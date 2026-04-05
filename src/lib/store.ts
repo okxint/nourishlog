@@ -167,3 +167,21 @@ export function addCustomFood(name: string, data: CustomFood): void {
   foods[name.toLowerCase()] = data;
   localStorage.setItem(CUSTOM_FOODS_KEY, JSON.stringify(foods));
 }
+
+// Water tracking
+const WATER_KEY = 'nourishlog_water';
+
+export function getWaterIntake(date: string): number {
+  if (typeof window === 'undefined') return 0;
+  const stored = localStorage.getItem(WATER_KEY);
+  if (!stored) return 0;
+  const data = JSON.parse(stored);
+  return data[date] || 0;
+}
+
+export function addWater(date: string, glasses: number): void {
+  const stored = localStorage.getItem(WATER_KEY);
+  const data = stored ? JSON.parse(stored) : {};
+  data[date] = (data[date] || 0) + glasses;
+  localStorage.setItem(WATER_KEY, JSON.stringify(data));
+}

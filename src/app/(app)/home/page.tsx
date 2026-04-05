@@ -7,18 +7,21 @@ import { useRouter } from 'next/navigation';
 import CalorieRing from '@/components/CalorieRing';
 import MacroBadge from '@/components/MacroBadge';
 import MealCard from '@/components/MealCard';
-import { getEntriesByDate, getProfile } from '@/lib/store';
+import { getEntriesByDate, getProfile, getWaterIntake, addWater } from '@/lib/store';
 import { FoodEntry, UserProfile } from '@/lib/types';
+import { Droplets } from 'lucide-react';
 
 export default function HomePage() {
   const router = useRouter();
   const [entries, setEntries] = useState<FoodEntry[]>([]);
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [water, setWater] = useState(0);
   const today = format(new Date(), 'yyyy-MM-dd');
 
   useEffect(() => {
     setEntries(getEntriesByDate(today));
     setProfile(getProfile());
+    setWater(getWaterIntake(today));
   }, [today]);
 
   useEffect(() => {
@@ -87,20 +90,31 @@ export default function HomePage() {
           </div>
           <div className="flex gap-2">
             <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
-              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Meals Today</p>
+              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Meals</p>
               <p className="text-lg font-bold mt-0.5" style={{ fontFamily: 'Sora, sans-serif' }}>{entries.length}</p>
             </div>
             <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
-              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Fiber</p>
-              <p className="text-lg font-bold mt-0.5" style={{ fontFamily: 'Sora, sans-serif' }}>
-                {entries.reduce((s, e) => s + e.fiber, 0)}g
-              </p>
-            </div>
-            <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
-              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Avg Score</p>
+              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Health Score</p>
               <p className="text-lg font-bold mt-0.5 text-[var(--green)]" style={{ fontFamily: 'Sora, sans-serif' }}>
                 {entries.length > 0 ? (entries.reduce((s, e) => s + (e.healthScore || 0), 0) / entries.length).toFixed(1) : '—'}
               </p>
+            </div>
+            <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
+              <div className="flex items-center justify-between">
+                <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Water</p>
+                <button
+                  onClick={() => { addWater(today, 1); setWater(water + 1); }}
+                  className="w-5 h-5 rounded-md flex items-center justify-center text-[var(--blue)] hover:bg-[var(--blue-dim)] transition-colors"
+                >
+                  <Droplets size={12} />
+                </button>
+              </div>
+              <p className="text-lg font-bold mt-0.5 text-[var(--blue)]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                {water}<span className="text-xs font-normal text-[var(--text-muted)]"> / {goals.water * 4}</span>
+              </p>
+              <div className="w-full h-1 rounded-full bg-[var(--bg-card-hover)] mt-1">
+                <div className="h-full rounded-full bg-[var(--blue)] transition-all" style={{ width: `${Math.min((water / (goals.water * 4)) * 100, 100)}%` }} />
+              </div>
             </div>
           </div>
         </div>
