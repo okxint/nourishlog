@@ -3,209 +3,327 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { isLoggedIn } from '@/lib/store';
-import { ArrowRight } from 'lucide-react';
+import { useTheme } from '@/lib/theme';
+import { ArrowRight, Sun, Moon, Check } from 'lucide-react';
 
 export default function LandingPage() {
   const router = useRouter();
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     if (isLoggedIn()) router.replace('/home');
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-white overflow-x-hidden">
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: 'rgba(9,9,11,0.85)', backdropFilter: 'blur(20px)' }}>
+    <div className="min-h-screen" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+      {/* ─── NAV ─── */}
+      <nav className="fixed top-0 left-0 right-0 z-50 glass-strong">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 h-14">
           <span className="text-base font-bold tracking-tight" style={{ fontFamily: 'Sora, sans-serif' }}>
-            nourish<span className="text-[#f97316]">log</span>
+            nourish<span style={{ color: 'var(--accent)' }}>log</span>
           </span>
-          <button
-            onClick={() => router.push('/login')}
-            className="px-4 py-1.5 rounded-full bg-white text-black text-xs font-semibold
-              hover:bg-white/90 transition-all active:scale-95"
-          >
-            Get Started
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggle}
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun size={14} style={{ color: 'var(--text-secondary)' }} /> : <Moon size={14} style={{ color: 'var(--text-secondary)' }} />}
+            </button>
+            <button onClick={() => router.push('/login')} className="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95" style={{ background: 'var(--accent)', color: '#fff' }}>
+              Get Started
+            </button>
+          </div>
         </div>
       </nav>
 
       {/* ─── HERO ─── */}
-      <section className="relative pt-28 pb-6 px-6">
+      <section className="pt-28 pb-8 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6" style={{ border: '1px solid var(--border)', background: 'var(--bg-card)' }}>
+            <span className="text-[11px] font-medium" style={{ color: 'var(--text-secondary)' }}>500+ Indian dishes</span>
+            <span className="text-xs">🇮🇳</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5" style={{ fontFamily: 'Sora, sans-serif' }}>
+            Know exactly what<br />you&apos;re <span style={{ color: 'var(--accent)' }}>eating.</span>
+          </h1>
+
+          <p className="text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            Type &ldquo;had biryani for lunch&rdquo;, snap a photo, or add your own recipes.
+            Full calorie and macro breakdown for every meal — built for how India eats.
+          </p>
+
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <button
+              onClick={() => router.push('/login')}
+              className="group flex items-center gap-2 px-7 py-3 rounded-lg font-semibold text-sm transition-all active:scale-95"
+              style={{ background: 'var(--accent)', color: '#fff' }}
+            >
+              Start Tracking — Free
+              <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+            </button>
+            <button
+              onClick={() => document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-sm font-medium transition-colors"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              See how it works ↓
+            </button>
+          </div>
+          <p className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Free forever · No credit card · Works on any device</p>
+        </div>
+      </section>
+
+      {/* ─── HERO MOCKUP — Web Dashboard ─── */}
+      <section className="px-6 pb-16">
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-            {/* Left copy */}
-            <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#27272a] mb-6">
-                <span className="text-[10px] font-medium text-[#a1a1aa]">Built for Indian food</span>
-                <span className="text-xs">🇮🇳</span>
+          <div className="rounded-xl overflow-hidden shadow-2xl" style={{ border: '1px solid var(--border)', background: 'var(--mockup-bg)' }}>
+            {/* Browser chrome */}
+            <div className="flex items-center gap-2 px-4 py-2.5" style={{ borderBottom: '1px solid var(--border)' }}>
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
               </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5" style={{ fontFamily: 'Sora, sans-serif' }}>
-                Know exactly<br />
-                what you&apos;re<br />
-                <span className="text-[#f97316]">eating.</span>
-              </h1>
-
-              <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed mb-8 max-w-md mx-auto lg:mx-0">
-                Snap your plate. Or just type &ldquo;had biryani for lunch&rdquo;.
-                We break down every calorie, macro, and nutrient — 500+ Indian dishes, custom recipes, and anything you throw at us.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start mb-6">
-                <button
-                  onClick={() => router.push('/login')}
-                  className="group flex items-center gap-2 px-7 py-3 rounded-full bg-[#f97316] text-white
-                    font-semibold text-sm hover:brightness-110 transition-all active:scale-95"
-                >
-                  Start Tracking — Free
-                  <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-                </button>
-                <button
-                  onClick={() => document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-sm text-[#71717a] hover:text-[#a1a1aa] transition-colors font-medium"
-                >
-                  See how it works ↓
-                </button>
+              <div className="flex-1 flex justify-center">
+                <div className="px-4 py-1 rounded-md text-[10px] font-medium" style={{ background: 'var(--bg-card)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
+                  nourishlog.vercel.app/home
+                </div>
               </div>
-
-              <p className="text-[11px] text-[#52525b]">
-                Free forever · No signup wall · Works on any device
-              </p>
             </div>
+            {/* Dashboard content */}
+            <div className="flex" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+              {/* Sidebar */}
+              <div className="hidden md:flex flex-col w-44 p-3 gap-1" style={{ borderRight: '1px solid var(--border)' }}>
+                <div className="flex items-center gap-2 px-2 py-1.5 mb-3">
+                  <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ background: 'var(--accent)' }}>
+                    <span className="text-[8px] text-white font-bold">N</span>
+                  </div>
+                  <span className="text-[11px] font-bold" style={{ fontFamily: 'Sora' }}>nourish<span style={{ color: 'var(--accent)' }}>log</span></span>
+                </div>
+                {['Home', 'Log', 'Chat', 'Dashboard', 'Profile'].map((t, i) => (
+                  <div key={t} className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px]" style={{
+                    background: i === 0 ? 'var(--accent-dim)' : 'transparent',
+                    color: i === 0 ? 'var(--accent)' : 'var(--text-muted)',
+                    fontWeight: i === 0 ? 600 : 400,
+                  }}>
+                    {['🏠', '➕', '💬', '📊', '👤'][i]} {t}
+                  </div>
+                ))}
+              </div>
+              {/* Main area */}
+              <div className="flex-1 p-4 sm:p-5">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <p className="text-sm font-bold" style={{ fontFamily: 'Sora', color: 'var(--text-primary)' }}>Good afternoon, Priya</p>
+                    <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Sunday, 6 April 2026</p>
+                  </div>
+                  <div className="px-3 py-1.5 rounded-lg text-[10px] font-medium" style={{ background: 'var(--accent)', color: '#fff' }}>+ Log Meal</div>
+                </div>
 
-            {/* Right — App mockup */}
-            <div className="flex-shrink-0 relative">
-              <div className="absolute -inset-10 bg-[#f97316] opacity-[0.06] rounded-full blur-[80px]" />
-              <PhoneMockup>
-                <AppHomeScreenshot />
-              </PhoneMockup>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {/* Ring */}
+                  <div className="flex justify-center sm:justify-start flex-shrink-0">
+                    <div className="relative" style={{ width: 140, height: 140 }}>
+                      <svg width="140" height="140" viewBox="0 0 140 140" className="transform -rotate-90">
+                        <circle cx="70" cy="70" r="56" fill="none" stroke="var(--bg-card-hover)" strokeWidth="8" />
+                        <circle cx="70" cy="70" r="56" fill="none" stroke="var(--accent)" strokeWidth="8" strokeLinecap="round" strokeDasharray="352" strokeDashoffset="155" />
+                      </svg>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <span className="text-2xl font-extrabold" style={{ fontFamily: 'Sora', color: 'var(--text-primary)' }}>1,245</span>
+                        <span className="text-[8px]" style={{ color: 'var(--text-muted)' }}>of 2,000 kcal</span>
+                        <span className="text-[8px] font-semibold" style={{ color: 'var(--accent)' }}>755 left</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Macros + Stats */}
+                  <div className="flex-1 flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      {[
+                        { label: 'PROTEIN', val: '48g', goal: '120g', color: 'var(--blue)', pct: '40%' },
+                        { label: 'CARBS', val: '156g', goal: '250g', color: 'var(--amber)', pct: '62%' },
+                        { label: 'FAT', val: '38g', goal: '65g', color: 'var(--rose)', pct: '58%' },
+                      ].map((m) => (
+                        <div key={m.label} className="flex-1 rounded-lg p-2" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                          <div className="flex items-center gap-1 mb-1">
+                            <div className="w-1.5 h-1.5 rounded-full" style={{ background: m.color }} />
+                            <span className="text-[8px] font-semibold" style={{ color: 'var(--text-muted)', fontFamily: 'Space Grotesk' }}>{m.label}</span>
+                          </div>
+                          <span className="text-xs font-bold" style={{ color: m.color, fontFamily: 'Sora' }}>{m.val}</span>
+                          <span className="text-[8px]" style={{ color: 'var(--text-muted)' }}> / {m.goal}</span>
+                          <div className="w-full h-1 rounded-full mt-1" style={{ background: 'var(--bg-card-hover)' }}>
+                            <div className="h-full rounded-full" style={{ width: m.pct, background: m.color }} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    {/* Meal cards */}
+                    <div className="flex flex-col gap-1.5">
+                      <p className="text-[9px] font-semibold" style={{ color: 'var(--text-secondary)', fontFamily: 'Sora' }}>Today&apos;s Meals</p>
+                      {[
+                        { name: 'Masala Dosa + Chutney', meal: 'Breakfast · 8:30 AM', cal: 280, score: 7, emoji: '🌅' },
+                        { name: 'Chicken Biryani', meal: 'Lunch · 1:00 PM', cal: 490, score: 6, emoji: '☀️' },
+                        { name: 'Dal Tadka + 2 Roti', meal: 'Dinner · 8:15 PM', cal: 330, score: 8, emoji: '🌙' },
+                        { name: 'Chai + Biscuits', meal: 'Snack · 4:00 PM', cal: 145, score: 4, emoji: '🍿' },
+                      ].map((m) => (
+                        <div key={m.name} className="flex items-center gap-2 p-2 rounded-lg" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                          <div className="w-7 h-7 rounded-md flex items-center justify-center text-sm" style={{ background: 'var(--bg-elevated)' }}>{m.emoji}</div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[10px] font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{m.name}</p>
+                            <p className="text-[8px]" style={{ color: 'var(--text-muted)' }}>{m.meal} · 💚 {m.score}/10</p>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-[11px] font-bold" style={{ color: 'var(--accent)', fontFamily: 'Sora' }}>{m.cal}</span>
+                            <span className="text-[7px] block" style={{ color: 'var(--text-muted)' }}>kcal</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── SOCIAL PROOF BAR ─── */}
-      <section className="py-8 px-6 border-y border-[#18181b]">
-        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
+      {/* ─── FEATURES ROW ─── */}
+      <section className="py-12 px-6" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            ['500+', 'Indian dishes'],
-            ['Instant', 'nutrition breakdown'],
-            ['Chat-first', 'food logging'],
-            ['Free', 'no strings attached'],
-          ].map(([big, small]) => (
-            <div key={big} className="text-center">
-              <span className="text-sm font-bold text-white">{big}</span>
-              <span className="text-xs text-[#52525b] ml-1.5">{small}</span>
+            { title: 'Chat to log', desc: 'Type naturally — "had 2 rotis with dal for dinner"', icon: '💬' },
+            { title: 'Photo scan', desc: 'Snap your plate, we identify and log everything', icon: '📸' },
+            { title: 'Custom recipes', desc: 'Add your own dishes with exact macros', icon: '🍳' },
+            { title: 'Weekly analytics', desc: 'Trends, macro splits, streaks, suggestions', icon: '📊' },
+          ].map((f) => (
+            <div key={f.title} className="text-center sm:text-left">
+              <span className="text-2xl mb-2 block">{f.icon}</span>
+              <h3 className="text-sm font-bold mb-1" style={{ fontFamily: 'Sora', color: 'var(--text-primary)' }}>{f.title}</h3>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{f.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ─── HOW IT WORKS ─── */}
-      <section id="how" className="py-20 px-6">
+      {/* ─── HOW IT WORKS — Web Screenshots ─── */}
+      <section id="how" className="py-20 px-6" style={{ background: 'var(--bg-secondary)' }}>
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-[11px] font-semibold text-[#f97316] uppercase tracking-widest mb-3" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-              How it works
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'Sora, sans-serif' }}>
-              Three steps. That&apos;s it.
-            </h2>
+          <div className="text-center mb-14">
+            <p className="text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: 'var(--accent)', fontFamily: 'Space Grotesk' }}>How it works</p>
+            <h2 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'Sora' }}>Three steps. That&apos;s it.</h2>
           </div>
 
-          {/* Step 1 — Chat */}
-          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mb-20">
+          {/* Step 1 */}
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-14 mb-16">
             <div className="flex-1 order-2 lg:order-1">
-              <span className="text-xs font-bold text-[#f97316] mb-2 block" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>01</span>
-              <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: 'Sora, sans-serif' }}>
-                Just type what you ate
-              </h3>
-              <p className="text-[#a1a1aa] leading-relaxed mb-4">
-                No barcode scanning. No searching through endless databases. Just talk to NourishLog like you&apos;d tell a friend —
-                &ldquo;had 2 rotis with dal for dinner&rdquo; or &ldquo;chai and samosa at 4pm&rdquo;.
+              <span className="text-xs font-bold mb-2 block" style={{ color: 'var(--accent)', fontFamily: 'Space Grotesk' }}>01</span>
+              <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Sora' }}>Tell us what you ate</h3>
+              <p className="leading-relaxed mb-3" style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>
+                No barcode scanning. No searching databases. Just type naturally — &ldquo;had 2 rotis with dal&rdquo; or &ldquo;chai and samosa at 4pm&rdquo;.
               </p>
-              <p className="text-[#a1a1aa] leading-relaxed">
-                You can also snap a photo, upload from gallery, or add your own custom recipes with exact nutrition.
-              </p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>Upload a photo from the Log tab, or send one in chat. We handle the rest.</p>
             </div>
-            <div className="flex-shrink-0 order-1 lg:order-2 relative">
-              <div className="absolute -inset-8 bg-[#6366f1] opacity-[0.05] rounded-full blur-[60px]" />
-              <PhoneMockup>
-                <ChatScreenshot />
-              </PhoneMockup>
+            <div className="flex-1 order-1 lg:order-2">
+              <WebMockup title="nourishlog.vercel.app/chat">
+                <ChatMockupContent />
+              </WebMockup>
             </div>
           </div>
 
-          {/* Step 2 — Nutrition */}
-          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mb-20">
-            <div className="flex-shrink-0 relative">
-              <div className="absolute -inset-8 bg-[#f97316] opacity-[0.05] rounded-full blur-[60px]" />
-              <PhoneMockup>
-                <NutritionScreenshot />
-              </PhoneMockup>
+          {/* Step 2 */}
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-14 mb-16">
+            <div className="flex-1">
+              <WebMockup title="nourishlog.vercel.app/meal/biryani">
+                <NutritionMockupContent />
+              </WebMockup>
             </div>
             <div className="flex-1">
-              <span className="text-xs font-bold text-[#f97316] mb-2 block" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>02</span>
-              <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: 'Sora, sans-serif' }}>
-                Full nutrition breakdown, instantly
-              </h3>
-              <p className="text-[#a1a1aa] leading-relaxed mb-4">
-                Every meal gets a complete breakdown — calories, protein, carbs, fat, fiber, vitamins, sodium, and a health score out of 10.
+              <span className="text-xs font-bold mb-2 block" style={{ color: 'var(--accent)', fontFamily: 'Space Grotesk' }}>02</span>
+              <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Sora' }}>Full nutrition breakdown</h3>
+              <p className="leading-relaxed mb-3" style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>
+                Every meal gets calories, protein, carbs, fat, fiber, micronutrients, and a health score out of 10.
               </p>
-              <p className="text-[#a1a1aa] leading-relaxed">
-                We know that a masala dosa is 280 kcal, not some generic &ldquo;pancake&rdquo; estimate. Indian food, done right.
+              <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>
+                We know a masala dosa is 280 kcal — not some generic &ldquo;pancake&rdquo; estimate.
               </p>
             </div>
           </div>
 
-          {/* Step 3 — Dashboard */}
-          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+          {/* Step 3 */}
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-14">
             <div className="flex-1 order-2 lg:order-1">
-              <span className="text-xs font-bold text-[#f97316] mb-2 block" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>03</span>
-              <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: 'Sora, sans-serif' }}>
-                See patterns. Eat better.
-              </h3>
-              <p className="text-[#a1a1aa] leading-relaxed mb-4">
-                Your dashboard shows weekly calorie trends, macro splits, your most-eaten foods, and how long your logging streak is.
+              <span className="text-xs font-bold mb-2 block" style={{ color: 'var(--accent)', fontFamily: 'Space Grotesk' }}>03</span>
+              <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Sora' }}>Track patterns. Eat better.</h3>
+              <p className="leading-relaxed mb-3" style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>
+                Weekly calorie trends, macro splits, most-eaten foods, streaks. See exactly where you stand.
               </p>
-              <p className="text-[#a1a1aa] leading-relaxed">
-                Ask &ldquo;analyze my nutrition&rdquo; for detailed insights, compare foods (&ldquo;dosa vs idli&rdquo;), or get meal suggestions based on your remaining calories and macros.
+              <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>
+                Ask chat &ldquo;analyze my nutrition&rdquo; or &ldquo;compare dosa vs idli&rdquo; for instant insights.
               </p>
             </div>
-            <div className="flex-shrink-0 order-1 lg:order-2 relative">
-              <div className="absolute -inset-8 bg-[#22c55e] opacity-[0.05] rounded-full blur-[60px]" />
-              <PhoneMockup>
-                <DashboardScreenshot />
-              </PhoneMockup>
+            <div className="flex-1 order-1 lg:order-2">
+              <WebMockup title="nourishlog.vercel.app/dashboard">
+                <DashboardMockupContent />
+              </WebMockup>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── FOODS WE KNOW ─── */}
-      <section className="py-16 px-6 border-t border-[#18181b]">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3" style={{ fontFamily: 'Sora, sans-serif' }}>
-            We speak Indian food
-          </h2>
-          <p className="text-sm text-[#71717a] mb-8 max-w-md mx-auto">
-            500+ dishes with accurate nutrition data — not some American database guessing what &ldquo;curry&rdquo; means.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto">
+      {/* ─── WHAT YOU GET ─── */}
+      <section className="py-16 px-6" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10" style={{ fontFamily: 'Sora' }}>Everything included. Free.</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              'Masala Dosa · 280 kcal', 'Idli Sambar · 195 kcal', 'Poha · 250 kcal',
-              'Chicken Biryani · 490 kcal', 'Rajma Chawal · 410 kcal', 'Chole Bhature · 520 kcal',
-              'Butter Chicken · 438 kcal', 'Palak Paneer · 290 kcal', 'Dal Rice · 380 kcal',
-              'Vada Pav · 290 kcal', 'Pav Bhaji · 380 kcal', 'Samosa · 262 kcal',
-              'Tandoori Chicken · 260 kcal', 'Chai · 80 kcal', 'Filter Coffee · 90 kcal',
-              'Paratha · 260 kcal', 'Upma · 210 kcal', 'Pani Puri · 180 kcal',
+              '500+ Indian dishes with accurate nutrition',
+              'Chat-based food logging — just type what you ate',
+              'Photo upload with food identification',
+              'Add your own custom recipes and dishes',
+              'Weekly calorie and macro trends',
+              'Nutrition analysis with improvement tips',
+              'Food comparison (dosa vs idli)',
+              'Meal suggestions based on remaining macros',
+              'Health score for every meal (1-10)',
+              'Dark and light mode',
+              'Works on desktop, tablet, and mobile',
+              'No account needed — data stays in your browser',
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-2.5 py-2">
+                <div className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center mt-0.5" style={{ background: 'var(--green-dim)' }}>
+                  <Check size={12} style={{ color: 'var(--green)' }} />
+                </div>
+                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FOODS WE KNOW ─── */}
+      <section className="py-16 px-6" style={{ background: 'var(--bg-secondary)' }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3" style={{ fontFamily: 'Sora' }}>We speak Indian food</h2>
+          <p className="text-sm mb-8 max-w-md mx-auto" style={{ color: 'var(--text-muted)' }}>
+            500+ dishes. Not a Western database guessing what &ldquo;curry&rdquo; means.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-3xl mx-auto">
+            {[
+              'Masala Dosa · 280', 'Idli Sambar · 195', 'Poha · 250', 'Biryani · 490',
+              'Rajma Chawal · 410', 'Chole Bhature · 520', 'Butter Chicken · 438',
+              'Palak Paneer · 290', 'Dal Rice · 380', 'Vada Pav · 290',
+              'Pav Bhaji · 380', 'Samosa · 262', 'Tandoori Chicken · 260',
+              'Fish Curry · 320', 'Dhokla · 160', 'Momos · 250',
+              'Chai · 80', 'Filter Coffee · 90', 'Gulab Jamun · 175',
             ].map((item) => {
               const [name, cal] = item.split(' · ');
               return (
-                <span key={item} className="px-3 py-1.5 rounded-lg bg-[#18181b] border border-[#27272a] text-xs">
-                  <span className="text-[#e4e4e7]">{name}</span>
-                  <span className="text-[#52525b] ml-1.5">{cal}</span>
+                <span key={item} className="px-2.5 py-1 rounded-md text-[11px]" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                  <span style={{ color: 'var(--text-primary)' }}>{name}</span>
+                  <span className="ml-1" style={{ color: 'var(--text-muted)' }}>{cal} kcal</span>
                 </span>
               );
             })}
@@ -216,16 +334,16 @@ export default function LandingPage() {
       {/* ─── CTA ─── */}
       <section className="py-20 px-6">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: 'Sora, sans-serif' }}>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: 'Sora' }}>
             Stop guessing.<br />Start knowing.
           </h2>
-          <p className="text-[#71717a] mb-8 max-w-md mx-auto">
-            Takes 10 seconds to set up. No credit card, no subscriptions, no nonsense.
+          <p className="mb-8 max-w-md mx-auto" style={{ color: 'var(--text-muted)' }}>
+            10 seconds to set up. No credit card. No subscriptions.
           </p>
           <button
             onClick={() => router.push('/login')}
-            className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#f97316] text-white
-              font-semibold text-base hover:brightness-110 transition-all active:scale-95"
+            className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-lg font-semibold text-base transition-all active:scale-95"
+            style={{ background: 'var(--accent)', color: '#fff' }}
           >
             Start Tracking — Free
             <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform" />
@@ -233,269 +351,98 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-[#18181b] py-6 px-6">
+      {/* ─── FOOTER ─── */}
+      <footer className="py-6 px-6" style={{ borderTop: '1px solid var(--border)' }}>
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="text-xs font-semibold text-[#52525b]" style={{ fontFamily: 'Sora, sans-serif' }}>
-            nourish<span className="text-[#f97316]">log</span>
+          <span className="text-xs font-semibold" style={{ fontFamily: 'Sora', color: 'var(--text-muted)' }}>
+            nourish<span style={{ color: 'var(--accent)' }}>log</span>
           </span>
-          <p className="text-[11px] text-[#3f3f46]">Made in India, for India.</p>
+          <p className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Made in India, for India.</p>
         </div>
       </footer>
     </div>
   );
 }
 
-/* ─── Phone Mockup Shell ─── */
-function PhoneMockup({ children }: { children: React.ReactNode }) {
+/* ─── Web Mockup (browser window, not phone) ─── */
+function WebMockup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="relative w-[260px] sm:w-[280px]">
-      <div className="rounded-[32px] border-[3px] border-[#27272a] bg-[#09090b] p-1.5 shadow-2xl">
-        {/* Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#09090b] rounded-b-2xl z-10 border-x-[3px] border-b-[3px] border-[#27272a]" />
-        <div className="rounded-[26px] overflow-hidden bg-[#0f0f14]">
-          {children}
+    <div className="rounded-xl overflow-hidden shadow-lg" style={{ border: '1px solid var(--border)', background: 'var(--mockup-bg)' }}>
+      <div className="flex items-center gap-2 px-3 py-2" style={{ borderBottom: '1px solid var(--border)' }}>
+        <div className="flex gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-[#ff5f57]" />
+          <div className="w-2 h-2 rounded-full bg-[#febc2e]" />
+          <div className="w-2 h-2 rounded-full bg-[#28c840]" />
         </div>
+        <div className="flex-1 flex justify-center">
+          <span className="text-[9px] font-medium" style={{ color: 'var(--text-muted)' }}>{title}</span>
+        </div>
+      </div>
+      <div className="p-4">{children}</div>
+    </div>
+  );
+}
+
+function ChatMockupContent() {
+  return (
+    <div className="flex flex-col gap-2 text-[11px]" style={{ fontFamily: 'DM Sans' }}>
+      <div className="self-start rounded-xl rounded-bl-sm px-3 py-2 max-w-[80%]" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        <p style={{ color: 'var(--text-secondary)' }}>Hey Priya! Tell me what you ate and I&apos;ll log it.</p>
+      </div>
+      <div className="self-end rounded-xl rounded-br-sm px-3 py-2 max-w-[75%]" style={{ background: 'var(--accent)', color: '#fff' }}>
+        had chicken biryani for lunch
+      </div>
+      <div className="self-start rounded-xl rounded-bl-sm px-3 py-2 max-w-[85%]" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        <p style={{ color: 'var(--text-secondary)' }}>Logged <strong style={{ color: 'var(--text-primary)' }}>Chicken Biryani</strong> for lunch! ✅</p>
+        <p className="mt-1" style={{ color: 'var(--text-muted)', fontSize: '10px' }}>490 kcal · 22g protein · 62g carbs · 18g fat · Score: 6/10</p>
+      </div>
+      <div className="self-end rounded-xl rounded-br-sm px-3 py-2 max-w-[75%]" style={{ background: 'var(--accent)', color: '#fff' }}>
+        also had chai and 2 samosas
+      </div>
+      <div className="self-start rounded-xl rounded-bl-sm px-3 py-2 max-w-[85%]" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        <p style={{ color: 'var(--text-secondary)' }}>Logged <strong style={{ color: 'var(--text-primary)' }}>Chai</strong> (80 kcal) + <strong style={{ color: 'var(--text-primary)' }}>2x Samosa</strong> (524 kcal) ✅</p>
+        <p className="mt-1" style={{ color: 'var(--text-muted)', fontSize: '10px' }}>1,094 kcal today. 906 remaining.</p>
+      </div>
+      <div className="self-end rounded-xl rounded-br-sm px-3 py-2 max-w-[75%]" style={{ background: 'var(--accent)', color: '#fff' }}>
+        analyze my nutrition
+      </div>
+      <div className="self-start rounded-xl rounded-bl-sm px-3 py-2 max-w-[85%]" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        <p style={{ color: 'var(--text-secondary)' }}>Avg: <strong style={{ color: 'var(--text-primary)' }}>1,834 kcal/day</strong>. 28% protein, 44% carbs, 28% fat.</p>
+        <p className="mt-1" style={{ color: 'var(--text-muted)', fontSize: '10px' }}>🥩 Low protein — add more dal, eggs, chicken ✅ Fiber is good</p>
       </div>
     </div>
   );
 }
 
-/* ─── Inline App Screenshots (rendered as actual UI, not images) ─── */
-
-function AppHomeScreenshot() {
+function NutritionMockupContent() {
   return (
-    <div className="px-4 pt-8 pb-4 text-[10px]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-      <p className="text-[11px] font-semibold text-white mb-0.5" style={{ fontFamily: 'Sora, sans-serif' }}>Good afternoon, Rahul</p>
-      <p className="text-[8px] text-[#52525b] mb-3">Saturday, 5 April 2026</p>
-
-      {/* Calorie Ring */}
-      <div className="flex justify-center mb-3">
-        <div className="relative w-32 h-32">
-          <svg width="128" height="128" viewBox="0 0 128 128" className="transform -rotate-90">
-            <circle cx="64" cy="64" r="52" fill="none" stroke="#1c1c22" strokeWidth="7" />
-            <circle cx="64" cy="64" r="52" fill="none" stroke="#f97316" strokeWidth="7" strokeLinecap="round"
-              strokeDasharray="327" strokeDashoffset="170" />
-          </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-xl font-extrabold text-white" style={{ fontFamily: 'Sora, sans-serif' }}>915</span>
-            <span className="text-[7px] text-[#52525b]">kcal consumed</span>
-            <span className="text-[7px] text-[#f97316] font-semibold">1,085 left</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Macros */}
-      <div className="flex gap-1.5 mb-3">
-        {[
-          { label: 'Protein', val: '28', goal: '120', color: '#6366f1', pct: '23%' },
-          { label: 'Carbs', val: '104', goal: '250', color: '#eab308', pct: '42%' },
-          { label: 'Fat', val: '33', goal: '65', color: '#f43f5e', pct: '51%' },
-        ].map((m) => (
-          <div key={m.label} className="flex-1 bg-[#1c1c22] rounded-xl px-2 py-2 border border-[#27272a]/50">
-            <div className="flex items-center gap-1 mb-1">
-              <div className="w-1.5 h-1.5 rounded-full" style={{ background: m.color }} />
-              <span className="text-[7px] text-[#52525b] uppercase font-semibold">{m.label}</span>
-            </div>
-            <span className="text-[11px] font-bold" style={{ color: m.color, fontFamily: 'Sora' }}>{m.val}</span>
-            <span className="text-[7px] text-[#3f3f46]"> / {m.goal}g</span>
-            <div className="w-full h-1 rounded-full bg-[#27272a] mt-1">
-              <div className="h-full rounded-full" style={{ width: m.pct, background: m.color }} />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Meals */}
-      <p className="text-[9px] font-semibold text-[#a1a1aa] mb-1.5" style={{ fontFamily: 'Sora' }}>Breakfast</p>
-      <div className="bg-[#1c1c22] rounded-xl p-2 flex items-center gap-2 mb-1.5 border border-[#27272a]/50">
-        <div className="w-9 h-9 rounded-lg bg-[#27272a] flex items-center justify-center text-sm">🌅</div>
-        <div className="flex-1 min-w-0">
-          <p className="text-[9px] font-semibold text-white truncate">Masala Dosa with Chutney</p>
-          <p className="text-[7px] text-[#52525b]">8:30 AM · 💚 7/10</p>
-        </div>
-        <div className="text-right">
-          <span className="text-[10px] font-bold text-[#f97316]">280</span>
-          <span className="text-[6px] text-[#52525b] block">kcal</span>
-        </div>
-      </div>
-
-      <p className="text-[9px] font-semibold text-[#a1a1aa] mb-1.5 mt-2.5" style={{ fontFamily: 'Sora' }}>Lunch</p>
-      <div className="bg-[#1c1c22] rounded-xl p-2 flex items-center gap-2 mb-1.5 border border-[#27272a]/50">
-        <div className="w-9 h-9 rounded-lg bg-[#27272a] flex items-center justify-center text-sm">☀️</div>
-        <div className="flex-1 min-w-0">
-          <p className="text-[9px] font-semibold text-white truncate">Chicken Biryani</p>
-          <p className="text-[7px] text-[#52525b]">1:00 PM · 💚 6/10</p>
-        </div>
-        <div className="text-right">
-          <span className="text-[10px] font-bold text-[#f97316]">490</span>
-          <span className="text-[6px] text-[#52525b] block">kcal</span>
-        </div>
-      </div>
-
-      <div className="bg-[#1c1c22] rounded-xl p-2 flex items-center gap-2 border border-[#27272a]/50">
-        <div className="w-9 h-9 rounded-lg bg-[#27272a] flex items-center justify-center text-sm">🍿</div>
-        <div className="flex-1 min-w-0">
-          <p className="text-[9px] font-semibold text-white truncate">Chai + Biscuits</p>
-          <p className="text-[7px] text-[#52525b]">4:00 PM · 💚 4/10</p>
-        </div>
-        <div className="text-right">
-          <span className="text-[10px] font-bold text-[#f97316]">145</span>
-          <span className="text-[6px] text-[#52525b] block">kcal</span>
-        </div>
-      </div>
-
-      {/* Bottom nav */}
-      <div className="flex items-center justify-around mt-3 pt-2 border-t border-[#18181b]">
-        {['Home', 'Chat', 'Stats', 'Profile'].map((t, i) => (
-          <span key={t} className={`text-[7px] font-medium ${i === 0 ? 'text-[#f97316]' : 'text-[#3f3f46]'}`}>{t}</span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ChatScreenshot() {
-  return (
-    <div className="px-3 pt-8 pb-3 text-[10px]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-      <div className="flex items-center gap-2 mb-3 pb-2 border-b border-[#18181b]">
-        <div className="w-7 h-7 rounded-lg bg-[#f97316]/15 flex items-center justify-center">
-          <span className="text-[10px]">✦</span>
-        </div>
-        <div>
-          <p className="text-[10px] font-bold text-white" style={{ fontFamily: 'Sora' }}>NourishLog</p>
-          <p className="text-[6px] text-[#52525b]">Tell me what you ate</p>
-        </div>
-      </div>
-
-      {/* Messages */}
-      <div className="flex flex-col gap-2">
-        <div className="self-start bg-[#1c1c22] rounded-xl rounded-bl-sm px-3 py-2 max-w-[85%] border border-[#27272a]/50">
-          <p className="text-[9px] text-[#d4d4d8] leading-relaxed">
-            Hey Rahul! 👋 Tell me what you ate and I&apos;ll log it with full nutrition info.
-          </p>
-        </div>
-
-        <div className="self-end bg-[#f97316] rounded-xl rounded-br-sm px-3 py-2 max-w-[80%]">
-          <p className="text-[9px] text-white">had chicken biryani for lunch</p>
-        </div>
-
-        <div className="self-start bg-[#1c1c22] rounded-xl rounded-bl-sm px-3 py-2 max-w-[88%] border border-[#27272a]/50">
-          <p className="text-[9px] text-[#d4d4d8] leading-relaxed">
-            Logged <strong className="text-white">Chicken Biryani</strong> for lunch! ✅
-          </p>
-          <p className="text-[8px] text-[#a1a1aa] mt-1.5">
-            🔥 490 kcal · 🥩 22g protein · 🍚 62g carbs · 🧈 18g fat
-          </p>
-          <p className="text-[8px] text-[#22c55e] mt-0.5">
-            💚 Health Score: 6/10
-          </p>
-        </div>
-
-        <div className="self-end bg-[#f97316] rounded-xl rounded-br-sm px-3 py-2 max-w-[80%]">
-          <p className="text-[9px] text-white">also had chai and 2 samosas at 4pm</p>
-        </div>
-
-        <div className="self-start bg-[#1c1c22] rounded-xl rounded-bl-sm px-3 py-2 max-w-[88%] border border-[#27272a]/50">
-          <p className="text-[9px] text-[#d4d4d8] leading-relaxed">
-            Logged <strong className="text-white">Chai</strong> (80 kcal) + <strong className="text-white">Samosa x2</strong> (524 kcal) ✅
-          </p>
-          <p className="text-[8px] text-[#a1a1aa] mt-1.5">
-            You&apos;ve had 1,094 kcal today. 906 remaining.
-          </p>
-        </div>
-
-        <div className="self-end bg-[#f97316] rounded-xl rounded-br-sm px-3 py-2 max-w-[80%]">
-          <p className="text-[9px] text-white">analyze my nutrition</p>
-        </div>
-
-        <div className="self-start bg-[#1c1c22] rounded-xl rounded-bl-sm px-3 py-2 max-w-[88%] border border-[#27272a]/50">
-          <p className="text-[9px] text-[#d4d4d8] leading-relaxed">
-            Avg: <strong className="text-white">1,834 kcal/day</strong>. Macro split: 28% protein, 44% carbs, 28% fat.
-          </p>
-          <p className="text-[8px] text-[#a1a1aa] mt-1">
-            🥩 Low protein — add more dal, eggs, chicken<br />
-            🌿 Fiber is good at 18g/day ✅
-          </p>
-        </div>
-      </div>
-
-      {/* Input bar */}
-      <div className="flex items-center gap-1.5 mt-3 pt-2 border-t border-[#18181b]">
-        <div className="w-6 h-6 rounded-md bg-[#1c1c22] flex items-center justify-center border border-[#27272a]/50">
-          <span className="text-[8px] text-[#52525b]">📷</span>
-        </div>
-        <div className="flex-1 h-6 rounded-md bg-[#1c1c22] border border-[#27272a]/50 flex items-center px-2">
-          <span className="text-[7px] text-[#3f3f46]">Type what you ate...</span>
-        </div>
-        <div className="w-6 h-6 rounded-md bg-[#f97316] flex items-center justify-center">
-          <span className="text-[8px] text-white">→</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function NutritionScreenshot() {
-  return (
-    <div className="px-4 pt-8 pb-4 text-[10px]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-[10px] text-[#52525b]">←</span>
-        <p className="text-[10px] font-bold text-white" style={{ fontFamily: 'Sora' }}>Meal Details</p>
-      </div>
-
-      {/* Food image placeholder */}
-      <div className="w-full h-28 rounded-xl bg-gradient-to-br from-[#27272a] to-[#1c1c22] mb-3 flex items-center justify-center">
-        <span className="text-3xl">🍛</span>
-      </div>
-
-      <p className="text-[13px] font-bold text-white" style={{ fontFamily: 'Sora' }}>Chicken Biryani</p>
-      <p className="text-[8px] text-[#52525b] mt-0.5">Lunch · 1:00 PM · 1 plate (300g)</p>
-
+    <div style={{ fontFamily: 'DM Sans' }}>
+      <p className="text-sm font-bold" style={{ fontFamily: 'Sora', color: 'var(--text-primary)' }}>Chicken Biryani</p>
+      <p className="text-[10px] mt-0.5" style={{ color: 'var(--text-muted)' }}>Lunch · 1:00 PM · 1 plate (300g)</p>
       <div className="flex items-center gap-2 mt-2 mb-3">
-        <span className="text-xl font-extrabold text-[#f97316]" style={{ fontFamily: 'Sora' }}>490</span>
-        <span className="text-[9px] text-[#52525b]">kcal</span>
-        <div className="ml-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#22c55e]/15">
-          <span className="text-[7px] text-[#22c55e] font-bold">💚 6/10</span>
-        </div>
+        <span className="text-xl font-extrabold" style={{ fontFamily: 'Sora', color: 'var(--accent)' }}>490</span>
+        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>kcal</span>
+        <span className="px-2 py-0.5 rounded-full text-[9px] font-bold" style={{ background: 'var(--green-dim)', color: 'var(--green)' }}>💚 6/10</span>
       </div>
-
-      {/* Macro circles */}
-      <div className="bg-[#1c1c22] rounded-xl p-3 mb-2 border border-[#27272a]/50">
-        <p className="text-[9px] font-bold text-white mb-2" style={{ fontFamily: 'Sora' }}>Nutrition Breakdown</p>
-        <div className="grid grid-cols-4 gap-2">
-          {[
-            { label: 'Protein', val: '22g', color: '#6366f1', pct: 18 },
-            { label: 'Carbs', val: '62g', color: '#eab308', pct: 25 },
-            { label: 'Fat', val: '18g', color: '#f43f5e', pct: 28 },
-            { label: 'Fiber', val: '3g', color: '#22c55e', pct: 12 },
-          ].map((m) => (
-            <div key={m.label} className="text-center">
-              <div className="relative w-10 h-10 mx-auto mb-1">
-                <svg width="40" height="40" viewBox="0 0 40 40" className="transform -rotate-90">
-                  <circle cx="20" cy="20" r="16" fill="none" stroke="#27272a" strokeWidth="3" />
-                  <circle cx="20" cy="20" r="16" fill="none" stroke={m.color} strokeWidth="3" strokeLinecap="round"
-                    strokeDasharray="100" strokeDashoffset={100 - m.pct} />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[8px] font-bold" style={{ color: m.color }}>{m.val}</span>
-                </div>
-              </div>
-              <p className="text-[7px] text-[#52525b]">{m.label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Micronutrients */}
-      <div className="bg-[#1c1c22] rounded-xl p-3 border border-[#27272a]/50">
-        <p className="text-[9px] font-bold text-white mb-1.5" style={{ fontFamily: 'Sora' }}>Micronutrients</p>
+      <div className="grid grid-cols-4 gap-2 mb-3">
         {[
-          ['Vitamin C', '8% DV'], ['Iron', '20% DV'], ['Calcium', '6% DV'], ['Sodium', '720mg'],
-        ].map(([label, val]) => (
-          <div key={label} className="flex items-center justify-between py-1 border-b border-[#27272a]/30 last:border-0">
-            <span className="text-[8px] text-[#52525b]">{label}</span>
-            <span className="text-[8px] font-semibold text-[#a1a1aa]">{val}</span>
+          { label: 'Protein', val: '22g', color: 'var(--blue)' },
+          { label: 'Carbs', val: '62g', color: 'var(--amber)' },
+          { label: 'Fat', val: '18g', color: 'var(--rose)' },
+          { label: 'Fiber', val: '3g', color: 'var(--green)' },
+        ].map((m) => (
+          <div key={m.label} className="rounded-lg p-2 text-center" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+            <span className="text-xs font-bold" style={{ color: m.color }}>{m.val}</span>
+            <p className="text-[8px] mt-0.5" style={{ color: 'var(--text-muted)' }}>{m.label}</p>
+          </div>
+        ))}
+      </div>
+      <div className="rounded-lg p-2" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        <p className="text-[10px] font-bold mb-1" style={{ fontFamily: 'Sora', color: 'var(--text-primary)' }}>Micronutrients</p>
+        {[['Iron', '20% DV'], ['Vitamin C', '8% DV'], ['Sodium', '720mg'], ['Calcium', '6% DV']].map(([l, v]) => (
+          <div key={l} className="flex justify-between py-0.5 text-[9px]" style={{ borderBottom: '1px solid var(--border)' }}>
+            <span style={{ color: 'var(--text-muted)' }}>{l}</span>
+            <span style={{ color: 'var(--text-secondary)' }}>{v}</span>
           </div>
         ))}
       </div>
@@ -503,94 +450,49 @@ function NutritionScreenshot() {
   );
 }
 
-function DashboardScreenshot() {
+function DashboardMockupContent() {
   return (
-    <div className="px-4 pt-8 pb-4 text-[10px]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+    <div style={{ fontFamily: 'DM Sans' }}>
       <div className="flex items-center justify-between mb-3">
-        <p className="text-[12px] font-bold text-white" style={{ fontFamily: 'Sora' }}>Dashboard</p>
-        <div className="flex items-center gap-1 bg-[#1c1c22] rounded-full px-2 py-0.5 border border-[#27272a]/50">
-          <span className="text-[7px] text-[#52525b]">‹</span>
-          <span className="text-[8px] font-semibold text-[#a1a1aa]">This Week</span>
-          <span className="text-[7px] text-[#52525b]">›</span>
+        <p className="text-sm font-bold" style={{ fontFamily: 'Sora', color: 'var(--text-primary)' }}>Dashboard</p>
+        <span className="text-[10px] font-medium" style={{ color: 'var(--text-muted)' }}>This Week</span>
+      </div>
+      <div className="flex gap-2 mb-3">
+        <div className="flex-1 rounded-lg p-2 text-center" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+          <p className="text-base font-extrabold" style={{ fontFamily: 'Sora', color: 'var(--accent)' }}>12,840</p>
+          <p className="text-[8px]" style={{ color: 'var(--text-muted)' }}>TOTAL KCAL</p>
+        </div>
+        <div className="flex-1 rounded-lg p-2 text-center" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+          <p className="text-base font-extrabold" style={{ fontFamily: 'Sora', color: 'var(--text-primary)' }}>1,834</p>
+          <p className="text-[8px]" style={{ color: 'var(--text-muted)' }}>DAILY AVG</p>
         </div>
       </div>
-
-      {/* Summary */}
-      <div className="flex gap-1.5 mb-3">
-        <div className="flex-1 bg-[#1c1c22] rounded-xl p-2 text-center border border-[#27272a]/50">
-          <p className="text-[14px] font-extrabold text-[#f97316]" style={{ fontFamily: 'Sora' }}>12,840</p>
-          <p className="text-[7px] text-[#52525b] uppercase font-semibold">Total kcal</p>
-        </div>
-        <div className="flex-1 bg-[#1c1c22] rounded-xl p-2 text-center border border-[#27272a]/50">
-          <p className="text-[14px] font-extrabold text-white" style={{ fontFamily: 'Sora' }}>1,834</p>
-          <p className="text-[7px] text-[#52525b] uppercase font-semibold">Daily avg</p>
-        </div>
-      </div>
-
       {/* Bar chart */}
-      <div className="bg-[#1c1c22] rounded-xl p-3 mb-2 border border-[#27272a]/50">
-        <p className="text-[9px] font-bold text-white mb-2" style={{ fontFamily: 'Sora' }}>Calories</p>
-        <div className="flex items-end justify-between h-16 gap-1">
-          {[
-            { d: 'M', h: 68 }, { d: 'T', h: 82 }, { d: 'W', h: 55 },
-            { d: 'T', h: 90 }, { d: 'F', h: 72 }, { d: 'S', h: 78, today: true }, { d: 'S', h: 45 },
-          ].map((b, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center gap-1">
-              <div
-                className="w-full rounded-t-md"
-                style={{
-                  height: `${b.h}%`,
-                  background: b.today ? '#f97316' : '#f97316' + '44',
-                }}
-              />
-              <span className={`text-[7px] ${b.today ? 'text-[#f97316] font-bold' : 'text-[#3f3f46]'}`}>
-                {b.d}
+      <div className="rounded-lg p-2 mb-2" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        <p className="text-[10px] font-bold mb-2" style={{ fontFamily: 'Sora', color: 'var(--text-primary)' }}>Weekly Calories</p>
+        <div className="flex items-end justify-between h-14 gap-1">
+          {[68, 82, 55, 90, 72, 78, 45].map((h, i) => (
+            <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
+              <div className="w-full rounded-t" style={{ height: `${h}%`, background: i === 5 ? 'var(--accent)' : 'color-mix(in srgb, var(--accent) 35%, transparent)' }} />
+              <span className="text-[7px]" style={{ color: i === 5 ? 'var(--accent)' : 'var(--text-muted)' }}>
+                {['M', 'T', 'W', 'T', 'F', 'S', 'S'][i]}
               </span>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Macro donut + legend */}
-      <div className="bg-[#1c1c22] rounded-xl p-3 mb-2 border border-[#27272a]/50">
-        <p className="text-[9px] font-bold text-white mb-2" style={{ fontFamily: 'Sora' }}>Macros</p>
-        <div className="flex items-center gap-3">
-          <div className="w-16 h-16 flex-shrink-0">
-            <svg width="64" height="64" viewBox="0 0 64 64">
-              <circle cx="32" cy="32" r="24" fill="none" stroke="#6366f1" strokeWidth="7" strokeDasharray="45 106" strokeDashoffset="0" transform="rotate(-90 32 32)" />
-              <circle cx="32" cy="32" r="24" fill="none" stroke="#eab308" strokeWidth="7" strokeDasharray="63 88" strokeDashoffset="-45" transform="rotate(-90 32 32)" />
-              <circle cx="32" cy="32" r="24" fill="none" stroke="#f43f5e" strokeWidth="7" strokeDasharray="42 109" strokeDashoffset="-108" transform="rotate(-90 32 32)" />
-            </svg>
-          </div>
-          <div className="flex-1 flex flex-col gap-1.5">
-            {[
-              { label: 'Protein', pct: '30%', g: '218g', color: '#6366f1' },
-              { label: 'Carbs', pct: '42%', g: '412g', color: '#eab308' },
-              { label: 'Fat', pct: '28%', g: '168g', color: '#f43f5e' },
-            ].map((m) => (
-              <div key={m.label} className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full" style={{ background: m.color }} />
-                <span className="text-[8px] text-[#a1a1aa] flex-1">{m.label}</span>
-                <span className="text-[8px] font-bold" style={{ color: m.color }}>{m.pct}</span>
-                <span className="text-[7px] text-[#3f3f46]">{m.g}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="grid grid-cols-4 gap-1.5">
         {[
-          { label: 'STREAK', value: '7 days', icon: '🔥' },
-          { label: 'MOST EATEN', value: 'Dal Rice', icon: '🍛' },
-          { label: 'PEAK DAY', value: 'Thu · 2,430', icon: '📈' },
-          { label: 'HYDRATION', value: '2.1L avg', icon: '💧' },
+          { icon: '🔥', label: 'Streak', val: '7 days' },
+          { icon: '🍛', label: 'Top food', val: 'Dal Rice' },
+          { icon: '📈', label: 'Peak', val: '2,430' },
+          { icon: '💧', label: 'Water', val: '2.1L/d' },
         ].map((s) => (
-          <div key={s.label} className="bg-[#1c1c22] rounded-xl p-2 border border-[#27272a]/50">
-            <span className="text-sm">{s.icon}</span>
-            <p className="text-[7px] text-[#52525b] uppercase font-semibold mt-0.5">{s.label}</p>
-            <p className="text-[9px] font-bold text-white">{s.value}</p>
+          <div key={s.label} className="rounded-lg p-1.5" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+            <span className="text-xs">{s.icon}</span>
+            <p className="text-[7px]" style={{ color: 'var(--text-muted)' }}>{s.label}</p>
+            <p className="text-[9px] font-bold" style={{ color: 'var(--text-primary)' }}>{s.val}</p>
           </div>
         ))}
       </div>

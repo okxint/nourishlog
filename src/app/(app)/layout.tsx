@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { isLoggedIn } from '@/lib/store';
-import { Home, PlusCircle, MessageCircle, BarChart3, User, Sparkles } from 'lucide-react';
+import { Home, PlusCircle, MessageCircle, BarChart3, User, Sparkles, Sun, Moon } from 'lucide-react';
+import { useTheme } from '@/lib/theme';
 
 const tabs = [
   { href: '/home', label: 'Home', icon: Home },
@@ -17,6 +18,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [ready, setReady] = useState(false);
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     if (!isLoggedIn()) {
@@ -40,7 +42,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             nourish<span className="text-[var(--accent)]">log</span>
           </span>
         </div>
-        <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
+        <nav className="flex-1 px-3 py-4 flex flex-col gap-1 justify-between"><div className="flex flex-col gap-1">
           {tabs.map((tab) => {
             const active = pathname === tab.href || (tab.href === '/home' && pathname?.startsWith('/meal'));
             const Icon = tab.icon;
@@ -61,6 +63,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </button>
             );
           })}
+          </div>
+          <button
+            onClick={toggle}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-150
+              text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-card)]"
+          >
+            {theme === 'dark' ? <Sun size={18} strokeWidth={1.6} /> : <Moon size={18} strokeWidth={1.6} />}
+            <span className="text-sm font-medium" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+              {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            </span>
+          </button>
         </nav>
       </aside>
 

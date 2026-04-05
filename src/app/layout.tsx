@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/lib/theme";
 
 export const metadata: Metadata = {
-  title: "NourishLog — AI Food Tracker for India",
-  description: "Track your meals with AI. Snap a photo or just chat. Built for Indian food lovers.",
+  title: "NourishLog — Smart Food Tracker for India",
+  description: "Track your meals with a chat. Snap a photo or just type what you ate. 500+ Indian dishes, full nutrition breakdown, weekly analytics.",
 };
 
 export default function RootLayout({
@@ -12,8 +13,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-full">{children}</body>
+    <html lang="en" className="h-full antialiased" data-theme="dark" suppressHydrationWarning>
+      <body className="min-h-full">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
