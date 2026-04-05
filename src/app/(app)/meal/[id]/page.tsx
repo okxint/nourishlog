@@ -18,7 +18,7 @@ export default function MealDetailPage() {
 
   if (!entry) {
     return (
-      <div className="px-5 pt-16 text-center fade-in">
+      <div className="px-5 lg:px-8 pt-16 text-center fade-in">
         <p className="text-4xl mb-4">🍽️</p>
         <p className="text-[var(--text-muted)]">Meal not found</p>
         <button onClick={() => router.push('/home')} className="mt-4 text-sm text-[var(--accent)] font-medium">
@@ -43,7 +43,7 @@ export default function MealDetailPage() {
   return (
     <div className="fade-in">
       {/* Header */}
-      <div className="flex items-center gap-3 px-5 pt-12 mb-4">
+      <div className="flex items-center gap-3 px-5 lg:px-8 pt-10 lg:pt-8 mb-4">
         <button
           onClick={() => router.back()}
           className="w-9 h-9 rounded-full glass flex items-center justify-center hover:bg-[var(--bg-card-hover)]"

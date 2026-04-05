@@ -88,9 +88,9 @@ export default function DashboardPage() {
   const totalCalThisWeek = weekData.reduce((s, d) => s + d.calories, 0);
 
   return (
-    <div className="px-5 pt-12 fade-in">
+    <div className="px-5 lg:px-8 pt-10 lg:pt-8 fade-in">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold" style={{ fontFamily: 'Sora, sans-serif' }}>Dashboard</h1>
+        <h1 className="text-2xl font-bold" style={{ fontFamily: 'Sora, sans-serif' }}>Dashboard</h1>
         <div className="flex items-center gap-1.5 glass rounded-full px-3 py-1.5">
           <ChevronLeft size={14} className="text-[var(--text-muted)]" />
           <span className="text-[11px] font-semibold text-[var(--text-secondary)]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
@@ -120,10 +120,11 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Weekly Chart */}
-      <div className="glass-card rounded-2xl p-4 mb-4">
+      {/* Charts — side by side on desktop */}
+      <div className="flex flex-col lg:flex-row gap-4 mb-4">
+      <div className="flex-1 glass-card rounded-2xl p-4">
         <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Sora, sans-serif' }}>Calories This Week</h3>
-        <ResponsiveContainer width="100%" height={160}>
+        <ResponsiveContainer width="100%" height={200}>
           <BarChart data={weekData} barCategoryGap="18%">
             <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: '#52525b', fontSize: 10, fontFamily: 'Space Grotesk' }} />
             <ReferenceLine y={goals.calories} stroke="#f9731633" strokeDasharray="6 4" />
@@ -147,7 +148,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Macro Breakdown */}
-      <div className="glass-card rounded-2xl p-4 mb-4">
+      <div className="flex-1 glass-card rounded-2xl p-4">
         <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Sora, sans-serif' }}>Macros Split</h3>
         <div className="flex items-center gap-5">
           <div className="w-28 h-28 flex-shrink-0">
@@ -175,9 +176,10 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+      </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 gap-2.5 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-8">
         {[
           { icon: TrendingUp, color: 'var(--amber)', label: 'Most Eaten', value: foodCounts[0] as string, sub: `${foodCounts[1]} times` },
           { icon: Flame, color: 'var(--rose)', label: 'Peak Day', value: highestCalDay.day, sub: `${highestCalDay.cal.toLocaleString()} kcal` },

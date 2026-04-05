@@ -42,7 +42,7 @@ export default function ProfilePage() {
   if (!profile) return null;
 
   return (
-    <div className="px-5 pt-12 fade-in">
+    <div className="px-5 lg:px-8 pt-10 lg:pt-8 fade-in">
       {/* Profile Card */}
       <div className="glass-card rounded-2xl p-6 mb-4 text-center gradient-border">
         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--accent)] to-[#fb923c] flex items-center justify-center mx-auto mb-3 glow-sm">

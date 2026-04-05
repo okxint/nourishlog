@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import { Camera, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import CalorieRing from '@/components/CalorieRing';
 import MacroBadge from '@/components/MacroBadge';
@@ -21,13 +21,12 @@ export default function HomePage() {
     setProfile(getProfile());
   }, [today]);
 
-  // Re-check on window focus (after logging from chat)
   useEffect(() => {
-    const onFocus = () => {
-      setEntries(getEntriesByDate(today));
-    };
+    const onFocus = () => setEntries(getEntriesByDate(today));
     window.addEventListener('focus', onFocus);
-    return () => window.removeEventListener('focus', onFocus);
+    // Also poll for changes (from other tabs like chat/log)
+    const interval = setInterval(() => setEntries(getEntriesByDate(today)), 2000);
+    return () => { window.removeEventListener('focus', onFocus); clearInterval(interval); };
   }, [today]);
 
   const totals = entries.reduce(
@@ -44,7 +43,6 @@ export default function HomePage() {
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
-  // Group by meal type
   const mealGroups: Record<string, FoodEntry[]> = {};
   entries.forEach((e) => {
     if (!mealGroups[e.mealType]) mealGroups[e.mealType] = [];
@@ -53,11 +51,11 @@ export default function HomePage() {
   const mealOrder = ['breakfast', 'lunch', 'dinner', 'snack'];
 
   return (
-    <div className="px-5 pt-12 fade-in">
+    <div className="px-5 lg:px-8 pt-10 lg:pt-8 fade-in">
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-xl font-bold" style={{ fontFamily: 'Sora, sans-serif' }}>
+          <h1 className="text-2xl font-bold" style={{ fontFamily: 'Sora, sans-serif' }}>
             {greeting}, {profile?.name || 'there'}
           </h1>
           <p className="text-xs text-[var(--text-muted)] mt-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
@@ -65,39 +63,71 @@ export default function HomePage() {
           </p>
         </div>
         <button
-          onClick={() => router.push('/chat')}
-          className="w-10 h-10 rounded-full glass-card flex items-center justify-center
-            hover:bg-[var(--bg-card-hover)] transition-colors"
+          onClick={() => router.push('/log')}
+          className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[var(--accent)] text-white text-sm font-medium
+            hover:brightness-110 active:scale-95 transition-all"
         >
-          <Plus size={20} className="text-[var(--text-secondary)]" />
+          <Plus size={16} /> Log Meal
         </button>
       </div>
 
-      {/* Calorie Ring */}
-      <div className="flex justify-center mb-6">
-        <CalorieRing consumed={totals.calories} goal={goals.calories} />
+      {/* Summary — Desktop: side by side, Mobile: stacked */}
+      <div className="flex flex-col lg:flex-row gap-6 mb-8">
+        {/* Calorie Ring */}
+        <div className="flex flex-col items-center lg:items-start">
+          <CalorieRing consumed={totals.calories} goal={goals.calories} />
+        </div>
+
+        {/* Macros + Quick Stats */}
+        <div className="flex-1 flex flex-col justify-center gap-3">
+          <div className="flex gap-2">
+            <MacroBadge label="Protein" current={totals.protein} goal={goals.protein} color="var(--blue)" />
+            <MacroBadge label="Carbs" current={totals.carbs} goal={goals.carbs} color="var(--amber)" />
+            <MacroBadge label="Fat" current={totals.fat} goal={goals.fat} color="var(--rose)" />
+          </div>
+          <div className="flex gap-2">
+            <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
+              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Meals Today</p>
+              <p className="text-lg font-bold mt-0.5" style={{ fontFamily: 'Sora, sans-serif' }}>{entries.length}</p>
+            </div>
+            <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
+              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Fiber</p>
+              <p className="text-lg font-bold mt-0.5" style={{ fontFamily: 'Sora, sans-serif' }}>
+                {entries.reduce((s, e) => s + e.fiber, 0)}g
+              </p>
+            </div>
+            <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
+              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Avg Score</p>
+              <p className="text-lg font-bold mt-0.5 text-[var(--green)]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                {entries.length > 0 ? (entries.reduce((s, e) => s + (e.healthScore || 0), 0) / entries.length).toFixed(1) : '—'}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Macro Badges */}
-      <div className="flex gap-2 mb-8">
-        <MacroBadge label="Protein" current={totals.protein} goal={goals.protein} color="var(--blue)" />
-        <MacroBadge label="Carbs" current={totals.carbs} goal={goals.carbs} color="var(--amber)" />
-        <MacroBadge label="Fat" current={totals.fat} goal={goals.fat} color="var(--rose)" />
-      </div>
-
-      {/* Meals by type */}
+      {/* Meals */}
       {entries.length === 0 ? (
-        <div className="glass-card rounded-2xl p-8 text-center mb-6">
+        <div className="glass-card rounded-2xl p-10 text-center">
           <p className="text-3xl mb-3">🍽️</p>
-          <p className="text-sm text-[var(--text-secondary)] font-medium mb-1">No meals logged yet</p>
-          <p className="text-xs text-[var(--text-muted)] mb-4">Start by chatting what you ate</p>
-          <button
-            onClick={() => router.push('/chat')}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--accent)] text-white
-              text-sm font-semibold hover:brightness-110 active:scale-95 transition-all"
-          >
-            <MessageIcon /> Log your first meal
-          </button>
+          <p className="text-sm text-[var(--text-secondary)] font-medium mb-1">No meals logged yet today</p>
+          <p className="text-xs text-[var(--text-muted)] mb-5">Upload a photo, type what you had, or chat with us</p>
+          <div className="flex items-center justify-center gap-3">
+            <button
+              onClick={() => router.push('/log')}
+              className="px-5 py-2.5 rounded-full bg-[var(--accent)] text-white text-sm font-semibold
+                hover:brightness-110 active:scale-95 transition-all"
+            >
+              Log a Meal
+            </button>
+            <button
+              onClick={() => router.push('/chat')}
+              className="px-5 py-2.5 rounded-full glass text-[var(--text-secondary)] text-sm font-medium
+                hover:text-[var(--text-primary)] transition-colors"
+            >
+              Open Chat
+            </button>
+          </div>
         </div>
       ) : (
         <div className="flex flex-col gap-5 mb-6">
@@ -108,16 +138,14 @@ export default function HomePage() {
             return (
               <div key={type}>
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-sm font-semibold capitalize text-[var(--text-secondary)]"
-                    style={{ fontFamily: 'Sora, sans-serif' }}>
+                  <h3 className="text-sm font-semibold capitalize text-[var(--text-secondary)]" style={{ fontFamily: 'Sora, sans-serif' }}>
                     {type}
                   </h3>
-                  <span className="text-[10px] font-medium text-[var(--text-muted)]"
-                    style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                  <span className="text-[10px] font-medium text-[var(--text-muted)]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                     {mealCal} kcal
                   </span>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                   {meals.map((entry) => <MealCard key={entry.id} entry={entry} />)}
                 </div>
               </div>
@@ -125,24 +153,6 @@ export default function HomePage() {
           })}
         </div>
       )}
-
-      {/* FAB */}
-      <button
-        onClick={() => router.push('/chat')}
-        className="fixed bottom-24 right-5 w-14 h-14 rounded-full bg-[var(--accent)] text-white
-          flex items-center justify-center shadow-lg shadow-[var(--accent-dim)] pulse-glow
-          hover:scale-105 active:scale-95 transition-transform duration-200 z-40"
-      >
-        <Camera size={22} strokeWidth={2.5} />
-      </button>
     </div>
-  );
-}
-
-function MessageIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
-    </svg>
   );
 }
