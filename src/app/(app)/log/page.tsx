@@ -3,7 +3,8 @@
 import { useState, useRef } from 'react';
 import { Camera, Upload, Search, X, Loader2, Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { addEntry, nutritionDb } from '@/lib/store';
+import { addEntry } from '@/lib/store';
+import { foodDatabase } from '@/lib/food-db';
 import { FoodEntry } from '@/lib/types';
 import { format } from 'date-fns';
 
@@ -46,7 +47,8 @@ export default function LogPage() {
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
   const logFood = (name: string, cal: number, p: number, c: number, f: number, fb: number, imageUrl?: string) => {
-    const score = nutritionDb[name.toLowerCase()]?.score ?? Math.floor(Math.random() * 4 + 4);
+    const dbEntry = foodDatabase[name.toLowerCase()];
+    const score = dbEntry?.score ?? Math.floor(Math.random() * 4 + 4);
     const entry: FoodEntry = {
       id: Date.now().toString(),
       name,
@@ -81,7 +83,7 @@ export default function LogPage() {
     if (!textInput.trim()) return;
     setIsLogging(true);
     const key = textInput.toLowerCase().trim();
-    const match = nutritionDb[key];
+    const match = foodDatabase[key];
     const cal = match?.cal ?? (200 + Math.floor(Math.random() * 250));
     const p = match?.p ?? Math.floor(Math.random() * 25 + 5);
     const c = match?.c ?? Math.floor(Math.random() * 45 + 10);
@@ -129,7 +131,7 @@ export default function LogPage() {
 
   const handleRecentSearch = (name: string) => {
     const key = name.toLowerCase();
-    const match = nutritionDb[key];
+    const match = foodDatabase[key];
     if (match) {
       logFood(name, match.cal, match.p, match.c, match.f, match.fb);
     } else {

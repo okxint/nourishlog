@@ -49,7 +49,7 @@ export default function LandingPage() {
 
               <p className="text-base sm:text-lg text-[#a1a1aa] leading-relaxed mb-8 max-w-md mx-auto lg:mx-0">
                 Snap your plate. Or just type &ldquo;had biryani for lunch&rdquo;.
-                We break down every calorie, macro, and nutrient — for dosa, dal, paneer, everything.
+                We break down every calorie, macro, and nutrient — 500+ Indian dishes, custom recipes, and anything you throw at us.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start mb-6">
@@ -89,7 +89,7 @@ export default function LandingPage() {
       <section className="py-8 px-6 border-y border-[#18181b]">
         <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
           {[
-            ['60+', 'Indian dishes'],
+            ['500+', 'Indian dishes'],
             ['Instant', 'nutrition breakdown'],
             ['Chat-first', 'food logging'],
             ['Free', 'no strings attached'],
@@ -126,7 +126,7 @@ export default function LandingPage() {
                 &ldquo;had 2 rotis with dal for dinner&rdquo; or &ldquo;chai and samosa at 4pm&rdquo;.
               </p>
               <p className="text-[#a1a1aa] leading-relaxed">
-                You can also snap a photo of your plate and we&apos;ll identify everything on it.
+                You can also snap a photo, upload from gallery, or add your own custom recipes with exact nutrition.
               </p>
             </div>
             <div className="flex-shrink-0 order-1 lg:order-2 relative">
@@ -170,7 +170,7 @@ export default function LandingPage() {
                 Your dashboard shows weekly calorie trends, macro splits, your most-eaten foods, and how long your logging streak is.
               </p>
               <p className="text-[#a1a1aa] leading-relaxed">
-                Ask the chat &ldquo;how&apos;s my week going?&rdquo; or &ldquo;what should I eat next?&rdquo; and get suggestions based on what you&apos;ve already had.
+                Ask &ldquo;analyze my nutrition&rdquo; for detailed insights, compare foods (&ldquo;dosa vs idli&rdquo;), or get meal suggestions based on your remaining calories and macros.
               </p>
             </div>
             <div className="flex-shrink-0 order-1 lg:order-2 relative">
@@ -190,7 +190,7 @@ export default function LandingPage() {
             We speak Indian food
           </h2>
           <p className="text-sm text-[#71717a] mb-8 max-w-md mx-auto">
-            60+ dishes with accurate nutrition data — not some American database guessing what &ldquo;curry&rdquo; means.
+            500+ dishes with accurate nutrition data — not some American database guessing what &ldquo;curry&rdquo; means.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto">
             {[
@@ -406,16 +406,16 @@ function ChatScreenshot() {
         </div>
 
         <div className="self-end bg-[#f97316] rounded-xl rounded-br-sm px-3 py-2 max-w-[80%]">
-          <p className="text-[9px] text-white">what should I eat for dinner?</p>
+          <p className="text-[9px] text-white">analyze my nutrition</p>
         </div>
 
         <div className="self-start bg-[#1c1c22] rounded-xl rounded-bl-sm px-3 py-2 max-w-[88%] border border-[#27272a]/50">
           <p className="text-[9px] text-[#d4d4d8] leading-relaxed">
-            You have <strong className="text-white">906 kcal</strong> left and need more protein. Try:
+            Avg: <strong className="text-white">1,834 kcal/day</strong>. Macro split: 28% protein, 44% carbs, 28% fat.
           </p>
           <p className="text-[8px] text-[#a1a1aa] mt-1">
-            • <strong className="text-[#d4d4d8]">Dal + Roti</strong> — 310 kcal, 13g protein<br />
-            • <strong className="text-[#d4d4d8]">Tandoori Chicken</strong> — 260 kcal, 32g protein
+            🥩 Low protein — add more dal, eggs, chicken<br />
+            🌿 Fiber is good at 18g/day ✅
           </p>
         </div>
       </div>
