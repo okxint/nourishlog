@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import BottomNav from "@/components/BottomNav";
 
 export const metadata: Metadata = {
-  title: "NourishLog",
-  description: "Track what you eat, beautifully.",
+  title: "NourishLog — AI Food Tracker for India",
+  description: "Track your meals with AI. Snap a photo or just chat. Built for Indian food lovers.",
 };
 
 export default function RootLayout({
@@ -14,12 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">
-        <main className="flex-1 max-w-md mx-auto w-full pb-20">
-          {children}
-        </main>
-        <BottomNav />
-      </body>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

@@ -11,6 +11,7 @@ export interface FoodEntry {
   date: string;
   imageUrl?: string;
   servingSize?: string;
+  healthScore?: number;
   micronutrients?: {
     vitaminA?: number;
     vitaminC?: number;
@@ -34,14 +35,13 @@ export interface UserProfile {
   email: string;
   goals: DailyGoals;
   joinedDate: string;
+  avatar?: string;
 }
 
-export interface DailySummary {
-  date: string;
-  totalCalories: number;
-  totalProtein: number;
-  totalCarbs: number;
-  totalFat: number;
-  totalFiber: number;
-  entries: FoodEntry[];
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+  foodEntry?: FoodEntry;
 }
