@@ -192,12 +192,14 @@ export default function LandingPage() {
 
       {/* ─── FEATURES ROW ─── */}
       <section className="py-12 px-6" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6">
           {[
             { title: 'Chat to log', desc: 'Type naturally — "had 2 rotis with dal for dinner"', icon: '💬' },
             { title: 'Photo scan', desc: 'Snap your plate, we identify and log everything', icon: '📸' },
             { title: 'Custom recipes', desc: 'Add your own dishes with exact macros', icon: '🍳' },
-            { title: 'Weekly analytics', desc: 'Trends, macro splits, streaks, suggestions', icon: '📊' },
+            { title: 'Dashboard & filters', desc: 'Filter by date, meal, food. Export CSV. Click charts to drill down.', icon: '📊' },
+            { title: 'Achievements & streaks', desc: 'Daily challenges, badges, share progress with friends', icon: '🏆' },
+            { title: 'Share with friends', desc: 'Copy your stats or weekly recap to share on WhatsApp or socials', icon: '📤' },
           ].map((f) => (
             <div key={f.title} className="text-center sm:text-left">
               <span className="text-2xl mb-2 block">{f.icon}</span>
@@ -283,14 +285,16 @@ export default function LandingPage() {
               'Chat-based food logging — just type what you ate',
               'Photo upload with food identification',
               'Add your own custom recipes and dishes',
-              'Weekly calorie and macro trends',
-              'Nutrition analysis with improvement tips',
-              'Food comparison (dosa vs idli)',
-              'Meal suggestions based on remaining macros',
-              'Health score for every meal (1-10)',
+              'Dashboard with date, meal type, and food filters',
+              'Export meal data as CSV (date × meal grid)',
+              'Click chart bars to drill into specific days',
+              'Daily challenges — hit protein goal, log 3 meals, eat clean',
+              '18 achievement badges — streaks, variety, consistency',
+              'Share progress & weekly recaps with friends',
+              'Water tracking on home page',
               'Dark and light mode',
+              'Nutrition analysis & food comparison',
               'Works on desktop, tablet, and mobile',
-              'No account needed — data stays in your browser',
             ].map((item) => (
               <div key={item} className="flex items-start gap-2.5 py-2">
                 <div className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center mt-0.5" style={{ background: 'var(--green-dim)' }}>

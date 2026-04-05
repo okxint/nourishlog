@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { isLoggedIn } from '@/lib/store';
-import { Home, PlusCircle, MessageCircle, BarChart3, User, Sparkles, Sun, Moon } from 'lucide-react';
+import { Home, PlusCircle, MessageCircle, BarChart3, User, Sparkles, Sun, Moon, Trophy } from 'lucide-react';
 import { useTheme } from '@/lib/theme';
 
 const tabs = [
@@ -11,6 +11,7 @@ const tabs = [
   { href: '/log', label: 'Log', icon: PlusCircle },
   { href: '/chat', label: 'Chat', icon: MessageCircle },
   { href: '/dashboard', label: 'Dashboard', icon: BarChart3 },
+  { href: '/achievements', label: 'Achievements', icon: Trophy },
   { href: '/profile', label: 'Profile', icon: User },
 ];
 
