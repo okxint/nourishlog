@@ -117,6 +117,11 @@ export function addEntry(entry: FoodEntry): void {
   localStorage.setItem(ENTRIES_KEY, JSON.stringify(entries));
 }
 
+export function updateEntry(id: string, updates: Partial<FoodEntry>): void {
+  const entries = getEntries().map((e) => e.id === id ? { ...e, ...updates } : e);
+  localStorage.setItem(ENTRIES_KEY, JSON.stringify(entries));
+}
+
 export function deleteEntry(id: string): void {
   const entries = getEntries().filter((e) => e.id !== id);
   localStorage.setItem(ENTRIES_KEY, JSON.stringify(entries));

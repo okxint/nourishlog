@@ -48,8 +48,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-            Tell us you had &ldquo;chole bhature for lunch&rdquo; and we know that&apos;s 520 kcal, 14g protein, and a health score of 4/10.
-            No other tracker does that.
+            Tell us you had &ldquo;chole bhature for lunch&rdquo; and we pull the nutrition from IFCT data — 450 kcal, 12g protein, health score 4/10. Edit any value if it&apos;s off. No other tracker does that.
           </p>
 
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -94,8 +93,8 @@ export default function LandingPage() {
       {/* ═══ FEATURE 3 — Nutrition Breakdown ═══ */}
       <Feature
         label="03" title="Every nutrient. Every meal." subtitle="Not just calories — the full picture."
-        description="Tap any logged meal to see the complete nutrition breakdown. Calories, protein, carbs, fat, fiber — each with a progress ring showing how much of your daily goal it covers. Plus micronutrients: iron, calcium, vitamin C, sodium, sugar. And a health score out of 10."
-        bullets={['Macro rings with daily value percentages', 'Micronutrient breakdown (6 key nutrients)', 'Health score 1-10 for every food', 'Serving size info', 'Edit or delete entries anytime']}
+        description="Tap any logged meal to see the complete nutrition breakdown sourced from IFCT (Indian Food Composition Tables). Calories, protein, carbs, fat, fiber — each with a progress ring. Plus micronutrients and a health score. Think a value is wrong? Edit any field inline."
+        bullets={['Nutrition data from IFCT / NIN Hyderabad sources', 'Edit calories, protein, carbs, fat, fiber inline', 'Macro rings with daily value percentages', 'Micronutrient breakdown (6 key nutrients)', 'Health score 1-10 for every food', 'Delete entries anytime']}
         mockup={<BrowserFrame url="nourishlog.vercel.app/meal/biryani"><NutritionMockup /></BrowserFrame>}
         reverse={false}
       />
@@ -162,12 +161,13 @@ export default function LandingPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10" style={{ fontFamily: 'Plus Jakarta Sans' }}>Everything. Free. No catch.</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {[
-              '500+ Indian dishes — dosa to dal to biryani',
+              '500+ Indian dishes — IFCT-sourced nutrition data',
               'Chat-based logging — just type what you ate',
               'Photo upload — camera or gallery',
               'Custom recipes — add your own dishes',
               'Calorie ring with macro badges',
               'Health score 1-10 for every food',
+              'Edit any nutrition value inline',
               'Micronutrient breakdown per meal',
               'Dashboard with bar charts & donut charts',
               'Filter by date range, meal type, food name',
@@ -395,7 +395,10 @@ function LogMockup() {
 function NutritionMockup() {
   return (
     <div style={{ fontFamily: 'Inter', fontSize: 11 }}>
-      <p className="text-[10px] mb-2" style={tm}>← Meal Details</p>
+      <div className="flex items-center justify-between mb-2">
+        <p className="text-[10px]" style={tm}>← Meal Details</p>
+        <span className="text-[8px] px-1.5 py-0.5 rounded" style={{ ...card, ...ts }}>✏️ Edit</span>
+      </div>
       <p className="text-sm font-bold" style={{ ...H, ...tp }}>Chicken Biryani</p>
       <p className="text-[9px] mt-0.5" style={tm}>Lunch · 1:00 PM · 1 plate (300g)</p>
       <div className="flex items-center gap-2 mt-2 mb-3">
@@ -421,6 +424,7 @@ function NutritionMockup() {
           </div>
         ))}
       </div>
+      <p className="text-[7px] mt-2" style={tm}>Source: IFCT data. <span style={ac}>Edit if incorrect →</span></p>
     </div>
   );
 }
