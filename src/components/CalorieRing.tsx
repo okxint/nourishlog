@@ -58,11 +58,11 @@ export default function CalorieRing({ consumed, goal, size = 200 }: CalorieRingP
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span
           className="text-4xl font-extrabold tracking-tight"
-          style={{ fontFamily: 'Sora, sans-serif', color: over ? 'var(--rose)' : 'var(--text-primary)' }}
+          style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', color: over ? 'var(--rose)' : 'var(--text-primary)' }}
         >
           {consumed.toLocaleString()}
         </span>
-        <span className="text-[11px] text-[var(--text-muted)] mt-0.5 font-medium" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+        <span className="text-[11px] text-[var(--text-muted)] mt-0.5 font-medium" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
           kcal consumed
         </span>
         <span className={`text-xs mt-1.5 font-semibold ${over ? 'text-[var(--rose)]' : 'text-[var(--accent)]'}`}>

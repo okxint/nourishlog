@@ -50,7 +50,7 @@ export default function MealDetailPage() {
         >
           <ArrowLeft size={18} />
         </button>
-        <h1 className="text-base font-bold flex-1" style={{ fontFamily: 'Sora, sans-serif' }}>Meal Details</h1>
+        <h1 className="text-base font-bold flex-1" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Meal Details</h1>
       </div>
 
       {/* Hero Image */}
@@ -62,7 +62,7 @@ export default function MealDetailPage() {
 
       {/* Title & Cal */}
       <div className="px-5 mb-5">
-        <h2 className="text-xl font-bold" style={{ fontFamily: 'Sora, sans-serif' }}>{entry.name}</h2>
+        <h2 className="text-xl font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>{entry.name}</h2>
         <div className="flex items-center gap-2 mt-1.5">
           <span className="text-xs text-[var(--text-muted)] capitalize">{entry.mealType}</span>
           <span className="text-[var(--text-muted)]">·</span>
@@ -77,7 +77,7 @@ export default function MealDetailPage() {
 
         <div className="flex items-center gap-4 mt-4">
           <div>
-            <span className="text-3xl font-extrabold text-[var(--accent)]" style={{ fontFamily: 'Sora, sans-serif' }}>
+            <span className="text-3xl font-extrabold text-[var(--accent)]" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
               {entry.calories}
             </span>
             <span className="text-sm text-[var(--text-muted)] ml-1">kcal</span>
@@ -94,7 +94,7 @@ export default function MealDetailPage() {
       {/* Macros */}
       <div className="px-5 mb-5">
         <div className="glass-card rounded-2xl p-4">
-          <h3 className="text-sm font-bold mb-4" style={{ fontFamily: 'Sora, sans-serif' }}>Nutrition Breakdown</h3>
+          <h3 className="text-sm font-bold mb-4" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Nutrition Breakdown</h3>
           <div className="grid grid-cols-4 gap-3 mb-4">
             {macros.map((m) => (
               <div key={m.label} className="text-center">
@@ -113,7 +113,7 @@ export default function MealDetailPage() {
                     <span className="text-xs font-bold" style={{ color: m.color }}>{m.value}g</span>
                   </div>
                 </div>
-                <p className="text-[10px] text-[var(--text-muted)]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                <p className="text-[10px] text-[var(--text-muted)]" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
                   {m.label}
                 </p>
                 <p className="text-[9px] text-[var(--text-muted)]">{m.pct}% DV</p>
@@ -127,7 +127,7 @@ export default function MealDetailPage() {
       {entry.micronutrients && (
         <div className="px-5 mb-5">
           <div className="glass-card rounded-2xl p-4">
-            <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Sora, sans-serif' }}>Micronutrients</h3>
+            <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Micronutrients</h3>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {[
                 { label: 'Vitamin A', value: `${entry.micronutrients.vitaminA}% DV` },

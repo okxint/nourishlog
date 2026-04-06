@@ -21,7 +21,7 @@ export default function LandingPage() {
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 glass-strong">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 h-14">
-          <span className="text-base font-bold tracking-tight" style={{ fontFamily: 'Sora' }}>
+          <span className="text-base font-bold tracking-tight" style={{ fontFamily: 'Plus Jakarta Sans' }}>
             nourish<span style={{ color: 'var(--accent)' }}>log</span>
           </span>
           <div className="flex items-center gap-3">
@@ -43,7 +43,7 @@ export default function LandingPage() {
             <span className="text-xs">🇮🇳</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5" style={{ fontFamily: 'Sora' }}>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5" style={{ fontFamily: 'Plus Jakarta Sans' }}>
             Your food diary that<br />actually <span style={{ color: 'var(--accent)' }}>gets</span> Indian food.
           </h1>
 
@@ -130,7 +130,7 @@ export default function LandingPage() {
       {/* ═══ FOODS ═══ */}
       <section className="py-16 px-6" style={{ background: 'var(--bg-secondary)' }}>
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-2" style={{ fontFamily: 'Sora' }}>500+ dishes. Real Indian food.</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2" style={{ fontFamily: 'Plus Jakarta Sans' }}>500+ dishes. Real Indian food.</h2>
           <p className="text-sm mb-8 max-w-md mx-auto" style={{ color: 'var(--text-muted)' }}>
             South Indian, North Indian, street food, Mughlai, Bengali, Gujarati, Maharashtrian, desserts, drinks, Indo-Chinese, and more.
           </p>
@@ -159,7 +159,7 @@ export default function LandingPage() {
       {/* ═══ EVERYTHING INCLUDED ═══ */}
       <section className="py-16 px-6">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10" style={{ fontFamily: 'Sora' }}>Everything. Free. No catch.</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10" style={{ fontFamily: 'Plus Jakarta Sans' }}>Everything. Free. No catch.</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {[
               '500+ Indian dishes — dosa to dal to biryani',
@@ -205,7 +205,7 @@ export default function LandingPage() {
       {/* ═══ CTA ═══ */}
       <section className="py-20 px-6" style={{ background: 'var(--bg-secondary)' }}>
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: 'Sora' }}>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: 'Plus Jakarta Sans' }}>
             You already know what you ate.<br />Now <span style={{ color: 'var(--accent)' }}>know what&apos;s in it.</span>
           </h2>
           <p className="mb-8" style={{ color: 'var(--text-muted)' }}>10 seconds to set up. No credit card. No app download. No nonsense.</p>
@@ -218,7 +218,7 @@ export default function LandingPage() {
       {/* FOOTER */}
       <footer className="py-6 px-6" style={{ borderTop: '1px solid var(--border)' }}>
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="text-xs font-semibold" style={{ fontFamily: 'Sora', color: 'var(--text-muted)' }}>nourish<span style={{ color: 'var(--accent)' }}>log</span></span>
+          <span className="text-xs font-semibold" style={{ fontFamily: 'Plus Jakarta Sans', color: 'var(--text-muted)' }}>nourish<span style={{ color: 'var(--accent)' }}>log</span></span>
           <p className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Made in India, for India.</p>
         </div>
       </footer>
@@ -248,8 +248,8 @@ function Feature({ id, label, title, subtitle, description, bullets, mockup, rev
     <section id={id} className="py-14 px-6" style={label === '02' || label === '04' || label === '06' ? { background: 'var(--bg-secondary)' } : {}}>
       <div className={`max-w-5xl mx-auto flex flex-col lg:flex-row items-start gap-8 lg:gap-14 ${reverse ? 'lg:flex-row-reverse' : ''}`}>
         <div className="flex-1 lg:pt-4">
-          <span className="text-xs font-bold block mb-1" style={{ color: 'var(--accent)', fontFamily: 'Space Grotesk' }}>{label}</span>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-1" style={{ fontFamily: 'Sora' }}>{title}</h2>
+          <span className="text-xs font-bold block mb-1" style={{ color: 'var(--accent)', fontFamily: 'JetBrains Mono' }}>{label}</span>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-1" style={{ fontFamily: 'Plus Jakarta Sans' }}>{title}</h2>
           <p className="text-sm font-medium mb-4" style={{ color: 'var(--text-muted)' }}>{subtitle}</p>
           <p className="text-[15px] leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }} dangerouslySetInnerHTML={{ __html: description }} />
           <ul className="flex flex-col gap-1.5">
@@ -269,8 +269,8 @@ function Feature({ id, label, title, subtitle, description, bullets, mockup, rev
 
 /* ─── Mockup Contents ─── */
 
-const S = { fontFamily: 'Sora' };
-const SG = { fontFamily: 'Space Grotesk' };
+const H = { fontFamily: 'Plus Jakarta Sans' };
+const SG = { fontFamily: 'JetBrains Mono' };
 const tp = { color: 'var(--text-primary)' };
 const ts = { color: 'var(--text-secondary)' };
 const tm = { color: 'var(--text-muted)' };
@@ -280,43 +280,43 @@ const el = { background: 'var(--bg-elevated)' };
 
 function HomeMockup() {
   return (
-    <div className="flex" style={{ fontFamily: 'DM Sans', fontSize: 11 }}>
+    <div className="flex" style={{ fontFamily: 'Inter', fontSize: 11 }}>
       <div className="hidden sm:flex flex-col w-36 p-2.5 gap-0.5" style={{ borderRight: '1px solid var(--border)' }}>
-        <div className="flex items-center gap-1.5 px-2 py-1 mb-2"><div className="w-4 h-4 rounded" style={{ background: 'var(--accent)' }} /><span className="text-[10px] font-bold" style={S}>nourish<span style={ac}>log</span></span></div>
+        <div className="flex items-center gap-1.5 px-2 py-1 mb-2"><div className="w-4 h-4 rounded" style={{ background: 'var(--accent)' }} /><span className="text-[10px] font-bold" style={H}>nourish<span style={ac}>log</span></span></div>
         {['🏠 Home', '➕ Log', '💬 Chat', '📊 Dashboard', '🏆 Achievements', '👤 Profile'].map((t, i) => (
           <div key={t} className="px-2 py-1 rounded text-[10px]" style={{ background: i === 0 ? 'var(--accent-dim)' : 'transparent', color: i === 0 ? 'var(--accent)' : 'var(--text-muted)', fontWeight: i === 0 ? 600 : 400 }}>{t}</div>
         ))}
       </div>
       <div className="flex-1 p-3 sm:p-4">
         <div className="flex justify-between items-start mb-3">
-          <div><p className="text-xs font-bold" style={{ ...S, ...tp }}>Good afternoon, Priya</p><p className="text-[9px]" style={tm}>Sunday, 6 April 2026</p></div>
+          <div><p className="text-xs font-bold" style={{ ...H, ...tp }}>Good afternoon, Priya</p><p className="text-[9px]" style={tm}>Sunday, 6 April 2026</p></div>
           <div className="px-2 py-1 rounded text-[9px] font-semibold" style={{ background: 'var(--accent)', color: '#fff' }}>+ Log Meal</div>
         </div>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-shrink-0 flex justify-center"><div className="relative" style={{ width: 120, height: 120 }}>
             <svg width="120" height="120" viewBox="0 0 120 120" className="-rotate-90"><circle cx="60" cy="60" r="48" fill="none" stroke="var(--bg-card-hover)" strokeWidth="7" /><circle cx="60" cy="60" r="48" fill="none" stroke="var(--accent)" strokeWidth="7" strokeLinecap="round" strokeDasharray="302" strokeDashoffset="130" /></svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center"><span className="text-lg font-extrabold" style={{ ...S, ...tp }}>1,245</span><span className="text-[7px]" style={tm}>of 2,000 kcal</span><span className="text-[7px] font-semibold" style={ac}>755 left</span></div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center"><span className="text-lg font-extrabold" style={{ ...H, ...tp }}>1,245</span><span className="text-[7px]" style={tm}>of 2,000 kcal</span><span className="text-[7px] font-semibold" style={ac}>755 left</span></div>
           </div></div>
           <div className="flex-1 flex flex-col gap-1.5">
             <div className="flex gap-1.5">
               {[{ l: 'PROTEIN', v: '48g', g: '120g', c: 'var(--blue)', p: '40%' }, { l: 'CARBS', v: '156g', g: '250g', c: 'var(--amber)', p: '62%' }, { l: 'FAT', v: '38g', g: '65g', c: 'var(--rose)', p: '58%' }].map(m => (
                 <div key={m.l} className="flex-1 rounded-lg p-1.5" style={card}>
                   <div className="flex items-center gap-0.5 mb-0.5"><div className="w-1 h-1 rounded-full" style={{ background: m.c }} /><span className="text-[7px] font-semibold" style={{ ...SG, ...tm }}>{m.l}</span></div>
-                  <span className="text-[10px] font-bold" style={{ color: m.c, ...S }}>{m.v}</span><span className="text-[7px]" style={tm}> / {m.g}</span>
+                  <span className="text-[10px] font-bold" style={{ color: m.c, ...H }}>{m.v}</span><span className="text-[7px]" style={tm}> / {m.g}</span>
                   <div className="w-full h-0.5 rounded-full mt-0.5" style={{ background: 'var(--bg-card-hover)' }}><div className="h-full rounded-full" style={{ width: m.p, background: m.c }} /></div>
                 </div>
               ))}
             </div>
             <div className="flex gap-1.5">
               {[{ l: 'MEALS', v: '4' }, { l: 'HEALTH', v: '6.3', c: 'var(--green)' }, { l: 'WATER', v: '5/12', c: 'var(--blue)' }].map(s => (
-                <div key={s.l} className="flex-1 rounded-lg p-1.5" style={card}><p className="text-[7px] font-semibold" style={{ ...SG, ...tm }}>{s.l}</p><p className="text-[10px] font-bold mt-0.5" style={{ ...S, color: s.c || 'var(--text-primary)' }}>{s.v}</p></div>
+                <div key={s.l} className="flex-1 rounded-lg p-1.5" style={card}><p className="text-[7px] font-semibold" style={{ ...SG, ...tm }}>{s.l}</p><p className="text-[10px] font-bold mt-0.5" style={{ ...H, color: s.c || 'var(--text-primary)' }}>{s.v}</p></div>
               ))}
             </div>
             {[{ n: 'Masala Dosa + Chutney', m: 'Breakfast · 8:30 AM · 💚 7/10', c: 280, e: '🌅' }, { n: 'Chicken Biryani', m: 'Lunch · 1:00 PM · 💚 6/10', c: 490, e: '☀️' }, { n: 'Dal Tadka + 2 Roti', m: 'Dinner · 8:15 PM · 💚 8/10', c: 330, e: '🌙' }, { n: 'Chai + Biscuits', m: 'Snack · 4:00 PM · 💚 4/10', c: 145, e: '🍿' }].map(f => (
               <div key={f.n} className="flex items-center gap-2 p-1.5 rounded-lg" style={card}>
                 <div className="w-6 h-6 rounded flex items-center justify-center text-xs" style={el}>{f.e}</div>
                 <div className="flex-1 min-w-0"><p className="text-[9px] font-semibold truncate" style={tp}>{f.n}</p><p className="text-[7px]" style={tm}>{f.m}</p></div>
-                <div className="text-right"><span className="text-[10px] font-bold" style={{ ...S, ...ac }}>{f.c}</span><span className="text-[6px] block" style={tm}>kcal</span></div>
+                <div className="text-right"><span className="text-[10px] font-bold" style={{ ...H, ...ac }}>{f.c}</span><span className="text-[6px] block" style={tm}>kcal</span></div>
               </div>
             ))}
           </div>
@@ -337,10 +337,10 @@ function ChatMockup() {
     ['Avg: 1,834 kcal/day. 28% protein, 44% carbs, 28% fat.\n🥩 Low protein — add more dal, eggs, chicken\n✅ Fiber is on track', 'a'],
   ];
   return (
-    <div className="flex flex-col gap-1.5" style={{ fontFamily: 'DM Sans', fontSize: 11 }}>
+    <div className="flex flex-col gap-1.5" style={{ fontFamily: 'Inter', fontSize: 11 }}>
       <div className="flex items-center gap-1.5 pb-2 mb-1" style={{ borderBottom: '1px solid var(--border)' }}>
         <div className="w-6 h-6 rounded-lg flex items-center justify-center text-[8px]" style={{ background: 'var(--accent-dim)' }}>✦</div>
-        <div><p className="text-[10px] font-bold" style={{ ...S, ...tp }}>NourishLog Chat</p><p className="text-[7px]" style={tm}>Log food, ask questions, get suggestions</p></div>
+        <div><p className="text-[10px] font-bold" style={{ ...H, ...tp }}>NourishLog Chat</p><p className="text-[7px]" style={tm}>Log food, ask questions, get suggestions</p></div>
       </div>
       {msgs.map(([text, role], i) => (
         <div key={i} className={`flex ${role === 'u' ? 'justify-end' : 'justify-start'}`}>
@@ -363,8 +363,8 @@ function ChatMockup() {
 
 function LogMockup() {
   return (
-    <div style={{ fontFamily: 'DM Sans', fontSize: 11 }}>
-      <p className="text-sm font-bold mb-0.5" style={{ ...S, ...tp }}>Log Meal</p>
+    <div style={{ fontFamily: 'Inter', fontSize: 11 }}>
+      <p className="text-sm font-bold mb-0.5" style={{ ...H, ...tp }}>Log Meal</p>
       <p className="text-[9px] mb-3" style={tm}>Upload a photo or type what you ate</p>
       <div className="flex gap-1.5 mb-3">{['Breakfast', 'Lunch', 'Dinner', 'Snack'].map((m, i) => (
         <span key={m} className="px-2 py-1 rounded text-[9px] font-medium" style={i === 1 ? { background: 'var(--accent)', color: '#fff' } : { ...card, ...ts }}>{m}</span>
@@ -394,16 +394,16 @@ function LogMockup() {
 
 function NutritionMockup() {
   return (
-    <div style={{ fontFamily: 'DM Sans', fontSize: 11 }}>
+    <div style={{ fontFamily: 'Inter', fontSize: 11 }}>
       <p className="text-[10px] mb-2" style={tm}>← Meal Details</p>
-      <p className="text-sm font-bold" style={{ ...S, ...tp }}>Chicken Biryani</p>
+      <p className="text-sm font-bold" style={{ ...H, ...tp }}>Chicken Biryani</p>
       <p className="text-[9px] mt-0.5" style={tm}>Lunch · 1:00 PM · 1 plate (300g)</p>
       <div className="flex items-center gap-2 mt-2 mb-3">
-        <span className="text-xl font-extrabold" style={{ ...S, ...ac }}>490</span><span className="text-xs" style={tm}>kcal</span>
+        <span className="text-xl font-extrabold" style={{ ...H, ...ac }}>490</span><span className="text-xs" style={tm}>kcal</span>
         <span className="px-2 py-0.5 rounded-full text-[9px] font-bold" style={{ background: 'var(--green-dim)', color: 'var(--green)' }}>💚 6/10</span>
       </div>
       <div className="rounded-lg p-2.5 mb-2" style={card}>
-        <p className="text-[10px] font-bold mb-2" style={{ ...S, ...tp }}>Nutrition Breakdown</p>
+        <p className="text-[10px] font-bold mb-2" style={{ ...H, ...tp }}>Nutrition Breakdown</p>
         <div className="grid grid-cols-4 gap-2">
           {[{ l: 'Protein', v: '22g', c: 'var(--blue)', p: 50 }, { l: 'Carbs', v: '62g', c: 'var(--amber)', p: 68 }, { l: 'Fat', v: '18g', c: 'var(--rose)', p: 75 }, { l: 'Fiber', v: '3g', c: 'var(--green)', p: 30 }].map(m => (
             <div key={m.l} className="text-center">
@@ -414,7 +414,7 @@ function NutritionMockup() {
         </div>
       </div>
       <div className="rounded-lg p-2.5" style={card}>
-        <p className="text-[10px] font-bold mb-1" style={{ ...S, ...tp }}>Micronutrients</p>
+        <p className="text-[10px] font-bold mb-1" style={{ ...H, ...tp }}>Micronutrients</p>
         {[['Vitamin C', '8% DV'], ['Iron', '20% DV'], ['Calcium', '6% DV'], ['Sodium', '720mg']].map(([l, v]) => (
           <div key={l} className="flex justify-between py-0.5 text-[8px]" style={{ borderBottom: '1px solid var(--border)' }}>
             <span style={tm}>{l}</span><span style={ts}>{v}</span>
@@ -427,47 +427,127 @@ function NutritionMockup() {
 
 function DashboardMockup() {
   return (
-    <div style={{ fontFamily: 'DM Sans', fontSize: 11 }}>
+    <div style={{ fontFamily: 'Inter', fontSize: 11 }}>
+      {/* Header + actions */}
       <div className="flex justify-between items-center mb-2">
-        <p className="text-sm font-bold" style={{ ...S, ...tp }}>Dashboard</p>
-        <div className="flex gap-1">{['Today', 'Week', 'Month', 'Custom'].map((r, i) => (
-          <span key={r} className="px-1.5 py-0.5 rounded text-[8px] font-medium" style={i === 1 ? { background: 'var(--accent)', color: '#fff' } : { ...tm }}>{r}</span>
-        ))}</div>
+        <p className="text-sm font-bold" style={{ ...H, ...tp }}>Dashboard</p>
+        <div className="flex gap-1">
+          <span className="px-1.5 py-0.5 rounded text-[8px] flex items-center gap-0.5" style={{ background: 'var(--accent-dim)', color: 'var(--accent)' }}>⚙ Filters (active)</span>
+          <span className="px-1.5 py-0.5 rounded text-[8px]" style={{ ...card, ...ts }}>📥 Export CSV</span>
+        </div>
       </div>
+
+      {/* Date range tabs + week nav */}
+      <div className="flex items-center gap-1 mb-1.5">
+        {['Today', 'Week', 'Month', 'Custom'].map((r, i) => (
+          <span key={r} className="px-1.5 py-0.5 rounded text-[7px] font-semibold" style={i === 1 ? { background: 'var(--accent)', color: '#fff' } : { ...card, ...tm }}>{r}</span>
+        ))}
+        <span className="text-[7px] mx-1" style={tm}>‹</span>
+        <span className="text-[8px] font-semibold" style={ts}>This Week</span>
+        <span className="text-[7px] mx-1" style={tm}>›</span>
+        <span className="ml-auto px-1.5 py-0.5 rounded text-[7px] flex items-center gap-0.5" style={{ background: 'var(--blue-dim)', color: 'var(--blue)' }}>📅 Sat 5 ✕</span>
+      </div>
+
+      {/* Filters panel (open) */}
+      <div className="rounded-lg p-2 mb-2 flex gap-3" style={card}>
+        <div className="flex-1">
+          <p className="text-[7px] font-bold mb-1 uppercase tracking-wider" style={{ ...SG, ...tm }}>Meal Type</p>
+          <div className="flex gap-0.5 flex-wrap">
+            {['All', 'Breakfast', 'Lunch', 'Dinner', 'Snack'].map((m, i) => (
+              <span key={m} className="px-1 py-0.5 rounded text-[7px]" style={i === 2 ? { background: 'var(--accent)', color: '#fff' } : { background: 'var(--bg-elevated)', ...ts }}>{m}</span>
+            ))}
+          </div>
+        </div>
+        <div className="flex-1">
+          <p className="text-[7px] font-bold mb-1 uppercase tracking-wider" style={{ ...SG, ...tm }}>Search Food</p>
+          <div className="rounded px-1.5 py-0.5 flex items-center" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+            <span className="text-[7px]" style={tm}>🔍 biryani</span>
+          </div>
+        </div>
+        <div className="flex items-end"><span className="text-[7px]" style={{ color: 'var(--rose)' }}>Clear all</span></div>
+      </div>
+
+      {/* Summary row */}
       <div className="flex gap-1 mb-2">
-        <span className="px-1.5 py-0.5 rounded text-[8px]" style={{ background: 'var(--accent-dim)', color: 'var(--accent)' }}>🔽 Filters (active)</span>
-        <span className="px-1.5 py-0.5 rounded text-[8px]" style={{ ...card, ...ts }}>📥 Export CSV</span>
+        {[{ v: '3,920', l: 'TOTAL KCAL', c: ac }, { v: '1,960', l: 'DAILY AVG', c: tp }, { v: '8', l: 'MEALS', c: tp }, { v: '4', l: 'DAYS', c: tp }].map(s => (
+          <div key={s.l} className="flex-1 rounded-lg p-1 text-center" style={card}>
+            <p className="text-[10px] font-extrabold" style={{ ...H, ...s.c }}>{s.v}</p>
+            <p className="text-[6px] uppercase font-semibold" style={{ ...SG, ...tm }}>{s.l}</p>
+          </div>
+        ))}
       </div>
+
+      {/* Charts row */}
       <div className="flex gap-1.5 mb-2">
-        <div className="flex-1 rounded-lg p-1.5 text-center" style={card}><p className="text-sm font-extrabold" style={{ ...S, ...ac }}>12,840</p><p className="text-[7px]" style={tm}>TOTAL KCAL</p></div>
-        <div className="flex-1 rounded-lg p-1.5 text-center" style={card}><p className="text-sm font-extrabold" style={{ ...S, ...tp }}>1,834</p><p className="text-[7px]" style={tm}>DAILY AVG</p></div>
-        <div className="flex-1 rounded-lg p-1.5 text-center" style={card}><p className="text-sm font-extrabold" style={{ ...S, ...tp }}>24</p><p className="text-[7px]" style={tm}>MEALS</p></div>
-        <div className="flex-1 rounded-lg p-1.5 text-center" style={card}><p className="text-sm font-extrabold" style={{ ...S, ...tp }}>7</p><p className="text-[7px]" style={tm}>DAYS</p></div>
-      </div>
-      <div className="flex gap-2 mb-2">
         <div className="flex-[2] rounded-lg p-2" style={card}>
-          <p className="text-[9px] font-bold mb-1" style={{ ...S, ...tp }}>Calories This Week</p>
-          <div className="flex items-end justify-between h-12 gap-0.5">{[68, 82, 55, 90, 72, 78, 45].map((h, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center gap-0.5"><div className="w-full rounded-t" style={{ height: `${h}%`, background: i === 5 ? 'var(--accent)' : 'color-mix(in srgb, var(--accent) 30%, transparent)' }} /><span className="text-[6px]" style={i === 5 ? ac : tm}>{['M', 'T', 'W', 'T', 'F', 'S', 'S'][i]}</span></div>
-          ))}</div>
+          <p className="text-[8px] font-bold mb-1" style={{ ...H, ...tp }}>Calories (lunch) matching &quot;biryani&quot;</p>
+          <div className="flex items-end justify-between h-12 gap-0.5">
+            {[0, 490, 0, 510, 0, 480, 0].map((h, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
+                <div className="w-full rounded-t" style={{ height: h ? `${(h/510)*100}%` : '3%', background: i === 3 ? 'var(--blue)' : h ? 'color-mix(in srgb, var(--accent) 40%, transparent)' : 'var(--bg-card-hover)' }} />
+                <span className="text-[6px]" style={i === 3 ? { color: 'var(--blue)' } : tm}>{['M', 'T', 'W', 'T', 'F', 'S', 'S'][i]}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 mt-1">
+            <div className="flex items-center gap-0.5"><div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--accent)' }} /><span className="text-[6px]" style={tm}>Today</span></div>
+            <div className="flex items-center gap-0.5"><div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--blue)' }} /><span className="text-[6px]" style={tm}>Selected</span></div>
+            <span className="text-[6px]" style={tm}>Click bar to filter</span>
+          </div>
         </div>
         <div className="flex-1 rounded-lg p-2" style={card}>
-          <p className="text-[9px] font-bold mb-1" style={{ ...S, ...tp }}>Macros</p>
+          <p className="text-[8px] font-bold mb-1" style={{ ...H, ...tp }}>Macro Split</p>
           <div className="flex items-center gap-2">
-            <svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="16" fill="none" stroke="var(--blue)" strokeWidth="5" strokeDasharray="30 70" strokeDashoffset="0" transform="rotate(-90 22 22)" /><circle cx="22" cy="22" r="16" fill="none" stroke="var(--amber)" strokeWidth="5" strokeDasharray="42 58" strokeDashoffset="-30" transform="rotate(-90 22 22)" /><circle cx="22" cy="22" r="16" fill="none" stroke="var(--rose)" strokeWidth="5" strokeDasharray="28 72" strokeDashoffset="-72" transform="rotate(-90 22 22)" /></svg>
-            <div className="flex flex-col gap-1">{[{ l: 'P', p: '30%', c: 'var(--blue)' }, { l: 'C', p: '42%', c: 'var(--amber)' }, { l: 'F', p: '28%', c: 'var(--rose)' }].map(m => (
+            <svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--blue)" strokeWidth="5" strokeDasharray="26 62" strokeDashoffset="0" transform="rotate(-90 20 20)" /><circle cx="20" cy="20" r="14" fill="none" stroke="var(--amber)" strokeWidth="5" strokeDasharray="37 51" strokeDashoffset="-26" transform="rotate(-90 20 20)" /><circle cx="20" cy="20" r="14" fill="none" stroke="var(--rose)" strokeWidth="5" strokeDasharray="25 63" strokeDashoffset="-63" transform="rotate(-90 20 20)" /></svg>
+            <div className="flex flex-col gap-0.5">{[{ l: 'Protein', p: '30%', c: 'var(--blue)' }, { l: 'Carbs', p: '42%', c: 'var(--amber)' }, { l: 'Fat', p: '28%', c: 'var(--rose)' }].map(m => (
               <div key={m.l} className="flex items-center gap-1"><div className="w-1 h-1 rounded-full" style={{ background: m.c }} /><span className="text-[7px]" style={ts}>{m.l}</span><span className="text-[7px] font-bold" style={{ color: m.c }}>{m.p}</span></div>
             ))}</div>
           </div>
         </div>
       </div>
-      <div className="rounded-lg p-2" style={card}>
-        <p className="text-[9px] font-bold mb-1" style={{ ...S, ...tp }}>▸ Meal History (24 entries)</p>
-        {[{ d: 'Sun 6', n: 'Masala Dosa', m: 'breakfast', c: 280 }, { d: 'Sun 6', n: 'Chicken Biryani', m: 'lunch', c: 490 }, { d: 'Sat 5', n: 'Rajma Chawal', m: 'lunch', c: 410 }].map((r, i) => (
-          <div key={i} className="flex items-center gap-2 py-1 text-[8px]" style={{ borderBottom: '1px solid var(--border)' }}>
-            <span className="w-10" style={tm}>{r.d}</span><span className="flex-1 font-medium truncate" style={tp}>{r.n}</span>
-            <span className="px-1 rounded text-[7px]" style={{ background: r.m === 'breakfast' ? 'var(--blue-dim)' : r.m === 'lunch' ? 'var(--amber-dim)' : 'var(--rose-dim)', color: r.m === 'breakfast' ? 'var(--blue)' : r.m === 'lunch' ? 'var(--amber)' : 'var(--rose)' }}>{r.m}</span>
-            <span className="font-bold w-8 text-right" style={ac}>{r.c}</span>
+
+      {/* Stats row */}
+      <div className="flex gap-1 mb-2">
+        {[{ i: '📈', l: 'Most Eaten', v: 'Biryani', s: '4x' }, { i: '🔥', l: 'Peak', v: 'Thu', s: '2,430 kcal' }, { i: '🏆', l: 'Streak', v: '7 days', s: '' }, { i: '🥩', l: 'Avg Protein', v: '64g', s: '/ 120g' }].map(s => (
+          <div key={s.l} className="flex-1 rounded-lg p-1" style={card}>
+            <span className="text-[10px]">{s.i}</span>
+            <p className="text-[6px] uppercase font-semibold" style={{ ...SG, ...tm }}>{s.l}</p>
+            <p className="text-[8px] font-bold truncate" style={tp}>{s.v}</p>
+            {s.s && <p className="text-[6px]" style={tm}>{s.s}</p>}
+          </div>
+        ))}
+      </div>
+
+      {/* Meal history table (expanded) */}
+      <div className="rounded-lg overflow-hidden" style={card}>
+        <div className="px-2 py-1" style={{ background: 'var(--bg-elevated)' }}>
+          <p className="text-[8px] font-bold" style={{ ...H, ...tp }}>▾ Meal History (8 entries)</p>
+        </div>
+        {/* Header */}
+        <div className="hidden sm:grid grid-cols-12 gap-1 px-2 py-0.5 text-[6px] font-bold uppercase" style={{ ...SG, ...tm, borderBottom: '1px solid var(--border)' }}>
+          <span className="col-span-2">Date</span><span className="col-span-3">Food</span><span className="col-span-2">Meal</span><span className="col-span-1">Time</span><span className="col-span-1 text-right">Cal</span><span className="col-span-1 text-right">P</span><span className="col-span-1 text-right">C</span><span className="col-span-1 text-right">Score</span>
+        </div>
+        {[
+          { d: 'Sun 6', n: 'Chicken Biryani', m: 'lunch', t: '13:00', c: 490, p: 22, cb: 62, s: 6 },
+          { d: 'Sun 6', n: 'Masala Dosa', m: 'breakfast', t: '08:30', c: 280, p: 6, cb: 42, s: 7 },
+          { d: 'Sat 5', n: 'Chicken Biryani', m: 'lunch', t: '13:15', c: 490, p: 22, cb: 62, s: 6 },
+          { d: 'Sat 5', n: 'Dal Tadka + Roti', m: 'dinner', t: '20:00', c: 330, p: 15, cb: 48, s: 8 },
+          { d: 'Thu 3', n: 'Hyderabadi Biryani', m: 'lunch', t: '12:45', c: 520, p: 24, cb: 60, s: 6 },
+        ].map((r, i) => (
+          <div key={i} className="grid grid-cols-12 gap-1 px-2 py-1 items-center text-[7px]" style={{ borderBottom: '1px solid var(--border)' }}>
+            <span className="col-span-2" style={tm}>{r.d}</span>
+            <span className="col-span-3 font-medium truncate" style={tp}>{r.n}</span>
+            <span className="col-span-2">
+              <span className="px-1 py-0.5 rounded text-[6px] font-medium" style={{
+                background: r.m === 'breakfast' ? 'var(--blue-dim)' : r.m === 'lunch' ? 'var(--amber-dim)' : 'var(--rose-dim)',
+                color: r.m === 'breakfast' ? 'var(--blue)' : r.m === 'lunch' ? 'var(--amber)' : 'var(--rose)',
+              }}>{r.m}</span>
+            </span>
+            <span className="col-span-1" style={tm}>{r.t}</span>
+            <span className="col-span-1 text-right font-bold" style={ac}>{r.c}</span>
+            <span className="col-span-1 text-right" style={tm}>{r.p}g</span>
+            <span className="col-span-1 text-right" style={tm}>{r.cb}g</span>
+            <span className="col-span-1 text-right" style={{ color: 'var(--green)' }}>{r.s}/10</span>
           </div>
         ))}
       </div>
@@ -477,10 +557,10 @@ function DashboardMockup() {
 
 function AchievementsMockup() {
   return (
-    <div style={{ fontFamily: 'DM Sans', fontSize: 11 }}>
+    <div style={{ fontFamily: 'Inter', fontSize: 11 }}>
       <div className="rounded-xl p-3 mb-3 text-center" style={card}>
         <span className="text-xl block">🔥</span>
-        <p className="text-xl font-extrabold" style={{ ...S, ...tp }}>7</p>
+        <p className="text-xl font-extrabold" style={{ ...H, ...tp }}>7</p>
         <p className="text-[10px]" style={ts}>day streak</p>
         <p className="text-[8px]" style={tm}>One week down, amazing!</p>
       </div>
@@ -504,10 +584,10 @@ function AchievementsMockup() {
 
 function RecipeMockup() {
   return (
-    <div className="flex flex-col gap-1.5" style={{ fontFamily: 'DM Sans', fontSize: 11 }}>
+    <div className="flex flex-col gap-1.5" style={{ fontFamily: 'Inter', fontSize: 11 }}>
       <div className="flex items-center gap-1.5 pb-2 mb-1" style={{ borderBottom: '1px solid var(--border)' }}>
         <div className="w-6 h-6 rounded-lg flex items-center justify-center text-[8px]" style={{ background: 'var(--accent-dim)' }}>✦</div>
-        <div><p className="text-[10px] font-bold" style={{ ...S, ...tp }}>NourishLog Chat</p></div>
+        <div><p className="text-[10px] font-bold" style={{ ...H, ...tp }}>NourishLog Chat</p></div>
       </div>
       {([
         ['add recipe protein bowl 420 cal 35g protein 40g carbs 12g fat', 'u'],

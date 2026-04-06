@@ -138,7 +138,7 @@ export default function ChatPage() {
             <Sparkles size={18} className="text-[var(--accent)]" />
           </div>
           <div>
-            <h1 className="text-base font-bold" style={{ fontFamily: 'Sora, sans-serif' }}>NourishLog Chat</h1>
+            <h1 className="text-base font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>NourishLog Chat</h1>
             <p className="text-[10px] text-[var(--text-muted)]">
               {isTyping ? 'Typing...' : 'Log food, ask questions, get suggestions'}
             </p>

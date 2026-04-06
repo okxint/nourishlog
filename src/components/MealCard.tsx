@@ -47,7 +47,7 @@ export default function MealCard({ entry }: { entry: FoodEntry }) {
       </div>
       <div className="flex items-center gap-1 flex-shrink-0">
         <div className="text-right mr-1">
-          <span className="text-sm font-bold text-[var(--accent)]" style={{ fontFamily: 'Sora, sans-serif' }}>{entry.calories}</span>
+          <span className="text-sm font-bold text-[var(--accent)]" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>{entry.calories}</span>
           <span className="text-[9px] text-[var(--text-muted)] block">kcal</span>
         </div>
         <ChevronRight size={14} className="text-[var(--text-muted)] group-hover:text-[var(--text-secondary)] transition-colors" />

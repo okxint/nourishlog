@@ -58,10 +58,10 @@ export default function HomePage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ fontFamily: 'Sora, sans-serif' }}>
+          <h1 className="text-2xl font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
             {greeting}, {profile?.name || 'there'}
           </h1>
-          <p className="text-xs text-[var(--text-muted)] mt-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+          <p className="text-xs text-[var(--text-muted)] mt-1" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
             {format(new Date(), 'EEEE, d MMMM yyyy')}
           </p>
         </div>
@@ -90,18 +90,18 @@ export default function HomePage() {
           </div>
           <div className="flex gap-2">
             <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
-              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Meals</p>
-              <p className="text-lg font-bold mt-0.5" style={{ fontFamily: 'Sora, sans-serif' }}>{entries.length}</p>
+              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Meals</p>
+              <p className="text-lg font-bold mt-0.5" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>{entries.length}</p>
             </div>
             <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
-              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Health Score</p>
-              <p className="text-lg font-bold mt-0.5 text-[var(--green)]" style={{ fontFamily: 'Sora, sans-serif' }}>
+              <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Health Score</p>
+              <p className="text-lg font-bold mt-0.5 text-[var(--green)]" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                 {entries.length > 0 ? (entries.reduce((s, e) => s + (e.healthScore || 0), 0) / entries.length).toFixed(1) : '—'}
               </p>
             </div>
             <div className="flex-1 glass-card rounded-xl px-3 py-2.5">
               <div className="flex items-center justify-between">
-                <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Water</p>
+                <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Water</p>
                 <button
                   onClick={() => { addWater(today, 1); setWater(water + 1); }}
                   className="w-5 h-5 rounded-md flex items-center justify-center text-[var(--blue)] hover:bg-[var(--blue-dim)] transition-colors"
@@ -109,7 +109,7 @@ export default function HomePage() {
                   <Droplets size={12} />
                 </button>
               </div>
-              <p className="text-lg font-bold mt-0.5 text-[var(--blue)]" style={{ fontFamily: 'Sora, sans-serif' }}>
+              <p className="text-lg font-bold mt-0.5 text-[var(--blue)]" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                 {water}<span className="text-xs font-normal text-[var(--text-muted)]"> / {goals.water * 4}</span>
               </p>
               <div className="w-full h-1 rounded-full bg-[var(--bg-card-hover)] mt-1">
@@ -152,10 +152,10 @@ export default function HomePage() {
             return (
               <div key={type}>
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-sm font-semibold capitalize text-[var(--text-secondary)]" style={{ fontFamily: 'Sora, sans-serif' }}>
+                  <h3 className="text-sm font-semibold capitalize text-[var(--text-secondary)]" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                     {type}
                   </h3>
-                  <span className="text-[10px] font-medium text-[var(--text-muted)]" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                  <span className="text-[10px] font-medium text-[var(--text-muted)]" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
                     {mealCal} kcal
                   </span>
                 </div>
