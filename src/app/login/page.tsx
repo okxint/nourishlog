@@ -45,12 +45,12 @@ export default function LoginPage() {
           <div className="w-10 h-10 rounded-xl bg-[var(--accent)] flex items-center justify-center glow-sm">
             <Sparkles size={22} className="text-white" />
           </div>
-          <span className="text-xl font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>NourishLog</span>
+          <span className="text-xl font-bold" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>NourishLog</span>
         </div>
 
         {step === 1 ? (
           <div className="fade-in">
-            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
               What&apos;s your name?
             </h1>
             <p className="text-[var(--text-secondary)] mb-8">
@@ -82,7 +82,7 @@ export default function LoginPage() {
           </div>
         ) : (
           <div className="fade-in">
-            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
               Hey {name} 👋
             </h1>
             <p className="text-[var(--text-secondary)] mb-8">

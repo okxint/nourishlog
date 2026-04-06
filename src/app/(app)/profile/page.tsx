@@ -46,11 +46,11 @@ export default function ProfilePage() {
       {/* Profile Card */}
       <div className="glass-card rounded-2xl p-6 mb-4 text-center gradient-border">
         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--accent)] to-[#fb923c] flex items-center justify-center mx-auto mb-3 glow-sm">
-          <span className="text-2xl font-bold text-white" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+          <span className="text-2xl font-bold text-white" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
             {profile.name.charAt(0).toUpperCase()}
           </span>
         </div>
-        <h2 className="text-lg font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>{profile.name}</h2>
+        <h2 className="text-lg font-bold" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>{profile.name}</h2>
         <p className="text-xs text-[var(--text-muted)] mt-0.5">{profile.email}</p>
       </div>
 
@@ -58,24 +58,24 @@ export default function ProfilePage() {
       <div className="grid grid-cols-3 gap-2 mb-4">
         <div className="glass-card rounded-2xl p-3 text-center">
           <Flame size={16} className="text-[var(--accent)] mx-auto mb-1.5" />
-          <p className="text-base font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>{streak}</p>
-          <p className="text-[9px] text-[var(--text-muted)] uppercase tracking-wide" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+          <p className="text-base font-bold" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>{streak}</p>
+          <p className="text-[9px] text-[var(--text-muted)] uppercase tracking-wide" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
             Day Streak
           </p>
         </div>
         <div className="glass-card rounded-2xl p-3 text-center">
           <UtensilsCrossed size={16} className="text-[var(--green)] mx-auto mb-1.5" />
-          <p className="text-base font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>{totalMeals}</p>
-          <p className="text-[9px] text-[var(--text-muted)] uppercase tracking-wide" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+          <p className="text-base font-bold" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>{totalMeals}</p>
+          <p className="text-[9px] text-[var(--text-muted)] uppercase tracking-wide" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
             Meals
           </p>
         </div>
         <div className="glass-card rounded-2xl p-3 text-center">
           <Calendar size={16} className="text-[var(--blue)] mx-auto mb-1.5" />
-          <p className="text-base font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+          <p className="text-base font-bold" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
             {profile.joinedDate ? format(new Date(profile.joinedDate), 'MMM') : 'N/A'}
           </p>
-          <p className="text-[9px] text-[var(--text-muted)] uppercase tracking-wide" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+          <p className="text-[9px] text-[var(--text-muted)] uppercase tracking-wide" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
             Joined
           </p>
         </div>
@@ -84,7 +84,7 @@ export default function ProfilePage() {
       {/* Goals */}
       <div className="glass-card rounded-2xl p-4 mb-4">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Daily Goals</h3>
+          <h3 className="text-sm font-bold" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>Daily Goals</h3>
           {editingGoals ? (
             <button onClick={handleSaveGoals} className="text-xs font-semibold text-[var(--accent)]">Save</button>
           ) : (
@@ -122,7 +122,7 @@ export default function ProfilePage() {
 
       {/* Settings */}
       <div className="glass-card rounded-2xl p-4 mb-4">
-        <h3 className="text-sm font-bold mb-2" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Settings</h3>
+        <h3 className="text-sm font-bold mb-2" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>Settings</h3>
         {[
           { icon: Bell, label: 'Notifications', right: <ToggleSwitch on={true} /> },
           { icon: Clock, label: 'Meal Reminders', right: <span className="text-[10px] text-[var(--text-muted)]">8am, 1pm, 7pm</span> },

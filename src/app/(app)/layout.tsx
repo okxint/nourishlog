@@ -39,7 +39,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="w-7 h-7 rounded-lg bg-[var(--accent)] flex items-center justify-center">
             <Sparkles size={14} className="text-white" />
           </div>
-          <span className="text-sm font-bold tracking-tight" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+          <span className="text-sm font-bold tracking-tight" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
             nourish<span className="text-[var(--accent)]">log</span>
           </span>
         </div>
@@ -58,7 +58,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   }`}
               >
                 <Icon size={18} strokeWidth={active ? 2.2 : 1.6} />
-                <span className="text-sm font-medium" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                <span className="text-sm font-medium" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
                   {tab.label}
                 </span>
               </button>
@@ -71,7 +71,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-card)]"
           >
             {theme === 'dark' ? <Sun size={18} strokeWidth={1.6} /> : <Moon size={18} strokeWidth={1.6} />}
-            <span className="text-sm font-medium" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+            <span className="text-sm font-medium" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
               {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
             </span>
           </button>
@@ -110,7 +110,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 />
                 <span
                   className={`text-[9px] font-medium ${active ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`}
-                  style={{ fontFamily: 'JetBrains Mono, monospace' }}
+                  style={{ fontFamily: 'IBM Plex Mono, monospace' }}
                 >
                   {tab.label}
                 </span>

@@ -198,7 +198,7 @@ export default function DashboardPage() {
     <div className="px-5 lg:px-8 pt-10 lg:pt-8 fade-in">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-        <h1 className="text-2xl font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Dashboard</h1>
+        <h1 className="text-2xl font-bold" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>Dashboard</h1>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowFilters(!showFilters)}
@@ -223,7 +223,7 @@ export default function DashboardPage() {
             key={r}
             onClick={() => { setDateRange(r); setWeekOffset(0); setSelectedDate(null); }}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all capitalize ${dateRange === r ? 'bg-[var(--accent)] text-white' : 'glass text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
-            style={{ fontFamily: 'JetBrains Mono, monospace' }}
+            style={{ fontFamily: 'IBM Plex Mono, monospace' }}
           >
             {r}
           </button>
@@ -234,7 +234,7 @@ export default function DashboardPage() {
             <button onClick={() => setWeekOffset(weekOffset - 1)} className="w-7 h-7 rounded-lg glass flex items-center justify-center hover:bg-[var(--bg-card-hover)]">
               <ChevronLeft size={14} className="text-[var(--text-muted)]" />
             </button>
-            <span className="text-xs font-semibold min-w-[90px] text-center" style={{ color: 'var(--text-secondary)', fontFamily: 'JetBrains Mono' }}>
+            <span className="text-xs font-semibold min-w-[90px] text-center" style={{ color: 'var(--text-secondary)', fontFamily: 'IBM Plex Mono' }}>
               {dateRangeBounds.label}
             </span>
             <button onClick={() => weekOffset < 0 && setWeekOffset(weekOffset + 1)} className="w-7 h-7 rounded-lg glass flex items-center justify-center hover:bg-[var(--bg-card-hover)]" disabled={weekOffset >= 0}>
@@ -264,7 +264,7 @@ export default function DashboardPage() {
       {showFilters && (
         <div className="glass-card rounded-xl p-4 mb-4 flex flex-col sm:flex-row gap-3 slide-up">
           <div className="flex-1">
-            <label className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-1 block" style={{ fontFamily: 'JetBrains Mono' }}>Meal Type</label>
+            <label className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-1 block" style={{ fontFamily: 'IBM Plex Mono' }}>Meal Type</label>
             <div className="flex gap-1.5 flex-wrap">
               {(['all', 'breakfast', 'lunch', 'dinner', 'snack'] as MealFilter[]).map((m) => (
                 <button key={m} onClick={() => setMealFilter(m)}
@@ -275,7 +275,7 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="flex-1">
-            <label className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-1 block" style={{ fontFamily: 'JetBrains Mono' }}>Search Food</label>
+            <label className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-1 block" style={{ fontFamily: 'IBM Plex Mono' }}>Search Food</label>
             <div className="relative">
               <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
               <input type="text" placeholder="e.g. biryani, dosa..." value={foodSearch} onChange={(e) => setFoodSearch(e.target.value)}
@@ -299,20 +299,20 @@ export default function DashboardPage() {
       {/* Summary cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-5">
         <div className="glass-card rounded-xl p-3 text-center">
-          <p className="text-xl font-extrabold text-[var(--accent)]" style={{ fontFamily: 'Plus Jakarta Sans' }}>{totals.cal.toLocaleString()}</p>
-          <p className="text-[9px] text-[var(--text-muted)] mt-0.5 uppercase font-semibold" style={{ fontFamily: 'JetBrains Mono' }}>Total kcal</p>
+          <p className="text-xl font-extrabold text-[var(--accent)]" style={{ fontFamily: 'Bricolage Grotesque' }}>{totals.cal.toLocaleString()}</p>
+          <p className="text-[9px] text-[var(--text-muted)] mt-0.5 uppercase font-semibold" style={{ fontFamily: 'IBM Plex Mono' }}>Total kcal</p>
         </div>
         <div className="glass-card rounded-xl p-3 text-center">
-          <p className="text-xl font-extrabold" style={{ fontFamily: 'Plus Jakarta Sans' }}>{avgCalories.toLocaleString()}</p>
-          <p className="text-[9px] text-[var(--text-muted)] mt-0.5 uppercase font-semibold" style={{ fontFamily: 'JetBrains Mono' }}>Daily Avg</p>
+          <p className="text-xl font-extrabold" style={{ fontFamily: 'Bricolage Grotesque' }}>{avgCalories.toLocaleString()}</p>
+          <p className="text-[9px] text-[var(--text-muted)] mt-0.5 uppercase font-semibold" style={{ fontFamily: 'IBM Plex Mono' }}>Daily Avg</p>
         </div>
         <div className="glass-card rounded-xl p-3 text-center">
-          <p className="text-xl font-extrabold" style={{ fontFamily: 'Plus Jakarta Sans' }}>{filteredEntries.length}</p>
-          <p className="text-[9px] text-[var(--text-muted)] mt-0.5 uppercase font-semibold" style={{ fontFamily: 'JetBrains Mono' }}>Meals</p>
+          <p className="text-xl font-extrabold" style={{ fontFamily: 'Bricolage Grotesque' }}>{filteredEntries.length}</p>
+          <p className="text-[9px] text-[var(--text-muted)] mt-0.5 uppercase font-semibold" style={{ fontFamily: 'IBM Plex Mono' }}>Meals</p>
         </div>
         <div className="glass-card rounded-xl p-3 text-center">
-          <p className="text-xl font-extrabold" style={{ fontFamily: 'Plus Jakarta Sans' }}>{uniqueDays}</p>
-          <p className="text-[9px] text-[var(--text-muted)] mt-0.5 uppercase font-semibold" style={{ fontFamily: 'JetBrains Mono' }}>Days</p>
+          <p className="text-xl font-extrabold" style={{ fontFamily: 'Bricolage Grotesque' }}>{uniqueDays}</p>
+          <p className="text-[9px] text-[var(--text-muted)] mt-0.5 uppercase font-semibold" style={{ fontFamily: 'IBM Plex Mono' }}>Days</p>
         </div>
       </div>
 
@@ -320,12 +320,12 @@ export default function DashboardPage() {
       {dateRange !== 'today' && chartData.length > 0 && (
         <div className="flex flex-col lg:flex-row gap-4 mb-4">
           <div className="flex-[2] glass-card rounded-xl p-4">
-            <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+            <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Bricolage Grotesque' }}>
               Calories {mealFilter !== 'all' ? `(${mealFilter})` : ''} {foodSearch ? `matching "${foodSearch}"` : ''}
             </h3>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={chartData} barCategoryGap="15%">
-                <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-muted)', fontSize: 10, fontFamily: 'JetBrains Mono' }} />
+                <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-muted)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} />
                 <YAxis hide />
                 <Tooltip
                   contentStyle={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 8, fontSize: 11, fontFamily: 'Inter' }}
@@ -358,7 +358,7 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex-1 glass-card rounded-xl p-4">
-            <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Plus Jakarta Sans' }}>Macro Split</h3>
+            <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Bricolage Grotesque' }}>Macro Split</h3>
             <div className="flex items-center gap-4">
               <div className="w-24 h-24 flex-shrink-0">
                 <ResponsiveContainer width="100%" height="100%">
@@ -401,8 +401,8 @@ export default function DashboardPage() {
         ].map((s) => (
           <div key={s.label} className="glass-card rounded-xl p-3">
             <s.icon size={14} style={{ color: s.color }} className="mb-1.5" />
-            <p className="text-[9px] text-[var(--text-muted)] uppercase tracking-wide" style={{ fontFamily: 'JetBrains Mono' }}>{s.label}</p>
-            <p className="text-sm font-bold truncate" style={{ fontFamily: 'Plus Jakarta Sans' }}>{s.value}</p>
+            <p className="text-[9px] text-[var(--text-muted)] uppercase tracking-wide" style={{ fontFamily: 'IBM Plex Mono' }}>{s.label}</p>
+            <p className="text-sm font-bold truncate" style={{ fontFamily: 'Bricolage Grotesque' }}>{s.value}</p>
             <p className="text-[10px] text-[var(--text-muted)]">{s.sub}</p>
           </div>
         ))}
@@ -411,14 +411,14 @@ export default function DashboardPage() {
       {/* Meal History Table */}
       <div className="mb-8">
         <button onClick={() => setShowHistory(!showHistory)}
-          className="flex items-center gap-2 mb-3 text-sm font-bold hover:text-[var(--accent)] transition-colors" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+          className="flex items-center gap-2 mb-3 text-sm font-bold hover:text-[var(--accent)] transition-colors" style={{ fontFamily: 'Bricolage Grotesque' }}>
           {showHistory ? '▾' : '▸'} Meal History ({filteredEntries.length} entries)
         </button>
 
         {showHistory && (
           <div className="glass-card rounded-xl overflow-hidden">
             {/* Table header */}
-            <div className="hidden lg:grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wide border-b border-[var(--border)]" style={{ fontFamily: 'JetBrains Mono' }}>
+            <div className="hidden lg:grid grid-cols-12 gap-2 px-4 py-2 text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wide border-b border-[var(--border)]" style={{ fontFamily: 'IBM Plex Mono' }}>
               <div className="col-span-2">Date</div>
               <div className="col-span-3">Food</div>
               <div className="col-span-1">Meal</div>
@@ -436,7 +436,7 @@ export default function DashboardPage() {
               historyByDate.map(([date, entries]) => (
                 <div key={date}>
                   {/* Date header (mobile) */}
-                  <div className="lg:hidden px-4 py-2 text-[11px] font-bold border-b border-[var(--border)]" style={{ background: 'var(--bg-elevated)', fontFamily: 'Plus Jakarta Sans' }}>
+                  <div className="lg:hidden px-4 py-2 text-[11px] font-bold border-b border-[var(--border)]" style={{ background: 'var(--bg-elevated)', fontFamily: 'Bricolage Grotesque' }}>
                     {format(parseISO(date), 'EEEE, d MMMM yyyy')}
                     <span className="ml-2 font-normal text-[var(--text-muted)]">
                       ({entries.reduce((s, e) => s + e.calories, 0)} kcal)

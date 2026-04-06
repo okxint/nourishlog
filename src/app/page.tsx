@@ -22,14 +22,14 @@ export default function LandingPage() {
       {/* ━━━ NAV ━━━ */}
       <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: 'color-mix(in srgb, var(--bg-primary) 85%, transparent)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid var(--border)' }}>
         <div className="max-w-[1120px] mx-auto flex items-center justify-between px-6 h-16">
-          <span style={{ fontSize: 18, fontWeight: 700, fontFamily: 'Plus Jakarta Sans', letterSpacing: '-0.02em' }}>
+          <span style={{ fontSize: 18, fontWeight: 700, fontFamily: 'Bricolage Grotesque', letterSpacing: '-0.02em' }}>
             nourish<span style={{ color: 'var(--accent)' }}>log</span>
           </span>
           <div className="flex items-center gap-3">
             <button onClick={toggle} className="w-9 h-9 rounded-full flex items-center justify-center transition-colors" style={{ border: '1px solid var(--border)' }}>
               {theme === 'dark' ? <Sun size={15} style={{ color: 'var(--text-muted)' }} /> : <Moon size={15} style={{ color: 'var(--text-muted)' }} />}
             </button>
-            <button onClick={go} style={{ background: 'var(--accent)', color: '#fff', padding: '8px 20px', borderRadius: 10, fontSize: 14, fontWeight: 600, fontFamily: 'Plus Jakarta Sans' }} className="hover:brightness-110 active:scale-[0.97] transition-all">
+            <button onClick={go} style={{ background: 'var(--accent)', color: '#fff', padding: '8px 20px', borderRadius: 10, fontSize: 14, fontWeight: 600, fontFamily: 'Bricolage Grotesque' }} className="hover:brightness-110 active:scale-[0.97] transition-all">
               Get Started
             </button>
           </div>
@@ -45,7 +45,7 @@ export default function LandingPage() {
           </div>
 
           {/* Headline — the money shot */}
-          <h1 style={{ fontSize: 'clamp(40px, 5.5vw, 72px)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.035em', fontFamily: 'Plus Jakarta Sans', marginBottom: 24 }}>
+          <h1 style={{ fontSize: 'clamp(40px, 5.5vw, 72px)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.035em', fontFamily: 'Bricolage Grotesque', marginBottom: 24 }}>
             Track what you eat.<br />
             <span style={{ color: 'var(--accent)' }}>In a chat.</span>
           </h1>
@@ -57,7 +57,7 @@ export default function LandingPage() {
 
           {/* CTAs */}
           <div className="flex items-center justify-center gap-4 mb-6">
-            <button onClick={go} className="group hover:brightness-110 active:scale-[0.97] transition-all" style={{ background: 'var(--accent)', color: '#fff', padding: '14px 32px', borderRadius: 12, fontSize: 16, fontWeight: 600, fontFamily: 'Plus Jakarta Sans', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <button onClick={go} className="group hover:brightness-110 active:scale-[0.97] transition-all" style={{ background: 'var(--accent)', color: '#fff', padding: '14px 32px', borderRadius: 12, fontSize: 16, fontWeight: 600, fontFamily: 'Bricolage Grotesque', display: 'flex', alignItems: 'center', gap: 8 }}>
               Start for Free <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button onClick={() => document.getElementById('f1')?.scrollIntoView({ behavior: 'smooth' })} style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-muted)' }} className="hover:text-[var(--text-secondary)] transition-colors">
@@ -65,7 +65,23 @@ export default function LandingPage() {
             </button>
           </div>
 
-          <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>No credit card · No app to install · Data stays on your device</p>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 48 }}>No credit card · No app to install · Data stays on your device</p>
+
+          {/* 3 ways to log */}
+          <div className="flex flex-col sm:flex-row items-stretch justify-center" style={{ gap: 12, maxWidth: 720, margin: '0 auto' }}>
+            {[
+              { icon: '💬', title: 'Chat', desc: '"Had 2 rotis with dal for dinner"', sub: 'Type naturally. We parse it.' },
+              { icon: '📸', title: 'Photo', desc: 'Snap your plate or pick from gallery', sub: 'We identify the food.' },
+              { icon: '✏️', title: 'Search & Edit', desc: 'Search 500+ dishes. Edit any value.', sub: 'You\'re always in control.' },
+            ].map((w) => (
+              <div key={w.title} className="flex-1" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 12, padding: 16, textAlign: 'center' }}>
+                <span style={{ fontSize: 28 }}>{w.icon}</span>
+                <p style={{ fontSize: 15, fontWeight: 700, fontFamily: 'Bricolage Grotesque', marginTop: 8, marginBottom: 4 }}>{w.title}</p>
+                <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 2 }}>{w.desc}</p>
+                <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>{w.sub}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -82,7 +98,7 @@ export default function LandingPage() {
             <div className="flex" style={{ background: 'var(--bg-primary)', fontFamily: 'Inter, sans-serif' }}>
               {/* Sidebar */}
               <div className="hidden md:flex flex-col" style={{ width: 200, padding: 16, borderRight: '1px solid var(--border)', gap: 2 }}>
-                <div className="flex items-center gap-2 mb-4 px-2"><div className="w-6 h-6 rounded-md" style={{ background: 'var(--accent)' }} /><span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'Plus Jakarta Sans' }}>nourish<span style={{ color: 'var(--accent)' }}>log</span></span></div>
+                <div className="flex items-center gap-2 mb-4 px-2"><div className="w-6 h-6 rounded-md" style={{ background: 'var(--accent)' }} /><span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'Bricolage Grotesque' }}>nourish<span style={{ color: 'var(--accent)' }}>log</span></span></div>
                 {['🏠 Home', '➕ Log', '💬 Chat', '📊 Dashboard', '🏆 Achievements'].map((t, i) => (
                   <div key={t} style={{ padding: '8px 10px', borderRadius: 8, fontSize: 13, fontWeight: i === 0 ? 600 : 400, background: i === 0 ? 'var(--accent-dim)' : 'transparent', color: i === 0 ? 'var(--accent)' : 'var(--text-muted)' }}>{t}</div>
                 ))}
@@ -90,7 +106,7 @@ export default function LandingPage() {
               {/* Main */}
               <div className="flex-1" style={{ padding: 24 }}>
                 <div className="flex justify-between items-start" style={{ marginBottom: 20 }}>
-                  <div><p style={{ fontSize: 16, fontWeight: 700, fontFamily: 'Plus Jakarta Sans' }}>Good afternoon, Priya</p><p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Sunday, 6 April 2026</p></div>
+                  <div><p style={{ fontSize: 16, fontWeight: 700, fontFamily: 'Bricolage Grotesque' }}>Good afternoon, Priya</p><p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Sunday, 6 April 2026</p></div>
                   <div style={{ background: 'var(--accent)', color: '#fff', padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600 }}>+ Log Meal</div>
                 </div>
                 <div className="flex flex-col sm:flex-row" style={{ gap: 20 }}>
@@ -102,7 +118,7 @@ export default function LandingPage() {
                         <circle cx="80" cy="80" r="64" fill="none" stroke="var(--accent)" strokeWidth="10" strokeLinecap="round" strokeDasharray="402" strokeDashoffset="175" />
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span style={{ fontSize: 28, fontWeight: 800, fontFamily: 'Plus Jakarta Sans' }}>1,245</span>
+                        <span style={{ fontSize: 28, fontWeight: 800, fontFamily: 'Bricolage Grotesque' }}>1,245</span>
                         <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>of 2,000 kcal</span>
                         <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--accent)' }}>755 left</span>
                       </div>
@@ -113,8 +129,8 @@ export default function LandingPage() {
                     <div className="flex" style={{ gap: 8 }}>
                       {[{ l: 'Protein', v: '48g', g: '120g', c: 'var(--blue)', p: '40%' }, { l: 'Carbs', v: '156g', g: '250g', c: 'var(--amber)', p: '62%' }, { l: 'Fat', v: '38g', g: '65g', c: 'var(--rose)', p: '58%' }].map(m => (
                         <div key={m.l} className="flex-1" style={{ padding: 10, borderRadius: 10, border: '1px solid var(--border)', background: 'var(--bg-card)' }}>
-                          <div className="flex items-center gap-1" style={{ marginBottom: 4 }}><div className="rounded-full" style={{ width: 6, height: 6, background: m.c }} /><span style={{ fontSize: 9, fontWeight: 700, color: 'var(--text-muted)', fontFamily: 'JetBrains Mono', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{m.l}</span></div>
-                          <span style={{ fontSize: 15, fontWeight: 700, color: m.c, fontFamily: 'Plus Jakarta Sans' }}>{m.v}</span><span style={{ fontSize: 10, color: 'var(--text-muted)' }}> / {m.g}</span>
+                          <div className="flex items-center gap-1" style={{ marginBottom: 4 }}><div className="rounded-full" style={{ width: 6, height: 6, background: m.c }} /><span style={{ fontSize: 9, fontWeight: 700, color: 'var(--text-muted)', fontFamily: 'IBM Plex Mono', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{m.l}</span></div>
+                          <span style={{ fontSize: 15, fontWeight: 700, color: m.c, fontFamily: 'Bricolage Grotesque' }}>{m.v}</span><span style={{ fontSize: 10, color: 'var(--text-muted)' }}> / {m.g}</span>
                           <div style={{ width: '100%', height: 3, borderRadius: 2, background: 'var(--bg-card-hover)', marginTop: 4 }}><div style={{ height: '100%', borderRadius: 2, width: m.p, background: m.c }} /></div>
                         </div>
                       ))}
@@ -124,7 +140,7 @@ export default function LandingPage() {
                       <div key={f.n} className="flex items-center" style={{ gap: 10, padding: 10, borderRadius: 10, border: '1px solid var(--border)', background: 'var(--bg-card)' }}>
                         <div style={{ width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-elevated)', fontSize: 16 }}>{f.e}</div>
                         <div className="flex-1 min-w-0"><p style={{ fontSize: 13, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.n}</p><p style={{ fontSize: 10, color: 'var(--text-muted)' }}>{f.m} · 💚 {f.s}/10</p></div>
-                        <div className="text-right"><span style={{ fontSize: 14, fontWeight: 700, color: 'var(--accent)', fontFamily: 'Plus Jakarta Sans' }}>{f.c}</span><span style={{ fontSize: 8, color: 'var(--text-muted)', display: 'block' }}>kcal</span></div>
+                        <div className="text-right"><span style={{ fontSize: 14, fontWeight: 700, color: 'var(--accent)', fontFamily: 'Bricolage Grotesque' }}>{f.c}</span><span style={{ fontSize: 8, color: 'var(--text-muted)', display: 'block' }}>kcal</span></div>
                       </div>
                     ))}
                   </div>
@@ -171,8 +187,8 @@ export default function LandingPage() {
         <section key={f.label} id={f.id} style={{ paddingTop: 100, paddingBottom: 100, background: fi % 2 === 1 ? 'var(--bg-secondary)' : 'var(--bg-primary)' }} className="px-6">
           <div className={`max-w-[1120px] mx-auto flex flex-col lg:flex-row items-start gap-16 ${fi % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
             <div className="flex-1 lg:pt-8">
-              <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent)', fontFamily: 'JetBrains Mono', letterSpacing: '0.05em' }}>{f.label}</span>
-              <h2 style={{ fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.025em', fontFamily: 'Plus Jakarta Sans', marginTop: 8, marginBottom: 16 }}>{f.title}</h2>
+              <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent)', fontFamily: 'IBM Plex Mono', letterSpacing: '0.05em' }}>{f.label}</span>
+              <h2 style={{ fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.025em', fontFamily: 'Bricolage Grotesque', marginTop: 8, marginBottom: 16 }}>{f.title}</h2>
               <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--text-secondary)', marginBottom: 24 }}>{f.desc}</p>
               <ul className="flex flex-col gap-3">
                 {f.bullets.map(b => (
@@ -192,7 +208,7 @@ export default function LandingPage() {
       {/* ━━━ FOOD DATABASE ━━━ */}
       <section style={{ paddingTop: 100, paddingBottom: 100, background: 'var(--bg-secondary)' }} className="px-6">
         <div className="max-w-[800px] mx-auto text-center">
-          <h2 style={{ fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-0.025em', fontFamily: 'Plus Jakarta Sans', marginBottom: 8 }}>500+ dishes. Real Indian food.</h2>
+          <h2 style={{ fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-0.025em', fontFamily: 'Bricolage Grotesque', marginBottom: 8 }}>500+ dishes. Real Indian food.</h2>
           <p style={{ fontSize: 15, color: 'var(--text-muted)', marginBottom: 32 }}>South Indian, North Indian, street food, Mughlai, Bengali, Gujarati, desserts, drinks — nutrition from IFCT.</p>
           <div className="flex flex-wrap justify-center" style={{ gap: 6 }}>
             {['Masala Dosa · 166', 'Idli · 39', 'Poha · 180', 'Biryani · 430', 'Rajma Chawal · 350', 'Chole Bhature · 450', 'Butter Chicken · 250', 'Palak Paneer · 230', 'Dal Rice · 300', 'Vada Pav · 290', 'Samosa · 155', 'Tandoori Chicken · 220', 'Chai · 60', 'Roti · 104', 'Pav Bhaji · 320', 'Momos · 200', 'Dhokla · 130', 'Gulab Jamun · 150', 'Filter Coffee · 75', 'Naan · 260'].map(item => {
@@ -206,7 +222,7 @@ export default function LandingPage() {
       {/* ━━━ EVERYTHING INCLUDED ━━━ */}
       <section style={{ paddingTop: 100, paddingBottom: 100 }} className="px-6">
         <div className="max-w-[960px] mx-auto">
-          <h2 className="text-center" style={{ fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-0.025em', fontFamily: 'Plus Jakarta Sans', marginBottom: 48 }}>Everything included. Free.</h2>
+          <h2 className="text-center" style={{ fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, letterSpacing: '-0.025em', fontFamily: 'Bricolage Grotesque', marginBottom: 48 }}>Everything included. Free.</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 8 }}>
             {[
               '500+ dishes — IFCT nutrition data', 'Chat-based logging', 'Photo upload — camera or gallery',
@@ -231,11 +247,11 @@ export default function LandingPage() {
       {/* ━━━ CTA ━━━ */}
       <section style={{ paddingTop: 120, paddingBottom: 120, background: 'var(--bg-secondary)' }} className="px-6">
         <div className="max-w-[600px] mx-auto text-center">
-          <h2 style={{ fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', fontFamily: 'Plus Jakarta Sans', marginBottom: 16 }}>
+          <h2 style={{ fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', fontFamily: 'Bricolage Grotesque', marginBottom: 16 }}>
             You know what you ate.<br /><span style={{ color: 'var(--accent)' }}>Now know what&apos;s in it.</span>
           </h2>
           <p style={{ fontSize: 16, color: 'var(--text-muted)', marginBottom: 32 }}>10 seconds to set up. Free forever.</p>
-          <button onClick={go} className="group hover:brightness-110 active:scale-[0.97] transition-all" style={{ background: 'var(--accent)', color: '#fff', padding: '16px 40px', borderRadius: 12, fontSize: 17, fontWeight: 700, fontFamily: 'Plus Jakarta Sans', display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+          <button onClick={go} className="group hover:brightness-110 active:scale-[0.97] transition-all" style={{ background: 'var(--accent)', color: '#fff', padding: '16px 40px', borderRadius: 12, fontSize: 17, fontWeight: 700, fontFamily: 'Bricolage Grotesque', display: 'inline-flex', alignItems: 'center', gap: 10 }}>
             Start Tracking <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -244,7 +260,7 @@ export default function LandingPage() {
       {/* ━━━ FOOTER ━━━ */}
       <footer className="px-6" style={{ padding: '24px 0', borderTop: '1px solid var(--border)' }}>
         <div className="max-w-[1120px] mx-auto flex items-center justify-between px-6">
-          <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'Plus Jakarta Sans', color: 'var(--text-muted)' }}>nourish<span style={{ color: 'var(--accent)' }}>log</span></span>
+          <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'Bricolage Grotesque', color: 'var(--text-muted)' }}>nourish<span style={{ color: 'var(--accent)' }}>log</span></span>
           <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Made in India.</span>
         </div>
       </footer>
@@ -265,8 +281,8 @@ function MockupFrame({ children }: { children: React.ReactNode }) {
 }
 
 /* ━━━ Mockup Contents ━━━ */
-const h = { fontFamily: 'Plus Jakarta Sans' };
-const m = { fontFamily: 'JetBrains Mono' };
+const h = { fontFamily: 'Bricolage Grotesque' };
+const m = { fontFamily: 'IBM Plex Mono' };
 const tp = { color: 'var(--text-primary)' };
 const ts = { color: 'var(--text-secondary)' };
 const tm = { color: 'var(--text-muted)' };

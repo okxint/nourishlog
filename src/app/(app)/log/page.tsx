@@ -158,7 +158,7 @@ export default function LogPage() {
         </div>
       )}
 
-      <h1 className="text-2xl font-bold mb-1" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Log Meal</h1>
+      <h1 className="text-2xl font-bold mb-1" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>Log Meal</h1>
       <p className="text-sm text-[var(--text-muted)] mb-6">Upload a photo or type what you ate</p>
 
       {/* Meal type selector */}
@@ -172,7 +172,7 @@ export default function LogPage() {
                 ? 'bg-[var(--accent)] text-white'
                 : 'bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-light)]'
               }`}
-            style={{ fontFamily: 'JetBrains Mono, monospace' }}
+            style={{ fontFamily: 'IBM Plex Mono, monospace' }}
           >
             {mealLabels[type]}
           </button>
@@ -183,7 +183,7 @@ export default function LogPage() {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Left — Photo Upload */}
         <div className="flex-1">
-          <h3 className="text-sm font-semibold mb-3 text-[var(--text-secondary)]" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+          <h3 className="text-sm font-semibold mb-3 text-[var(--text-secondary)]" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
             Upload Photo
           </h3>
           <div
@@ -244,7 +244,7 @@ export default function LogPage() {
 
         {/* Right — Text Input */}
         <div className="flex-1">
-          <h3 className="text-sm font-semibold mb-3 text-[var(--text-secondary)]" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+          <h3 className="text-sm font-semibold mb-3 text-[var(--text-secondary)]" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
             Type What You Ate
           </h3>
 
@@ -274,7 +274,7 @@ export default function LogPage() {
 
           {/* Recent searches */}
           <div className="mb-5">
-            <p className="text-xs font-semibold text-[var(--text-muted)] mb-2 uppercase tracking-wide" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+            <p className="text-xs font-semibold text-[var(--text-muted)] mb-2 uppercase tracking-wide" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
               Recent
             </p>
             <div className="flex flex-wrap gap-1.5">
@@ -293,7 +293,7 @@ export default function LogPage() {
 
           {/* Quick add */}
           <div>
-            <p className="text-xs font-semibold text-[var(--text-muted)] mb-2 uppercase tracking-wide" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+            <p className="text-xs font-semibold text-[var(--text-muted)] mb-2 uppercase tracking-wide" style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
               Quick Add
             </p>
             <div className="grid grid-cols-4 lg:grid-cols-6 gap-2">

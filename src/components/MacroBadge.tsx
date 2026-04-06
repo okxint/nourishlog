@@ -17,12 +17,12 @@ export default function MacroBadge({ label, current, goal, color, unit = 'g' }: 
       <div className="flex items-center gap-1.5 mb-2">
         <div className="w-2 h-2 rounded-full" style={{ background: color }} />
         <span className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-wide"
-          style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+          style={{ fontFamily: 'IBM Plex Mono, monospace' }}>
           {label}
         </span>
       </div>
       <div className="flex items-baseline gap-0.5 mb-2">
-        <span className="text-lg font-bold" style={{ color, fontFamily: 'Plus Jakarta Sans, sans-serif' }}>{current}</span>
+        <span className="text-lg font-bold" style={{ color, fontFamily: 'Bricolage Grotesque, sans-serif' }}>{current}</span>
         <span className="text-[10px] text-[var(--text-muted)]">/ {goal}{unit}</span>
       </div>
       <div className="w-full h-1.5 rounded-full bg-[var(--bg-card-hover)]">

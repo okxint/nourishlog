@@ -36,7 +36,7 @@ export default function AchievementsPage() {
       {/* Streak Banner */}
       <div className="glass-card rounded-2xl p-5 mb-5 text-center">
         <Flame size={28} style={{ color: streak >= 7 ? 'var(--accent)' : 'var(--amber)' }} className="mx-auto mb-2" />
-        <p className="text-3xl font-extrabold" style={{ fontFamily: 'Plus Jakarta Sans' }}>{streak}</p>
+        <p className="text-3xl font-extrabold" style={{ fontFamily: 'Bricolage Grotesque' }}>{streak}</p>
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>day streak</p>
         <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
           {streak === 0 ? 'Log a meal to start your streak!' :
@@ -56,7 +56,7 @@ export default function AchievementsPage() {
         ].map((t) => (
           <button key={t.key} onClick={() => setTab(t.key)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${tab === t.key ? 'bg-[var(--accent)] text-white' : 'glass text-[var(--text-secondary)]'}`}
-            style={{ fontFamily: 'JetBrains Mono' }}>
+            style={{ fontFamily: 'IBM Plex Mono' }}>
             {t.label}
           </button>
         ))}
@@ -65,7 +65,7 @@ export default function AchievementsPage() {
       {/* Daily Challenges */}
       {tab === 'today' && (
         <div className="flex flex-col gap-2.5 mb-8">
-          <h2 className="text-sm font-bold" style={{ fontFamily: 'Plus Jakarta Sans' }}>Today&apos;s Challenges</h2>
+          <h2 className="text-sm font-bold" style={{ fontFamily: 'Bricolage Grotesque' }}>Today&apos;s Challenges</h2>
           {challenges.map((c) => (
             <div key={c.id} className="glass-card rounded-xl p-3.5">
               <div className="flex items-center gap-3 mb-2">
@@ -97,7 +97,7 @@ export default function AchievementsPage() {
           {achievements.map((a) => (
             <div key={a.id} className={`glass-card rounded-xl p-3.5 text-center transition-all ${a.unlocked ? '' : 'opacity-35 grayscale'}`}>
               <span className="text-3xl block mb-1.5">{a.icon}</span>
-              <p className="text-xs font-bold" style={{ fontFamily: 'Plus Jakarta Sans' }}>{a.title}</p>
+              <p className="text-xs font-bold" style={{ fontFamily: 'Bricolage Grotesque' }}>{a.title}</p>
               <p className="text-[10px] mt-0.5" style={{ color: 'var(--text-muted)' }}>{a.description}</p>
               {a.unlocked && <p className="text-[9px] mt-1 font-semibold" style={{ color: 'var(--green)' }}>Unlocked ✓</p>}
             </div>
@@ -109,7 +109,7 @@ export default function AchievementsPage() {
       {tab === 'share' && (
         <div className="flex flex-col gap-4 mb-8">
           <div className="glass-card rounded-xl p-4">
-            <h3 className="text-sm font-bold mb-2 flex items-center gap-2" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+            <h3 className="text-sm font-bold mb-2 flex items-center gap-2" style={{ fontFamily: 'Bricolage Grotesque' }}>
               <Share2 size={14} /> Share Your Progress
             </h3>
             <pre className="text-xs p-3 rounded-lg whitespace-pre-wrap leading-relaxed" style={{ background: 'var(--bg-elevated)', color: 'var(--text-secondary)', fontFamily: 'Inter' }}>
@@ -123,7 +123,7 @@ export default function AchievementsPage() {
           </div>
 
           <div className="glass-card rounded-xl p-4">
-            <h3 className="text-sm font-bold mb-2 flex items-center gap-2" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+            <h3 className="text-sm font-bold mb-2 flex items-center gap-2" style={{ fontFamily: 'Bricolage Grotesque' }}>
               <Trophy size={14} /> Weekly Recap
             </h3>
             <pre className="text-xs p-3 rounded-lg whitespace-pre-wrap leading-relaxed" style={{ background: 'var(--bg-elevated)', color: 'var(--text-secondary)', fontFamily: 'Inter' }}>

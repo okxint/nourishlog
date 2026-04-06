@@ -72,7 +72,7 @@ export default function MealDetailPage() {
         <button onClick={() => router.back()} className="w-9 h-9 rounded-full glass flex items-center justify-center hover:bg-[var(--bg-card-hover)]">
           <ArrowLeft size={18} />
         </button>
-        <h1 className="text-base font-bold flex-1" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Meal Details</h1>
+        <h1 className="text-base font-bold flex-1" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>Meal Details</h1>
         {!editing ? (
           <button onClick={() => setEditing(true)} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
             <Pencil size={13} /> Edit
@@ -101,9 +101,9 @@ export default function MealDetailPage() {
         {editing ? (
           <input type="text" value={editValues.name} onChange={(e) => setEditValues({ ...editValues, name: e.target.value })}
             className="text-xl font-bold w-full bg-transparent border-b-2 pb-1 focus:outline-none"
-            style={{ fontFamily: 'Plus Jakarta Sans', borderColor: 'var(--accent)', color: 'var(--text-primary)' }} />
+            style={{ fontFamily: 'Bricolage Grotesque', borderColor: 'var(--accent)', color: 'var(--text-primary)' }} />
         ) : (
-          <h2 className="text-xl font-bold" style={{ fontFamily: 'Plus Jakarta Sans' }}>{entry.name}</h2>
+          <h2 className="text-xl font-bold" style={{ fontFamily: 'Bricolage Grotesque' }}>{entry.name}</h2>
         )}
         <div className="flex items-center gap-2 mt-1.5">
           <span className="text-xs capitalize" style={{ color: 'var(--text-muted)' }}>{entry.mealType}</span>
@@ -128,12 +128,12 @@ export default function MealDetailPage() {
             <div className="flex items-baseline gap-1">
               <input type="number" value={editValues.calories} onChange={(e) => setEditValues({ ...editValues, calories: Number(e.target.value) })}
                 className="text-3xl font-extrabold w-24 bg-transparent border-b-2 focus:outline-none text-right"
-                style={{ fontFamily: 'Plus Jakarta Sans', borderColor: 'var(--accent)', color: 'var(--accent)' }} />
+                style={{ fontFamily: 'Bricolage Grotesque', borderColor: 'var(--accent)', color: 'var(--accent)' }} />
               <span className="text-sm" style={{ color: 'var(--text-muted)' }}>kcal</span>
             </div>
           ) : (
             <div>
-              <span className="text-3xl font-extrabold" style={{ fontFamily: 'Plus Jakarta Sans', color: 'var(--accent)' }}>{entry.calories}</span>
+              <span className="text-3xl font-extrabold" style={{ fontFamily: 'Bricolage Grotesque', color: 'var(--accent)' }}>{entry.calories}</span>
               <span className="text-sm ml-1" style={{ color: 'var(--text-muted)' }}>kcal</span>
             </div>
           )}
@@ -149,7 +149,7 @@ export default function MealDetailPage() {
       {/* Macros */}
       <div className="px-5 lg:px-8 mb-5">
         <div className="glass-card rounded-2xl p-4">
-          <h3 className="text-sm font-bold mb-4" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+          <h3 className="text-sm font-bold mb-4" style={{ fontFamily: 'Bricolage Grotesque' }}>
             Nutrition Breakdown
             {editing && <span className="text-xs font-normal ml-2" style={{ color: 'var(--text-muted)' }}>— click values to edit</span>}
           </h3>
@@ -163,12 +163,12 @@ export default function MealDetailPage() {
                 { key: 'fiber' as const, label: 'Fiber', color: 'var(--green)', unit: 'g' },
               ].map((m) => (
                 <div key={m.key} className="rounded-xl p-3 text-center" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
-                  <label className="text-[10px] font-semibold block mb-1.5" style={{ color: m.color, fontFamily: 'JetBrains Mono' }}>{m.label}</label>
+                  <label className="text-[10px] font-semibold block mb-1.5" style={{ color: m.color, fontFamily: 'IBM Plex Mono' }}>{m.label}</label>
                   <div className="flex items-center justify-center gap-1">
                     <input type="number" value={editValues[m.key]}
                       onChange={(e) => setEditValues({ ...editValues, [m.key]: Number(e.target.value) })}
                       className="w-14 text-center text-lg font-bold bg-transparent border-b-2 focus:outline-none"
-                      style={{ borderColor: m.color, color: m.color, fontFamily: 'Plus Jakarta Sans' }} />
+                      style={{ borderColor: m.color, color: m.color, fontFamily: 'Bricolage Grotesque' }} />
                     <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{m.unit}</span>
                   </div>
                 </div>
@@ -188,7 +188,7 @@ export default function MealDetailPage() {
                       <span className="text-xs font-bold" style={{ color: m.color }}>{m.value}g</span>
                     </div>
                   </div>
-                  <p className="text-[10px]" style={{ color: 'var(--text-muted)', fontFamily: 'JetBrains Mono' }}>{m.label}</p>
+                  <p className="text-[10px]" style={{ color: 'var(--text-muted)', fontFamily: 'IBM Plex Mono' }}>{m.label}</p>
                   <p className="text-[9px]" style={{ color: 'var(--text-muted)' }}>{m.pct}% DV</p>
                 </div>
               ))}
@@ -201,7 +201,7 @@ export default function MealDetailPage() {
       {entry.micronutrients && !editing && (
         <div className="px-5 lg:px-8 mb-5">
           <div className="glass-card rounded-2xl p-4">
-            <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Plus Jakarta Sans' }}>Micronutrients</h3>
+            <h3 className="text-sm font-bold mb-3" style={{ fontFamily: 'Bricolage Grotesque' }}>Micronutrients</h3>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {[
                 { label: 'Vitamin A', value: `${entry.micronutrients.vitaminA}% DV` },
