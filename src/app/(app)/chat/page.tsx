@@ -9,10 +9,11 @@ import { format } from 'date-fns';
 
 const quickActions = [
   "What did I eat today?",
-  "How's my week going?",
-  "Suggest something healthy",
-  "Calories in dosa",
+  "What did I eat yesterday?",
+  "Show me last week",
+  "When did I last have biryani?",
   "What do I eat most?",
+  "What did I have for dinner on Monday?",
 ];
 
 export default function ChatPage() {
@@ -31,7 +32,7 @@ export default function ChatPage() {
       const welcome: ChatMessage = {
         id: 'welcome',
         role: 'assistant',
-        content: `Hey ${profile.name}! I'm your NourishLog assistant.\n\nYou can log food here too — just tell me what you ate. Or ask me about your nutrition:\n\n• "What did I eat today?"\n• "How's my week going?"\n• "Suggest something healthy"\n• "Calories in biryani"`,
+        content: `Hey ${profile.name}! Tell me what you ate, or ask about your food history:\n\n• **Log:** "had biryani for lunch"\n• **Yesterday:** "what did I eat yesterday?"\n• **Search:** "when did I last have dosa?"\n• **Specific:** "what was dinner on Monday?"\n• **History:** "how many times have I had chai?"\n• **Photo:** use the camera button below`,
         timestamp: new Date().toISOString(),
       };
       setMessages([welcome]);

@@ -46,13 +46,13 @@ export default function LandingPage() {
 
           {/* Headline — the money shot */}
           <h1 style={{ fontSize: 'clamp(40px, 5.5vw, 72px)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.035em', fontFamily: 'Bricolage Grotesque', marginBottom: 24 }}>
-            Track what you eat.<br />
-            <span style={{ color: 'var(--accent)' }}>In a chat.</span>
+            Remember every meal.<br />
+            <span style={{ color: 'var(--accent)' }}>Ask anything about it.</span>
           </h1>
 
           {/* Subtext */}
-          <p style={{ fontSize: 'clamp(16px, 1.8vw, 20px)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: 540, margin: '0 auto 40px', fontWeight: 400 }}>
-            Type &ldquo;had biryani for lunch&rdquo; and get the full breakdown. Upload a plate photo. Add your own recipes. Built for how India eats.
+          <p style={{ fontSize: 'clamp(16px, 1.8vw, 20px)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: 560, margin: '0 auto 40px', fontWeight: 400 }}>
+            Log what you ate — by chat, photo, or text. Then ask &ldquo;what did I have for dinner on Monday?&rdquo; or &ldquo;when did I last eat biryani?&rdquo;. Your entire food history, searchable forever.
           </p>
 
           {/* CTAs */}
@@ -154,8 +154,8 @@ export default function LandingPage() {
       {/* ━━━ FEATURE SECTIONS ━━━ */}
       {[
         {
-          id: 'f1', label: '01', title: 'Log by chatting', desc: 'Type "had 2 rotis with dal for dinner". We parse quantities, detect meal type, and log it with full IFCT nutrition. No forms, no dropdowns.',
-          bullets: ['Natural language — "chai and samosa at 4pm"', 'Auto-detects breakfast/lunch/dinner from time', '"Analyze my nutrition" for weekly insights', '"Compare dosa vs idli" side by side', 'Upload photos in chat too'],
+          id: 'f1', label: '01', title: 'Chat is your food diary', desc: 'Log what you ate, then ask about it later. "What did I have for dinner on Monday?" "When did I last eat biryani?" "Show me last week." Your entire history, queryable forever.',
+          bullets: ['Log: "had 2 rotis with dal for dinner"', 'Query: "what did I eat yesterday?"', 'Search: "when did I last have dosa?"', 'History: "how many times have I had biryani?"', 'Filter: "what did I have for breakfast this week?"', 'Upload photos in chat too'],
           mockup: 'chat',
         },
         {
@@ -314,13 +314,14 @@ function Msg({ text, isUser }: { text: string; isUser?: boolean }) {
 function ChatM() {
   return (
     <div className="flex flex-col" style={{ gap: 8, fontSize: 12 }}>
-      <Msg text="Hey Priya! Tell me what you ate." />
       <Msg text="had chicken biryani for lunch" isUser />
-      <Msg text={'Logged Chicken Biryani for lunch! ✅\n430 kcal · 25g protein · 52g carbs · 14g fat\nHealth Score: 6/10'} />
-      <Msg text="also had chai and 2 samosas" isUser />
-      <Msg text={'Logged Chai (60 kcal) + 2x Samosa (310 kcal) ✅\n800 kcal today. 1,200 remaining.'} />
-      <Msg text="analyze my nutrition" isUser />
-      <Msg text={'Avg: 1,680 kcal/day. 30% protein, 42% carbs, 28% fat.\n🥩 Protein on track ✅\n🌿 Low fiber — add more dal, veggies'} />
+      <Msg text={'Logged Chicken Biryani for lunch ✅\n430 kcal · 25g protein · 52g carbs · 14g fat'} />
+      <Msg text="what did I eat yesterday?" isUser />
+      <Msg text={'Yesterday:\n\nBreakfast: Masala Dosa (166 kcal, 8:30)\nLunch: Rajma Chawal (350 kcal, 13:00)\nSnack: Chai + Biscuits (120 kcal, 16:00)\nDinner: Dal Tadka + 2 Roti (358 kcal, 20:15)\n\nTotal: 994 kcal'} />
+      <Msg text="when did I last have biryani?" isUser />
+      <Msg text={'Last Chicken Biryani: Today at 13:00 (lunch, 430 kcal).\nYou\'ve had it 4 times total.'} />
+      <Msg text="what did I have for dinner on Monday?" isUser />
+      <Msg text={'Monday dinner: Butter Chicken + Naan (510 kcal, 20:30)'} />
     </div>
   );
 }

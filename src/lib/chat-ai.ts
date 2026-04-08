@@ -1,188 +1,164 @@
-import { FoodEntry, ChatMessage } from './types';
+import { FoodEntry } from './types';
 import { getEntriesByDate, getEntries, addEntry, getProfile, getCustomFoods, addCustomFood, CustomFood } from './store';
 import { foodDatabase } from './food-db';
-import { format, subDays } from 'date-fns';
+import { format, subDays, parseISO, isWithinInterval, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
 
 type NutritionData = { cal: number; p: number; c: number; f: number; fb: number; score: number };
 
 function lookupFood(name: string): NutritionData | null {
   const key = name.toLowerCase().trim();
-
-  // 1. Check custom foods first
   const custom = getCustomFoods();
   if (custom[key]) return custom[key];
-
-  // 2. Check main database (exact)
-  if (foodDatabase[key]) {
-    const d = foodDatabase[key];
-    return { cal: d.cal, p: d.p, c: d.c, f: d.f, fb: d.fb, score: d.score };
-  }
-
-  // 3. Check aliases
-  for (const [, v] of Object.entries(foodDatabase)) {
-    if (v.aliases?.some((a) => a === key)) {
-      return { cal: v.cal, p: v.p, c: v.c, f: v.f, fb: v.fb, score: v.score };
-    }
-  }
-
-  // 4. Partial match
-  for (const [k, v] of Object.entries(foodDatabase)) {
-    if (k.includes(key) || key.includes(k)) {
-      return { cal: v.cal, p: v.p, c: v.c, f: v.f, fb: v.fb, score: v.score };
-    }
-  }
-
-  // 5. Check custom partial
-  for (const [k, v] of Object.entries(custom)) {
-    if (k.includes(key) || key.includes(k)) return v;
-  }
-
+  if (foodDatabase[key]) { const d = foodDatabase[key]; return { cal: d.cal, p: d.p, c: d.c, f: d.f, fb: d.fb, score: d.score }; }
+  for (const [, v] of Object.entries(foodDatabase)) { if (v.aliases?.some((a) => a === key)) return { cal: v.cal, p: v.p, c: v.c, f: v.f, fb: v.fb, score: v.score }; }
+  for (const [k, v] of Object.entries(foodDatabase)) { if (k.includes(key) || key.includes(k)) return { cal: v.cal, p: v.p, c: v.c, f: v.f, fb: v.fb, score: v.score }; }
+  for (const [k, v] of Object.entries(custom)) { if (k.includes(key) || key.includes(k)) return v; }
   return null;
 }
 
-function searchFoods(query: string): string[] {
-  const key = query.toLowerCase().trim();
-  const results: string[] = [];
-  for (const k of Object.keys(foodDatabase)) {
-    if (k.includes(key)) results.push(k);
-    if (results.length >= 8) break;
+// ─── History Query Helpers ───
+
+function getEntriesForRange(text: string): { entries: FoodEntry[]; label: string } {
+  const all = getEntries();
+  const today = new Date();
+  const todayStr = format(today, 'yyyy-MM-dd');
+
+  if (text.includes('yesterday')) {
+    const d = format(subDays(today, 1), 'yyyy-MM-dd');
+    return { entries: all.filter(e => e.date === d), label: 'yesterday' };
   }
-  return results;
-}
-
-function getTodaySummary(): string {
-  const today = format(new Date(), 'yyyy-MM-dd');
-  const entries = getEntriesByDate(today);
-  if (entries.length === 0) return "You haven't logged any meals today. Tell me what you ate or upload a photo!";
-
-  const totals = entries.reduce(
-    (acc, e) => ({ cal: acc.cal + e.calories, p: acc.p + e.protein, c: acc.c + e.carbs, f: acc.f + e.fat, fb: acc.fb + e.fiber }),
-    { cal: 0, p: 0, c: 0, f: 0, fb: 0 }
-  );
-
-  const goals = getProfile().goals;
-  const remaining = goals.calories - totals.cal;
-  const mealList = entries.map((e) => `• ${e.name} — ${e.calories} kcal (${e.mealType})`).join('\n');
-
-  const proteinPct = Math.round((totals.p / goals.protein) * 100);
-  const carbsPct = Math.round((totals.c / goals.carbs) * 100);
-  const fatPct = Math.round((totals.f / goals.fat) * 100);
-
-  return `Today so far (${entries.length} meals):\n\n${mealList}\n\n**${totals.cal} kcal** consumed (${remaining > 0 ? remaining + ' left' : Math.abs(remaining) + ' over'})\n\nMacros:\n• Protein: ${totals.p}g (${proteinPct}% of goal)\n• Carbs: ${totals.c}g (${carbsPct}% of goal)\n• Fat: ${totals.f}g (${fatPct}% of goal)\n• Fiber: ${totals.fb}g`;
-}
-
-function getWeekSummary(): string {
-  const entries = getEntries();
-  const days: Record<string, { cal: number; count: number; p: number }> = {};
-
-  for (let i = 6; i >= 0; i--) {
-    const dateStr = format(subDays(new Date(), i), 'yyyy-MM-dd');
-    const dayEntries = entries.filter((e) => e.date === dateStr);
-    days[dateStr] = {
-      cal: dayEntries.reduce((s, e) => s + e.calories, 0),
-      count: dayEntries.length,
-      p: dayEntries.reduce((s, e) => s + e.protein, 0),
-    };
+  if (text.includes('today')) {
+    return { entries: all.filter(e => e.date === todayStr), label: 'today' };
+  }
+  if (text.includes('last week') || text.includes('past week')) {
+    const start = subDays(today, 7);
+    return { entries: all.filter(e => new Date(e.date) >= start), label: 'last 7 days' };
+  }
+  if (text.includes('this week')) {
+    const start = startOfWeek(today, { weekStartsOn: 1 });
+    const end = endOfWeek(today, { weekStartsOn: 1 });
+    return { entries: all.filter(e => isWithinInterval(parseISO(e.date), { start, end })), label: 'this week' };
+  }
+  if (text.includes('this month') || text.includes('last month') || text.includes('past month')) {
+    const start = text.includes('last month') || text.includes('past month') ? subDays(today, 30) : startOfMonth(today);
+    const end = text.includes('last month') || text.includes('past month') ? today : endOfMonth(today);
+    return { entries: all.filter(e => isWithinInterval(parseISO(e.date), { start, end })), label: text.includes('last') || text.includes('past') ? 'last 30 days' : 'this month' };
   }
 
-  const daysList = Object.entries(days)
-    .map(([date, d]) => `${format(new Date(date), 'EEE d')}: ${d.cal || '—'} kcal ${d.count ? `(${d.count} meals)` : '(no data)'}`)
-    .join('\n');
+  // Try to parse a specific date like "april 3" or "3rd april" or "march 15"
+  const dateMatch = text.match(/(\d{1,2})(?:st|nd|rd|th)?\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i) ||
+    text.match(/(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w*\s*(\d{1,2})/i);
+  if (dateMatch) {
+    const months: Record<string, string> = { jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06', jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12' };
+    let day: string, mon: string;
+    if (/^\d/.test(dateMatch[1])) { day = dateMatch[1].padStart(2, '0'); mon = months[dateMatch[2].toLowerCase().slice(0, 3)]; }
+    else { mon = months[dateMatch[1].toLowerCase().slice(0, 3)]; day = dateMatch[2].padStart(2, '0'); }
+    const dateStr = `2026-${mon}-${day}`;
+    return { entries: all.filter(e => e.date === dateStr), label: format(parseISO(dateStr), 'EEEE, d MMMM') };
+  }
 
-  const withData = Object.values(days).filter((d) => d.cal > 0);
-  const totalCal = withData.reduce((s, d) => s + d.cal, 0);
-  const avgCal = withData.length > 0 ? Math.round(totalCal / withData.length) : 0;
-  const avgProtein = withData.length > 0 ? Math.round(withData.reduce((s, d) => s + d.p, 0) / withData.length) : 0;
-  const goals = getProfile().goals;
+  // Days of week
+  const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  for (const [i, name] of dayNames.entries()) {
+    if (text.includes(name)) {
+      // Find the most recent occurrence of this day
+      for (let d = 0; d < 14; d++) {
+        const date = subDays(today, d);
+        if (date.getDay() === i) {
+          const dateStr = format(date, 'yyyy-MM-dd');
+          return { entries: all.filter(e => e.date === dateStr), label: `last ${name} (${format(date, 'd MMM')})` };
+        }
+      }
+    }
+  }
 
-  let insight = '';
-  if (avgCal > goals.calories * 1.1) insight = '\n\n⚠️ You\'re averaging above your calorie goal. Consider lighter meals or cutting snacks.';
-  else if (avgCal < goals.calories * 0.8) insight = '\n\n⚠️ You\'re eating below your goal. Make sure you\'re getting enough nutrition.';
-  else insight = '\n\n✅ You\'re staying close to your goal. Keep it up!';
-
-  return `Your week:\n\n${daysList}\n\n**Avg: ${avgCal} kcal/day** | Avg protein: ${avgProtein}g/day${insight}`;
+  return { entries: all.filter(e => e.date === todayStr), label: 'today' };
 }
 
-function getAnalysis(): string {
-  const entries = getEntries();
-  if (entries.length < 5) return "Not enough data for analysis yet. Keep logging for a few days!";
+function formatMealList(entries: FoodEntry[]): string {
+  if (entries.length === 0) return 'Nothing logged.';
 
-  const weekEntries = entries.filter((e) => {
-    const diff = (new Date().getTime() - new Date(e.date).getTime()) / (1000 * 60 * 60 * 24);
-    return diff <= 7;
+  // Group by meal type
+  const groups: Record<string, FoodEntry[]> = {};
+  entries.forEach(e => {
+    if (!groups[e.mealType]) groups[e.mealType] = [];
+    groups[e.mealType].push(e);
   });
 
-  const totalP = weekEntries.reduce((s, e) => s + e.protein, 0);
-  const totalC = weekEntries.reduce((s, e) => s + e.carbs, 0);
-  const totalF = weekEntries.reduce((s, e) => s + e.fat, 0);
-  const totalFb = weekEntries.reduce((s, e) => s + e.fiber, 0);
-  const totalCal = weekEntries.reduce((s, e) => s + e.calories, 0);
-  const daysCount = new Set(weekEntries.map((e) => e.date)).size || 1;
+  const order = ['breakfast', 'lunch', 'dinner', 'snack'];
+  const lines: string[] = [];
+  for (const type of order) {
+    if (!groups[type]) continue;
+    lines.push(`**${type.charAt(0).toUpperCase() + type.slice(1)}:**`);
+    groups[type].forEach(e => {
+      lines.push(`  • ${e.name} — ${e.calories} kcal (${e.time})`);
+    });
+  }
 
-  const avgP = Math.round(totalP / daysCount);
-  const avgC = Math.round(totalC / daysCount);
-  const avgF = Math.round(totalF / daysCount);
-  const avgFb = Math.round(totalFb / daysCount);
-  const avgCal = Math.round(totalCal / daysCount);
-
-  // Macro split
-  const totalMacro = totalP + totalC + totalF || 1;
-  const pPct = Math.round((totalP / totalMacro) * 100);
-  const cPct = Math.round((totalC / totalMacro) * 100);
-  const fPct = Math.round((totalF / totalMacro) * 100);
-
-  // Find patterns
-  const scores = weekEntries.filter((e) => e.healthScore).map((e) => e.healthScore!);
-  const avgScore = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : 'N/A';
-
-  const insights: string[] = [];
-  if (avgP < 50) insights.push('🥩 **Low protein** — add more dal, paneer, chicken, or eggs');
-  if (avgFb < 15) insights.push('🌿 **Low fiber** — eat more dal, vegetables, fruits, and whole grains');
-  if (fPct > 35) insights.push('🧈 **High fat ratio** — try grilled/steamed options over fried');
-  if (cPct > 55) insights.push('🍚 **Carb-heavy diet** — balance with more protein sources');
-  if (avgCal > 2500) insights.push('🔥 **High calorie intake** — watch portion sizes');
-
-  return `**Weekly Nutrition Analysis**\n\nDaily averages:\n• Calories: ${avgCal} kcal\n• Protein: ${avgP}g | Carbs: ${avgC}g | Fat: ${avgF}g | Fiber: ${avgFb}g\n\nMacro split: ${pPct}% protein, ${cPct}% carbs, ${fPct}% fat\nAvg health score: ${avgScore}/10\n\n${insights.length > 0 ? '**Areas to improve:**\n' + insights.join('\n') : '**Looking good!** Your nutrition balance is solid.'}`;
+  const total = entries.reduce((s, e) => s + e.calories, 0);
+  lines.push(`\n**Total: ${total} kcal** across ${entries.length} items`);
+  return lines.join('\n');
 }
 
-function getMostEaten(): string {
-  const entries = getEntries();
-  const counts: Record<string, number> = {};
-  entries.forEach((e) => { counts[e.name] = (counts[e.name] || 0) + 1; });
-  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 8);
-  if (sorted.length === 0) return "No data yet. Start logging!";
-  return `Your top foods:\n\n${sorted.map(([name, count], i) => `${i + 1}. ${name} — ${count}x`).join('\n')}`;
+function searchHistory(query: string): string {
+  const all = getEntries();
+  const matches = all.filter(e => e.name.toLowerCase().includes(query));
+
+  if (matches.length === 0) return `You've never logged anything matching "${query}".`;
+
+  // Group by date
+  const byDate: Record<string, FoodEntry[]> = {};
+  matches.forEach(e => {
+    if (!byDate[e.date]) byDate[e.date] = [];
+    byDate[e.date].push(e);
+  });
+
+  const dates = Object.keys(byDate).sort().reverse().slice(0, 10);
+  const totalTimes = matches.length;
+  const totalCal = matches.reduce((s, e) => s + e.calories, 0);
+
+  let result = `You've had "${query}" **${totalTimes} times** (${totalCal} kcal total):\n\n`;
+  dates.forEach(date => {
+    const entries = byDate[date];
+    result += `**${format(parseISO(date), 'EEE, d MMM')}:** ${entries.map(e => `${e.name} (${e.calories} kcal, ${e.mealType})`).join(', ')}\n`;
+  });
+
+  if (Object.keys(byDate).length > 10) result += `\n...and ${Object.keys(byDate).length - 10} more days`;
+  return result;
+}
+
+function getLastTimeAte(query: string): string {
+  const all = getEntries().filter(e => e.name.toLowerCase().includes(query)).sort((a, b) => b.date.localeCompare(a.date) || b.time.localeCompare(a.time));
+  if (all.length === 0) return `I don't see "${query}" in your history.`;
+  const last = all[0];
+  return `Last time you had **${last.name}**: **${format(parseISO(last.date), 'EEEE, d MMMM')}** at ${last.time} (${last.mealType}, ${last.calories} kcal).\n\nYou've had it ${all.length} time${all.length > 1 ? 's' : ''} total.`;
+}
+
+function getBreakdownByMeal(entries: FoodEntry[]): string {
+  const groups: Record<string, { count: number; cal: number }> = {};
+  entries.forEach(e => {
+    if (!groups[e.mealType]) groups[e.mealType] = { count: 0, cal: 0 };
+    groups[e.mealType].count++;
+    groups[e.mealType].cal += e.calories;
+  });
+  return Object.entries(groups).map(([type, d]) => `${type}: ${d.count} meals, ${d.cal} kcal`).join('\n');
 }
 
 function parseCustomRecipe(text: string): { name: string; data: CustomFood } | null {
-  // Parse patterns like "add recipe paneer wrap 350 cal 20g protein 30g carbs 15g fat"
-  // or "my morning smoothie is about 250 calories 15g protein 30g carbs 8g fat"
   const calMatch = text.match(/(\d+)\s*(?:cal|kcal|calories)/i);
+  if (!calMatch) return null;
   const proteinMatch = text.match(/(\d+)\s*g?\s*protein/i);
   const carbsMatch = text.match(/(\d+)\s*g?\s*carbs?/i);
   const fatMatch = text.match(/(\d+)\s*g?\s*fat/i);
   const fiberMatch = text.match(/(\d+)\s*g?\s*fiber/i);
-
-  if (!calMatch) return null;
-
-  // Extract name — remove the nutrition parts
-  let name = text
-    .replace(/add recipe |add custom |create recipe |save recipe |my |is about |is /gi, '')
-    .replace(/\d+\s*(?:cal|kcal|calories|g?\s*protein|g?\s*carbs?|g?\s*fat|g?\s*fiber)/gi, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-
+  let name = text.replace(/add recipe |add custom |create recipe |save recipe |my |is about |is /gi, '')
+    .replace(/\d+\s*(?:cal|kcal|calories|g?\s*protein|g?\s*carbs?|g?\s*fat|g?\s*fiber)/gi, '').replace(/\s+/g, ' ').trim();
   if (name.length < 2) return null;
-
   const cal = parseInt(calMatch[1]);
-  const p = proteinMatch ? parseInt(proteinMatch[1]) : Math.round(cal * 0.1 / 4);
-  const c = carbsMatch ? parseInt(carbsMatch[1]) : Math.round(cal * 0.5 / 4);
-  const f = fatMatch ? parseInt(fatMatch[1]) : Math.round(cal * 0.3 / 9);
-  const fb = fiberMatch ? parseInt(fiberMatch[1]) : 2;
-  const score = cal < 200 ? 8 : cal < 400 ? 6 : cal < 600 ? 5 : 4;
-
-  return { name, data: { cal, p, c, f, fb, score } };
+  return { name, data: { cal, p: proteinMatch ? parseInt(proteinMatch[1]) : Math.round(cal * 0.1 / 4), c: carbsMatch ? parseInt(carbsMatch[1]) : Math.round(cal * 0.5 / 4), f: fatMatch ? parseInt(fatMatch[1]) : Math.round(cal * 0.3 / 9), fb: fiberMatch ? parseInt(fiberMatch[1]) : 2, score: cal < 200 ? 8 : cal < 400 ? 6 : 5 } };
 }
+
+// ─── Main processor ───
 
 export function processMessage(text: string): { response: string; foodEntry?: FoodEntry } {
   const lower = text.toLowerCase().trim();
@@ -190,196 +166,175 @@ export function processMessage(text: string): { response: string; foodEntry?: Fo
   // Greetings
   if (/^(hi|hello|hey|namaste|yo|sup)\b/.test(lower)) {
     const profile = getProfile();
-    return {
-      response: `Hey ${profile.name || 'there'}! How can I help?\n\n• **Log food** — "I had dosa for breakfast"\n• **Upload a photo** — use the camera button\n• **Check your day** — "what did I eat today?"\n• **Get analysis** — "analyze my nutrition"\n• **Add custom recipe** — "add recipe protein bowl 400 cal 30g protein 40g carbs 12g fat"`
-    };
+    return { response: `Hey ${profile.name || 'there'}! What did you eat? Or ask me anything:\n\n• **"What did I eat yesterday?"**\n• **"When did I last have biryani?"**\n• **"Show me last week"**\n• **"What did I have for dinner on Monday?"**\n• **"How many times have I had dosa?"**\n• Or just tell me what you ate right now.` };
   }
 
-  // Custom recipe / add dish
-  if (lower.includes('add recipe') || lower.includes('add custom') || lower.includes('create recipe') || lower.includes('save recipe') ||
-      (lower.includes('add') && lower.includes('dish')) || (lower.includes('save') && lower.includes('dish'))) {
+  // Custom recipe
+  if (lower.includes('add recipe') || lower.includes('add custom') || lower.includes('create recipe') || lower.includes('save recipe')) {
     const recipe = parseCustomRecipe(lower);
     if (recipe) {
       addCustomFood(recipe.name, recipe.data);
-      const d = recipe.data;
-      return {
-        response: `Saved custom recipe **${recipe.name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}**! 🍳\n\n🔥 ${d.cal} kcal | 🥩 ${d.p}g protein | 🍚 ${d.c}g carbs | 🧈 ${d.f}g fat\n\nYou can now log it anytime by name.`
-      };
+      return { response: `Saved **${recipe.name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}** (${recipe.data.cal} kcal). Log it anytime by name.` };
     }
-    return {
-      response: `To add a custom recipe, include at least the calories:\n\n**"add recipe [name] [calories] cal [protein]g protein [carbs]g carbs [fat]g fat"**\n\nExample: "add recipe morning smoothie 250 cal 15g protein 30g carbs 8g fat"`
-    };
+    return { response: 'To save a recipe: **"add recipe [name] [cal] cal [protein]g protein [carbs]g carbs [fat]g fat"**' };
   }
 
-  // Analysis
-  if (lower.includes('analy') || lower.includes('review my') || lower.includes('how am i doing') || lower.includes('nutrition report') || lower.includes('breakdown')) {
-    return { response: getAnalysis() };
+  // ─── HISTORY QUERIES ───
+
+  // "When did I last have X" / "Last time I had X"
+  if (lower.includes('last time') || lower.includes('when did i') || lower.includes('when was')) {
+    const food = lower.replace(/when did i (last )?(have|eat)|last time i (had|ate)|when was the last time i (had|ate)/g, '').replace(/\?/g, '').trim();
+    if (food.length >= 2) return { response: getLastTimeAte(food) };
   }
 
-  // Today summary
-  if (lower.includes('today') && (lower.includes('eat') || lower.includes('ate') || lower.includes('summary') || lower.includes('what') || lower.includes('show'))) {
-    return { response: getTodaySummary() };
+  // "How many times have I had X" / "How often do I eat X"
+  if (lower.includes('how many times') || lower.includes('how often') || lower.includes('how much') && lower.includes('had')) {
+    const food = lower.replace(/how many times have i (had|eaten)|how often do i (eat|have)|how much .* (had|eaten)/g, '').replace(/\?/g, '').trim();
+    if (food.length >= 2) return { response: searchHistory(food) };
   }
 
-  // Week summary
-  if (lower.includes('week') && (lower.includes('summary') || lower.includes('how') || lower.includes('going') || lower.includes('review') || lower.includes('show'))) {
-    return { response: getWeekSummary() };
+  // "Show me [food] history" / "all my [food]"
+  if ((lower.includes('history') || lower.includes('all my') || lower.includes('show me all') || lower.includes('every time')) && !lower.includes('meal history')) {
+    const food = lower.replace(/show me |history of |all my |every time i (had|ate) |show |history|\?/g, '').trim();
+    if (food.length >= 2) return { response: searchHistory(food) };
+  }
+
+  // "What did I eat [date/time]" / "Show me [date]" / "What did I have for [meal] [date]"
+  if ((lower.includes('what did i') && (lower.includes('eat') || lower.includes('have'))) ||
+      lower.includes('show me') || lower.includes('what was') ||
+      (lower.includes('what') && (lower.includes('breakfast') || lower.includes('lunch') || lower.includes('dinner') || lower.includes('snack')))) {
+
+    const { entries, label } = getEntriesForRange(lower);
+
+    // Filter by meal type if mentioned
+    let filtered = entries;
+    let mealLabel = '';
+    if (lower.includes('breakfast')) { filtered = entries.filter(e => e.mealType === 'breakfast'); mealLabel = ' for breakfast'; }
+    else if (lower.includes('lunch')) { filtered = entries.filter(e => e.mealType === 'lunch'); mealLabel = ' for lunch'; }
+    else if (lower.includes('dinner')) { filtered = entries.filter(e => e.mealType === 'dinner'); mealLabel = ' for dinner'; }
+    else if (lower.includes('snack')) { filtered = entries.filter(e => e.mealType === 'snack'); mealLabel = ' as snacks'; }
+
+    if (filtered.length === 0) return { response: `Nothing logged${mealLabel} on ${label}.` };
+    return { response: `Here's what you ate${mealLabel} on **${label}**:\n\n${formatMealList(filtered)}` };
+  }
+
+  // Week/month summary
+  if (lower.includes('week') || lower.includes('month')) {
+    const { entries, label } = getEntriesForRange(lower);
+    if (entries.length === 0) return { response: `No meals logged for ${label}.` };
+
+    const uniqueDates = [...new Set(entries.map(e => e.date))].sort();
+    const totalCal = entries.reduce((s, e) => s + e.calories, 0);
+    const avg = Math.round(totalCal / uniqueDates.length);
+
+    let result = `**${label}** — ${entries.length} meals across ${uniqueDates.length} days:\n\n`;
+    uniqueDates.forEach(date => {
+      const dayEntries = entries.filter(e => e.date === date);
+      const dayCal = dayEntries.reduce((s, e) => s + e.calories, 0);
+      const names = dayEntries.map(e => e.name).join(', ');
+      result += `**${format(parseISO(date), 'EEE d')}:** ${names} — ${dayCal} kcal\n`;
+    });
+    result += `\n**Avg: ${avg} kcal/day** · ${getBreakdownByMeal(entries)}`;
+    return { response: result };
   }
 
   // Most eaten
-  if (lower.includes('most') && (lower.includes('eaten') || lower.includes('frequent') || lower.includes('common') || lower.includes('popular'))) {
-    return { response: getMostEaten() };
+  if (lower.includes('most') && (lower.includes('eaten') || lower.includes('frequent') || lower.includes('common') || lower.includes('eat'))) {
+    const all = getEntries();
+    const counts: Record<string, number> = {};
+    all.forEach(e => { counts[e.name] = (counts[e.name] || 0) + 1; });
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    if (sorted.length === 0) return { response: 'No data yet.' };
+    return { response: `Your most eaten foods:\n\n${sorted.map(([name, count], i) => `${i + 1}. **${name}** — ${count} times`).join('\n')}` };
   }
 
-  // Search foods
-  if (lower.startsWith('search ') || lower.startsWith('find ')) {
-    const query = lower.replace(/^(search |find )/, '').trim();
-    const results = searchFoods(query);
-    if (results.length === 0) return { response: `No dishes found for "${query}". You can add it as a custom recipe!` };
-    const list = results.map((r) => {
-      const d = foodDatabase[r];
-      return `• **${r.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}** — ${d.cal} kcal, ${d.p}g protein`;
-    }).join('\n');
-    return { response: `Found ${results.length} matches:\n\n${list}\n\nSay the dish name to log it.` };
-  }
-
-  // Compare foods
+  // Compare
   if (lower.includes(' vs ') || lower.includes(' versus ') || lower.includes('compare')) {
     const parts = lower.replace(/compare |which is better |which is healthier /g, '').split(/ vs | versus | or /);
     if (parts.length >= 2) {
-      const a = lookupFood(parts[0].trim());
-      const b = lookupFood(parts[1].trim());
-      const nameA = parts[0].trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-      const nameB = parts[1].trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-      if (a && b) {
-        const winner = a.score > b.score ? nameA : a.score < b.score ? nameB : 'Both are similar';
-        return {
-          response: `**${nameA}** vs **${nameB}**:\n\n| | ${nameA} | ${nameB} |\n|---|---|---|\n| Calories | ${a.cal} kcal | ${b.cal} kcal |\n| Protein | ${a.p}g | ${b.p}g |\n| Carbs | ${a.c}g | ${b.c}g |\n| Fat | ${a.f}g | ${b.f}g |\n| Health Score | ${a.score}/10 | ${b.score}/10 |\n\n**Healthier pick: ${winner}** ${a.score > b.score ? '(lower cal, better score)' : ''}`
-        };
-      }
+      const a = lookupFood(parts[0].trim()), b = lookupFood(parts[1].trim());
+      const nA = parts[0].trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      const nB = parts[1].trim().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      if (a && b) return { response: `**${nA}** vs **${nB}**:\n\nCalories: ${a.cal} vs ${b.cal}\nProtein: ${a.p}g vs ${b.p}g\nCarbs: ${a.c}g vs ${b.c}g\nFat: ${a.f}g vs ${b.f}g\nHealth: ${a.score}/10 vs ${b.score}/10\n\n${a.score > b.score ? nA : nB} is the healthier pick.` };
     }
   }
 
   // Nutrition query
-  if (lower.includes('how many') || lower.includes('calories in') || lower.includes('nutrition') || lower.includes('how much') || lower.includes('whats in') || lower.includes("what's in")) {
-    const words = lower.replace(/how many calories in |calories in |nutrition of |nutrition in |how much protein in |how much |whats in |what's in /g, '').trim();
+  if (lower.includes('calories in') || lower.includes('nutrition') || lower.includes("what's in")) {
+    const words = lower.replace(/how many calories in |calories in |nutrition of |nutrition in |whats in |what's in /g, '').trim();
     const food = lookupFood(words);
-    if (food) {
-      return {
-        response: `**${words.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}** per serving:\n\n🔥 ${food.cal} kcal\n🥩 Protein: ${food.p}g\n🍚 Carbs: ${food.c}g\n🧈 Fat: ${food.f}g\n🌿 Fiber: ${food.fb}g\n💚 Health Score: ${food.score}/10\n\nSay "log it" or "had [food name]" to add it to your diary.`
-      };
-    }
-    return { response: `I don't have "${words}" in my database yet. You can add it as a custom recipe:\n\n"add recipe ${words} [calories] cal [protein]g protein [carbs]g carbs [fat]g fat"` };
+    if (food) return { response: `**${words.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}**: ${food.cal} kcal · ${food.p}g protein · ${food.c}g carbs · ${food.f}g fat · ${food.fb}g fiber · Score: ${food.score}/10` };
+    return { response: `Don't have "${words}" yet. Add it: "add recipe ${words} [cal] cal [protein]g protein..."` };
   }
 
-  // Suggestions
-  if (lower.includes('suggest') || lower.includes('recommend') || lower.includes('what should i eat') || lower.includes('what can i eat')) {
-    const profile = getProfile();
+  // Suggest
+  if (lower.includes('suggest') || lower.includes('recommend') || lower.includes('what should i eat')) {
     const todayEntries = getEntriesByDate(format(new Date(), 'yyyy-MM-dd'));
     const todayCal = todayEntries.reduce((s, e) => s + e.calories, 0);
-    const remaining = profile.goals.calories - todayCal;
-    const todayProtein = todayEntries.reduce((s, e) => s + e.protein, 0);
-
-    if (remaining <= 0) {
-      return { response: "You've hit your calorie goal! If you're hungry, try something light like buttermilk (40 kcal), coconut water (46 kcal), or a small fruit salad (120 kcal)." };
-    }
-
-    const suggestions = [];
-    if (remaining > 400 && todayProtein < profile.goals.protein * 0.6) {
-      suggestions.push('**Tandoori Chicken** — 260 kcal, 32g protein');
-      suggestions.push('**Dal Tadka with Rice** — 380 kcal, 14g protein');
-      suggestions.push('**Egg Bhurji with Roti** — 340 kcal, 20g protein');
-    } else if (remaining > 200) {
-      suggestions.push('**Idli Sambar** — 195 kcal, light and balanced');
-      suggestions.push('**Sprouts Salad** — 150 kcal, high fiber');
-      suggestions.push('**Curd Rice** — 210 kcal, easy on the stomach');
-    } else {
-      suggestions.push('**Buttermilk** — 40 kcal, great for digestion');
-      suggestions.push('**Coconut Water** — 46 kcal, natural electrolytes');
-      suggestions.push('**Small Banana** — 105 kcal, quick energy');
-    }
-
-    return {
-      response: `You have **${remaining} kcal** remaining today (protein: ${todayProtein}g/${profile.goals.protein}g).\n\n${suggestions.map((s) => `• ${s}`).join('\n')}`
-    };
+    const remaining = getProfile().goals.calories - todayCal;
+    const suggestions = remaining > 400
+      ? ['Tandoori Chicken (220 kcal)', 'Dal + Roti (254 kcal)', 'Egg Bhurji + Roti (284 kcal)']
+      : remaining > 150 ? ['Idli Sambar (150 kcal)', 'Fruit Salad (100 kcal)', 'Curd Rice (180 kcal)']
+      : ['Buttermilk (35 kcal)', 'Coconut Water (46 kcal)', 'Banana (105 kcal)'];
+    return { response: `${remaining > 0 ? remaining : 0} kcal remaining. Try:\n\n${suggestions.map(s => `• ${s}`).join('\n')}` };
   }
 
-  // Goal check
-  if (lower.includes('goal') || lower.includes('target') || lower.includes('limit')) {
+  // Goals
+  if (lower.includes('goal') || lower.includes('target')) {
     const g = getProfile().goals;
-    return { response: `Your daily goals:\n\n🔥 Calories: ${g.calories} kcal\n🥩 Protein: ${g.protein}g\n🍚 Carbs: ${g.carbs}g\n🧈 Fat: ${g.fat}g\n💧 Water: ${g.water}L\n\nUpdate these in Profile → Edit Goals.` };
+    return { response: `Your goals: ${g.calories} kcal · ${g.protein}g protein · ${g.carbs}g carbs · ${g.fat}g fat · ${g.water}L water\n\nUpdate in Profile → Edit Goals.` };
   }
 
   // Help
   if (lower.includes('help') || lower === '?') {
-    return {
-      response: `**What I can do:**\n\n📝 **Log food** — "had biryani for lunch"\n📷 **Photo log** — use camera button below\n🔍 **Search** — "search paneer"\n📊 **Today** — "what did I eat today?"\n📈 **Week** — "how's my week?"\n🧪 **Analysis** — "analyze my nutrition"\n⚖️ **Compare** — "dosa vs idli"\n🍽️ **Nutrition** — "calories in samosa"\n💡 **Suggest** — "what should I eat?"\n🍳 **Custom recipe** — "add recipe [name] [cal] cal [protein]g protein [carbs]g carbs [fat]g fat"\n🏆 **Top foods** — "what do I eat most?"`
-    };
+    return { response: `**What you can ask:**\n\n📖 **"What did I eat yesterday?"**\n📖 **"What did I have for dinner on Monday?"**\n📖 **"Show me last week"**\n📖 **"When did I last have biryani?"**\n📖 **"How many times have I had dosa?"**\n📖 **"Show me all my biryani"**\n📖 **"What do I eat most?"**\n\n📝 **Log food:** "had biryani for lunch"\n📸 **Photo:** use camera button\n🍳 **Custom recipe:** "add recipe [name] [cal] cal..."\n⚖️ **Compare:** "dosa vs idli"\n🔍 **Nutrition:** "calories in samosa"` };
   }
 
-  // Log food — default action
+  // Search
+  if (lower.startsWith('search ') || lower.startsWith('find ')) {
+    const query = lower.replace(/^(search |find )/, '').trim();
+    const results: string[] = [];
+    for (const k of Object.keys(foodDatabase)) { if (k.includes(query) && results.length < 8) results.push(k); }
+    if (results.length === 0) return { response: `No dishes found for "${query}".` };
+    return { response: `Found:\n\n${results.map(r => `• **${r.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}** — ${foodDatabase[r].cal} kcal`).join('\n')}\n\nSay the name to log it.` };
+  }
+
+  // ─── DEFAULT: Log food ───
   let foodName = lower;
   let mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack' = 'snack';
-
   if (lower.includes('breakfast')) { mealType = 'breakfast'; foodName = foodName.replace(/for breakfast|breakfast/g, ''); }
   else if (lower.includes('lunch')) { mealType = 'lunch'; foodName = foodName.replace(/for lunch|lunch/g, ''); }
   else if (lower.includes('dinner') || lower.includes('supper')) { mealType = 'dinner'; foodName = foodName.replace(/for dinner|for supper|dinner|supper/g, ''); }
   else if (lower.includes('snack')) { mealType = 'snack'; foodName = foodName.replace(/for snack|as a snack|snack/g, ''); }
-  else {
-    const hour = new Date().getHours();
-    if (hour < 11) mealType = 'breakfast';
-    else if (hour < 15) mealType = 'lunch';
-    else if (hour < 18) mealType = 'snack';
-    else mealType = 'dinner';
-  }
+  else { const h = new Date().getHours(); if (h < 11) mealType = 'breakfast'; else if (h < 15) mealType = 'lunch'; else if (h < 18) mealType = 'snack'; else mealType = 'dinner'; }
 
   foodName = foodName.replace(/^(i |i had |i ate |ate |had |just had |just ate |log |add |eating |eaten |took |drank |made )/g, '').trim();
 
-  // Handle quantities like "2 rotis" or "3 idlis"
-  const qtyMatch = foodName.match(/^(\d+)\s+(.+?)s?$/);
   let qty = 1;
-  if (qtyMatch) {
-    qty = parseInt(qtyMatch[1]);
-    foodName = qtyMatch[2];
-  }
+  const qtyMatch = foodName.match(/^(\d+)\s+(.+?)s?$/);
+  if (qtyMatch) { qty = parseInt(qtyMatch[1]); foodName = qtyMatch[2]; }
 
-  if (!foodName || foodName.length < 2) {
-    return { response: "Tell me what you ate, or type **help** for all commands." };
-  }
+  if (!foodName || foodName.length < 2) return { response: "Tell me what you ate, or ask about your food history. Type **help** for everything I can do." };
 
   const nutrition = lookupFood(foodName);
-  const cal = (nutrition?.cal ?? (200 + Math.floor(Math.random() * 250))) * qty;
-  const p = (nutrition?.p ?? Math.floor(Math.random() * 20 + 5)) * qty;
-  const c = (nutrition?.c ?? Math.floor(Math.random() * 40 + 10)) * qty;
-  const f = (nutrition?.f ?? Math.floor(Math.random() * 15 + 3)) * qty;
-  const fb = (nutrition?.fb ?? Math.floor(Math.random() * 5 + 1)) * qty;
+  const cal = (nutrition?.cal ?? (200 + Math.floor(Math.random() * 200))) * qty;
+  const p = (nutrition?.p ?? Math.floor(Math.random() * 15 + 5)) * qty;
+  const c = (nutrition?.c ?? Math.floor(Math.random() * 35 + 10)) * qty;
+  const f = (nutrition?.f ?? Math.floor(Math.random() * 12 + 3)) * qty;
+  const fb = (nutrition?.fb ?? Math.floor(Math.random() * 4 + 1)) * qty;
   const score = nutrition?.score ?? Math.floor(Math.random() * 4 + 4);
-
-  const displayName = (qty > 1 ? `${qty}x ` : '') + foodName.split(' ').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const displayName = (qty > 1 ? `${qty}x ` : '') + foodName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
   const entry: FoodEntry = {
-    id: Date.now().toString(),
-    name: displayName,
-    calories: cal, protein: p, carbs: c, fat: f, fiber: fb,
-    mealType,
-    time: format(new Date(), 'HH:mm'),
-    date: format(new Date(), 'yyyy-MM-dd'),
-    healthScore: score,
-    servingSize: qty > 1 ? `${qty} servings` : '1 serving',
-    micronutrients: {
-      vitaminA: Math.floor(Math.random() * 30 + 5),
-      vitaminC: Math.floor(Math.random() * 50 + 5),
-      iron: Math.floor(Math.random() * 20 + 5),
-      calcium: Math.floor(Math.random() * 25 + 5),
-      sodium: Math.floor(Math.random() * 400 + 100),
-      sugar: Math.floor(Math.random() * 15 + 2),
-    },
+    id: Date.now().toString(), name: displayName, calories: cal, protein: p, carbs: c, fat: f, fiber: fb,
+    mealType, time: format(new Date(), 'HH:mm'), date: format(new Date(), 'yyyy-MM-dd'),
+    healthScore: score, servingSize: qty > 1 ? `${qty} servings` : '1 serving',
+    micronutrients: { vitaminA: Math.floor(Math.random() * 30 + 5), vitaminC: Math.floor(Math.random() * 50 + 5), iron: Math.floor(Math.random() * 20 + 5), calcium: Math.floor(Math.random() * 25 + 5), sodium: Math.floor(Math.random() * 400 + 100), sugar: Math.floor(Math.random() * 15 + 2) },
   };
-
   addEntry(entry);
 
   return {
-    response: `Logged **${displayName}** for ${mealType}! ✅\n\n🔥 ${cal} kcal | 🥩 ${p}g protein | 🍚 ${c}g carbs | 🧈 ${f}g fat\n💚 Health Score: ${score}/10${!nutrition ? '\n\n_Estimated — add exact nutrition with "add recipe" command_' : ''}`,
+    response: `Logged **${displayName}** for ${mealType} ✅\n${cal} kcal · ${p}g protein · ${c}g carbs · ${f}g fat${!nutrition ? '\n\n_Estimated — tap the entry to edit exact values_' : ''}`,
     foodEntry: entry,
   };
 }
